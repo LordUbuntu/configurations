@@ -1,0 +1,175 @@
+# shrinks path to emulate fish
+#########
+#  ENV  #
+#########
+
+# set environment variables
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+  PATH="$HOME/.cabal/bin:$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+export PATH
+export LC_CTYPE="en_CA.UTF-8"
+export EDITOR="nvim"
+export OPENER="xdg-open"
+
+# start fasd
+if [[ -f `which fasd` ]]
+then
+  eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
+fi
+
+
+
+##############
+#  SETTINGS  #
+##############
+
+# - History
+HISTFILE=$HOME/.history
+HISTSIZE=1000
+SAVEHIST=200
+# - Behaviour
+setopt bang_hist hist_ignore_space hist_beep beep
+setopt share_history inc_append_history extended_history
+# - Storage
+setopt hist_find_no_dups hist_ignore_all_dups
+setopt hist_fcntl_lock hist_reduce_blanks
+setopt hist_no_functions
+# - Directory Stack
+setopt auto_cd
+setopt auto_pushd 
+setopt pushd_minus pushd_silent pushd_to_home pushd_ignore_dups 
+DIRSTACKSIZE=13
+# - Completion
+setopt bash_auto_list list_packed list_rows_first list_types
+setopt glob_complete auto_param_slash
+# - Globbing
+setopt glob extended_glob
+setopt bad_pattern
+setopt bare_glob_qual brace_ccl glob_dots ksh_glob mark_dirs
+# - I/O
+# setopt correct_all interactive_comments
+bindkey -v
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^[[Z' reverse-menu-complete
+# - Style
+setopt prompt_subst
+
+
+
+##############
+#  THEMEING  #
+##############
+
+# AUTOLOADS
+autoload -U colors && colors
+autoload -Uz compinit
+autoload -Uz vcs_info
+zstyle :compinstall filename '/home/jaybee/.zshrc'
+
+# COLORS AND SYMBOLS
+elem=`print "\U220a"`
+err=`print "\U21af"`
+state=`print "|\U03a8\U3009"`
+userhost='%(!|%F{red}|%F{green})%B%n@%m%b%f'
+errcode="%(?||%F{red}$err%? )%f"
+level='%(2L|%L|)'
+
+# PROMPTS
+Functy='$userhost $elem ${vcs_info_msg_0_}
+$errcode$state%f= '
+Fancy="$userhost $elem %1~, $errcode$state%f = "
+Minimal='$errcode$state%f = '
+
+PROMPT=$Functy
+
+
+
+#############
+#  ALIASES  #
+#############
+
+# common utility aliases
+alias note="vim `date +%F`.md" # used a ton for taking notes
+alias py='python3'
+
+# fasd aliases
+alias v='f -e $EDITOR'
+alias o='a -e $OPENER'
+
+# standard aliases
+alias cp='cp -i'
+alias df='df -h'
+alias ls='ls -h --color=yes'
+alias ll='ls -l'
+alias la='ls -a'
+alias lah='ls -la'
+alias grep='grep --color=yes'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+
+
+
+
+###############
+#  FUNCTIONS  #
+###############
+
+# abbreviates directory fish style
+function shrink {
+  local paths=(${PWD/$HOME/\~}) 'cur_dir'
+  paths=(${(s:/:)paths})
+
+  # TODO shorten all but the last path name by iterating the index
+  len=$(( ${#paths[@]} - 1 ))
+  for i in $(seq 1 $len )
+  do
+    cur_dir+="${paths[$i]:0:1}"
+    cur_dir+='/'
+  done
+  cur_dir+="${paths[$(( -1 ))]}"
+  print -P "$cur_dir"
+}
+
+# updates vcs info status
+function vcs_show {
+  setopt prompt_subst
+  autoload -Uz vcs_info
+  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*' stagedstr '+'
+  zstyle ':vcs_info:*' unstagedstr '~'
+  zstyle ':vcs_info:*' patch-format "%10>..>%p%<< (%n applied)"
+  zstyle ':vcs_info:*' nvcsformats "%F{yellow}%B$(shrink)%b%f"
+  zstyle ':vcs_info:*' formats '%F{yellow}%B%r/%S%%b%f %F{cyan}%b%f %F{green}%c%f %F{yellow}%u%f'
+  vcs_info
+}
+
+function preexec {
+  timer=$(( $(date +%s%0N) / 1000000 )) # start timer
+}
+
+function precmd {
+  vcs_show # display directory/git info
+
+  # calculate and show how much time has passed since last command execution
+  if [ $timer ]
+  then
+    now=$(( $(date +%s%0N) / 1000000 ))
+    elapsed=$(( $now - $timer ))  # elapsed time in milliseconds
+    delta=$(print -P "\U0394")
+
+    threshold=3   # seconds to display elapsed time
+    if [[ $(( $elapsed / 1000 )) -gt $threshold ]]
+    then
+      export RPROMPT="%F{cyan}$delta${elapsed}ms%f "
+    else
+      export RPROMPT=""
+    fi
+    unset timer
+  fi
+}
+
+compinit

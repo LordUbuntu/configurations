@@ -1,0 +1,29 @@
+# Custom C language Ultisnippets
+# Jacobus Burger <therealjacoburger@gmail.com>
+
+snippet inc "#include <stdio.h>"
+#include ${1:<stdio.h>}
+${0}
+endsnippet
+
+snippet main "int main(void)"
+int
+main(${1:void})
+{
+	${0}
+}
+endsnippet
+
+snippet for "for (int i = 0; i <= lim; i++)"
+for (${1:int} ${2:i} = 0; $2${3: <= lim}; $2${3:++})
+{
+	${0}
+}
+endsnippet
+
+snippet while "while ( count < lim )" A
+while (${1:count} < ${2:lim})
+{
+	${0}
+}
+endsnippet

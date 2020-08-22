@@ -1,4 +1,0 @@
-- init git
-- remove old dotfiles repo
-- create new repo
-- sync repo systems

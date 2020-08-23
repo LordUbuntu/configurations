@@ -1,15 +1,6 @@
 #!/usr/bin/env bash
 # TODO merge into setup script
 
-if [[ ! -f "$HOME/.ssh/id_rsa" ]]
-then
-  ssh-keygen -t rsa -b 4096 -C "therealjacoburger@gmail.com"
-
-fi
-ssh-keygen -t rsa -b 4096 -C "therealjacoburger@gmail.com"
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
-
 if [[ ! -f $(which git) ]]
 then
   echo "git is not installed, skipping!"

@@ -16,12 +16,18 @@ source_files=(
 # file destinations
 destination_files=(
   $HOME/.config/alacritty/alacritty.yml
-  $HOME/.gitconfig
+  $HOME/.config/git/config
   $HOME/.config/nvim/init.vim
   $HOME/.config/nvim/UltiSnips
   $HOME/.config/sway/config
   $HOME/.zshrc
 )
+
+read -p "are you sure, this will overwrite prexisting files [Y/n]" res
+case $res in
+  [Yy]) continue;;
+  *)    exit 1;;
+esac
 
 echo """
 

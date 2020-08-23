@@ -1,3 +1,16 @@
 [user]
 email = therealjacoburger@gmail.com
 name = Jacobus Burger
+
+[core]
+editor = nvim
+
+[diff]
+tool = vimdiff
+
+[web]
+browser = google-chrome
+
+; will break current repos, make sure to uncomment in the future
+; [init]
+; defaultBranch = main

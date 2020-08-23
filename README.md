@@ -1,4 +1,4 @@
-# configurations
+# Configurations
 This repository documents and tracks the configuration files (dotfiles) and environment/system setup scripts (setup) that I use to - in effect - make my environment portable.
 
 ## dotfiles
@@ -12,6 +12,8 @@ A typical setup on a fresh system will typically follow this procedure (starting
 ```bash
 $ cd dotfiles
 $ ./sync.sh
-$ cd ../
+$ cd ../setup/environment/development
+$ ./install.sh
+$ ./setup.sh
 ```
 

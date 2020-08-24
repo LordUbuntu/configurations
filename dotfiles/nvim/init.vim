@@ -1,7 +1,7 @@
 " Title: NeoVim Configuration File
 " Desc: A self-contained NeoVim configuration file
 " Author: Jacobus Burger <therealjacoburger@gmail.com>
-" Date: 2020-08-19
+" Date: 2020-08-23
 
 
 

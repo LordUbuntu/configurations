@@ -4,6 +4,7 @@
 " Date: 2020-08-23
 
 
+" -- testing XXX
 
 
 
@@ -23,7 +24,6 @@ let linters = {
     \ 'cpp': ['g++'],
     \ 'haskell': ['hlint', 'ghc'],
 \}
-let dependencies = ['ctags']
 
 " -- Setup environment if not already installed
 " TODO test that this script works on a new machine
@@ -62,12 +62,6 @@ for lang in keys(linters)
     echo "snippet for for " . lang . " not found in snippets directory"
   endif
 endfor
-" report missing programs
-for program in dependencies
-  if !executable(program)
-    echo program . " is not installed!"
-  endif 
-endfor
 
 
 
@@ -79,10 +73,10 @@ endfor
 filetype off            " PLUGIN ENSURANCE
 call plug#begin()
 " -- Sytnax
-Plug 'sheerun/vim-polyglot' "extended syntax highlighting
-Plug 'dense-analysis/ale' "Asynchronous Lint Engine
+Plug 'sheerun/vim-polyglot' " extended syntax highlighting
+Plug 'dense-analysis/ale' " Asynchronous Lint Engine
 " -- Snippets
-Plug 'SirVer/ultisnips' "| Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' " | Plug 'honza/vim-snippets'
 Plug 'ervandew/supertab'
 " -- Completion
 Plug 'prabirshrestha/async.vim'
@@ -95,10 +89,12 @@ Plug 'ncm2/ncm2-highprio-pop'
 " -- Language Specific
 Plug 'kalekundert/vim-coiled-snake', { 'for': 'python' } " py folding++
 Plug 'junegunn/limelight.vim', { 'for': 'markdown' }  " focus writing
-  " autocmd! User limelight.vim :Limelight
 " -- Quality of Life
 Plug 'tmsvg/pear-tree' " smart pairs
 Plug 'ludovicchabant/vim-gutentags' " automatic ctags
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-rooter' " sets working directory to proj root
 Plug 'preservim/nerdcommenter' " nerd commenter
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' } " visualize file tree
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' } " visualize undo tree
@@ -121,7 +117,7 @@ call plug#end()
 filetype plugin indent on
 
 " - Theme Settings
-set t_Co=256 termguicolors encoding=utf-8
+set t_Co=256 termguicolors encoding=utf-8 fileencoding=utf-8
 set background=dark
 colorscheme gruvbox
 
@@ -143,25 +139,26 @@ iabbrev @@ therealjacoburger@gmail.com
 " +--------------------+
 
 " --- standard settings
-syntax enable " enable syntax
-set nocompatible " modern settings only
-set number relativenumber " line numbering
-" set cursorline " highlight line of cursor (note: can cause lag)
-set lazyredraw	" fast terminal for large files
-set showmode showcmd
-set noshowmode
-set showtabline=2
-set laststatus=2	" status bar
+syntax enable
+set nocompatible
+set number relativenumber
+set lazyredraw
+set noshowmode showcmd
 set backspace=indent,eol,start " backspace compatibility
-set visualbell t_vb=  	" make vim less flashy
-set hlsearch incsearch showmatch " incremental highlighting of search
-set foldmethod=syntax " set default folding to syntax (curly boys)
-set updatetime=100 " set update interval to 100ms
-set expandtab smarttab " expand tabs to spaces
-set wrap linebreak nolist " soft text wrapping
+set visualbell t_vb=
+set hlsearch incsearch showmatch
+set foldmethod=syntax
+set expandtab smarttab
 set undofile " enable persistent undo
-set timeoutlen=390 " make keyinput for leader et al faster
+set clipboard=unnamedplus
+set autochdir
+set updatetime=100
+set timeoutlen=390 " make leader key delay faster
 set colorcolumn=81 " show where the 80 column limit is visually
+" set cursorline " highlight line of cursor (note: can cause lag)
+set wrap linebreak nolist
+set expandtab smarttab smartindent autoindent
+set shiftwidth=2 tabstop=2 softtabstop=2
 
 
 
@@ -201,6 +198,9 @@ inoremap <right> <nop>
 noremap ii <esc>
 inoremap ii <esc>
 
+" other mappings
+map <C-p> :Files<CR>
+
 
 
 
@@ -232,7 +232,7 @@ autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType scss setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType haskell setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType vim setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType *sh setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType *sh setlocal shiftwidth=2 tabstop=2 softtabstop=2 nofoldenable
 " 4-space tabs
 autocmd FileType cs setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType java setlocal shiftwidth=4 tabstop=4 softtabstop=4
@@ -250,6 +250,13 @@ autocmd FileType cpp setlocal shiftwidth=8 tabstop=8 softtabstop=8
 " +-----------------------+
 " | Plugin Configurations |
 " +-----------------------+
+
+" -- FZF
+let g:fzf_preview_window = 'right:60%'
+let g:fzf_buffers_jump = 1
+let g:fzf_tags_command = 'ctags -R'
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--preview', 'bat --color always --style full {}']}, <bang>0)
 
 " -- NCM2
 autocmd BufEnter * call ncm2#enable_for_buffer()

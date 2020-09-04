@@ -23,7 +23,7 @@ destination_files=(
   $HOME/.zshrc
 )
 
-read -p "are you sure, this will overwrite prexisting files [Y/n]" res
+read -p "are you sure, this will overwrite prexisting files [Y/n] " res
 case $res in
   [Yy]) continue;;
   *)    exit 1;;
@@ -58,7 +58,7 @@ do
     echo "removing prexisting file '$dest'..."
     rm $dest
     echo "linking '$src' => '$dest'..."
-    cp -l $src $dest
+    ln $src $dest
   # for a directory
   elif [[ -d $src ]]
   then
@@ -76,7 +76,7 @@ do
     for file in `ls $src`
     do
       echo -e "\tlinking '$file' => '$dest/$file'..."
-      cp -l $src/$file $dest/$file
+      ln $src/$file $dest/$file
     done
   else
     echo "BAD !! '$dest' isn't recognized as a file or directory that exists"

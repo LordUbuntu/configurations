@@ -65,12 +65,16 @@ echo """##### DONE #####"""
 echo """
 
 ##### SETTING UP ZSH #####"""
+if [[ $SHELL == "/bin/zsh" ]]
+then
+  echo "zsh already installed and set as default shell, skipping..."
+fi
 if [[ -f `which zsh` ]]
 then
   echo "changing default shell for $(whoami) to zsh..."
   sudo chsh -s /bin/zsh $(whoami)
 else
-  echo """##### SKIPPING ZSH, NOT INSTALLED #####"""
+  echo "zsh not installed, skipping..."
 fi
 echo """##### DONE #####"""
 
@@ -80,14 +84,14 @@ echo """##### DONE #####"""
 
 echo """
 
-##### SETTING UP GIT / SSH #####"""
+##### SETTING UP SSH #####"""
 if [[ -f `which git` ]]
 then
-  if [[ $(git config user.email) == "" ]]
+  email="$(git config user.email)"
+  if [[ $email == "" ]]
   then
     echo "please set git user.email, skipping!"
   else
-    email="$(git config user.email)"
     if [[ ! -f "$HOME/.ssh/id_rsa" ]]
     then
       echo "git installed and email set, setting up ssh..."

@@ -16,7 +16,7 @@ source_files=(
 # file destinations
 destination_files=(
   $HOME/.config/alacritty/alacritty.yml
-  $HOME/.config/git/config
+  $HOME/.gitconfig
   $HOME/.config/nvim/init.vim
   $HOME/.config/nvim/UltiSnips
   $HOME/.config/sway/config

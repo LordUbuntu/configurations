@@ -4,7 +4,6 @@
 " Date: 2020-08-23
 
 
-" -- testing XXX
 
 
 
@@ -172,17 +171,9 @@ set shiftwidth=2 tabstop=2 softtabstop=2
 let mapleader = ';'
 
 " buffer switching
-nmap <leader><space><space> :bn<cr>
+" TODO eliminate this
 nmap <leader><space>1 <Plug>lightline#bufferline#go(1)
-nmap <leader><space>2 <Plug>lightline#bufferline#go(2)
-nmap <leader><space>3 <Plug>lightline#bufferline#go(3)
-nmap <leader><space>4 <Plug>lightline#bufferline#go(4)
-nmap <leader><space>5 <Plug>lightline#bufferline#go(5)
-nmap <leader><space>6 <Plug>lightline#bufferline#go(6)
-nmap <leader><space>7 <Plug>lightline#bufferline#go(7)
-nmap <leader><space>8 <Plug>lightline#bufferline#go(8)
-nmap <leader><space>9 <Plug>lightline#bufferline#go(9)
-nmap <leader><space>0 <Plug>lightline#bufferline#go(10)
+nmap <leader><space> :bn<CR>
 
 " konomi code habit breaker
 noremap <up> <nop>
@@ -198,8 +189,11 @@ inoremap <right> <nop>
 noremap ii <esc>
 inoremap ii <esc>
 
-" other mappings
-map <C-p> :Files<CR>
+" FZF navigation mappings
+nmap <C-p> :Files<CR>
+nmap <leader><space><space> :Buffers<CR>
+nmap <C-a> :Ag<CR>
+" tags?
 
 
 

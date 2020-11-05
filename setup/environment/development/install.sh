@@ -30,7 +30,7 @@ sudo dpkg -i hyperfine_1.10.0_amd64.deb
 # DISTRO SPECIFIC PROCEDURE #
 #############################
 
-# UBUNTU
+# UBUNTU BASED
 if [[ -f `which apt` ]]
 then
   # install packages
@@ -43,7 +43,7 @@ then
   ln -s /usr/bin/batcat $HOME/.local/bin/bat
 fi
 
-# MANJARO
+# ARCH BASED
 if [[ -f `which yay` ]]
 then
   # TODO check this works on manjaro

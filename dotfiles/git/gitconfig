@@ -1,16 +1,15 @@
 [user]
-email = therealjacoburger@gmail.com
-name = Jacobus Burger
-
+	email = therealjacoburger@gmail.com
+	name = Jacobus Burger
 [core]
-editor = nvim
-
+	autocrlf = input
+	editor = vim
+[merge]
+	tool = vimdiff
 [diff]
-tool = vimdiff
-
-[web]
-browser = google-chrome
-
-; will break current repos, make sure to uncomment in the future
+	tool = vimdiff
+	; ...
+; [web]
+;		browser = firefox
 ; [init]
-; defaultBranch = main
+;		defaultBranch = main ; or "core"

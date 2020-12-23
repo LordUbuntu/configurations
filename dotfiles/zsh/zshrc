@@ -4,14 +4,15 @@
 
 # common utility aliases
 alias note="vim `date +%F`.md" # used a ton for taking notes
-alias py='python3'
+alias py='bpython'
 alias python='python3'
 
 # niceitie aliases
 alias v='f -e $EDITOR'
 alias o='a -e $OPENER'
-alias fd='fd --color=always'
+alias fd='fd-find --color=always'
 alias bat='bat --color=always'
+alias emacs='emacs -nw'
 
 # standard aliases
 alias cp='cp -i'
@@ -23,6 +24,7 @@ alias lah='ls -la'
 alias grep='grep --color=yes'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias mkdir='mkdir -p'
 
 
 
@@ -37,6 +39,7 @@ SAVEHIST=200
 # - Behaviour
 setopt bang_hist hist_ignore_space hist_beep beep
 setopt share_history inc_append_history extended_history
+setopt interactive_comments # correct_all 
 # - Storage
 setopt hist_find_no_dups hist_ignore_all_dups
 setopt hist_fcntl_lock hist_reduce_blanks
@@ -54,7 +57,6 @@ setopt glob extended_glob
 setopt bad_pattern
 setopt bare_glob_qual brace_ccl glob_dots ksh_glob mark_dirs
 # - I/O
-# setopt correct_all interactive_comments
 bindkey -v
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
@@ -101,7 +103,7 @@ function vcs_show {
 }
 
 function preexec {
-  timer=$(( $(date +%s%0N) / 1000000 )) # start timer
+  timer=$(( $(date +%s%0N) / 1000000000 )) # start timer
 }
 
 function precmd {
@@ -110,19 +112,19 @@ function precmd {
   # calculate and show how much time has passed since last command execution
   if [ $timer ]
   then
-    now=$(( $(date +%s%0N) / 1000000 ))
+    now=$(( $(date +%s%0N) / 1000000000 ))
     elapsed=$(( $now - $timer ))  # elapsed time in milliseconds
     delta=$(print -P "\U0394")
 
     threshold=3   # seconds to display elapsed time
-    if [[ $(( $elapsed / 1000 )) -gt $threshold ]]
+    if [[ $(( $elapsed )) -gt $threshold ]]
     then
-      export RPROMPT="%F{cyan}$delta${elapsed}ms%f "
+      export RPROMPT="%F{cyan}$delta${elapsed}s%f "
     else
       export RPROMPT=""
     fi
-    unset timer
   fi
+  unset timer
 }
 
 compinit
@@ -151,7 +153,7 @@ level='%(2L|%L|)'
 Functy='$userhost $elem ${vcs_info_msg_0_}
 $errcode$state%f= '
 Fancy="$userhost $elem %1~, $errcode$state%f = "
-Minimal='$errcode$state%f = '
+Functional='$errcode$state%f = '
 
 PROMPT=$Functy
 
@@ -172,10 +174,7 @@ source ~/.fzf.zsh
 #########
 
 # set environment variables
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-  PATH="$HOME/.cabal/bin:$HOME/.local/bin:$HOME/bin:$PATH"
-fi
+PATH="$PATH:$HOME/.cabal/bin:$HOME/.local/bin:$HOME/.emacs.d/bin:$HOME/bin"
 export PATH
 export LC_CTYPE="en_CA.UTF-8"
 export EDITOR="nvim"

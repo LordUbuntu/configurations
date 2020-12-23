@@ -170,6 +170,9 @@ set shiftwidth=2 tabstop=2 softtabstop=2
 " map leader key to ';'
 let mapleader = ';'
 
+" nmap <leader>wj <C-w>j
+" nmap <leader>wk <C-w>k
+
 " buffer switching
 " TODO eliminate this
 nmap <leader><space>1 <Plug>lightline#bufferline#go(1)

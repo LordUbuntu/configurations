@@ -159,16 +159,6 @@ PROMPT=$Functy
 
 
 
-############
-# PROGRAMS #
-############
-
-# Assumes fasd and fzf have been installed via development/install.sh
-eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
-source ~/.fzf.zsh
-
-
-
 #########
 #  ENV  #
 #########
@@ -186,4 +176,30 @@ then
   export FZF_DEFAULT_OPTS=""
   export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
 fi
-if [ -e /home/jaybee/.nix-profile/etc/profile.d/nix.sh ]; then . /home/jaybee/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+
+
+############
+# PROGRAMS #
+############
+
+# Assumes fasd and fzf have been installed via development/install.sh
+eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
+if ! [[ `which fzf` ]]
+then
+  echo "fzf not installed"
+  if ! [[ -f $HOME/.fzf.zsh ]]
+  then
+    echo ".fzf.zsh not found!"
+    read -p "commence git install? [Y/n] " res
+    case $res in
+      [Yy]) continue;;
+      *)    exit 1;;
+    esac
+    git clone --depth 1 https://github.com/junegunn/fzf.git
+    yes | ~/.fzf/install
+    source ~/.fzf.zsh
+  else
+    source ~/.fzf.zsh
+  fi
+fi

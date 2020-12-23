@@ -84,7 +84,7 @@ echo """##### DONE #####"""
 
 echo """
 
-##### SETTING UP SSH #####"""
+##### SETTING UP SSH FOR GIT #####"""
 if [[ -f `which git` ]]
 then
   email="$(git config user.email)"

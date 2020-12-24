@@ -25,7 +25,6 @@ let linters = {
 \}
 
 " -- Setup environment if not already installed
-" TODO test that this script works on a new machine
 if empty(glob('~/.config/nvim/autoload/plug.vim')) " install vim-plug
   " install vim-plug and run it upon entering vim
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -41,7 +40,7 @@ endif
 for language in keys(fixers)
   for program in linters[language]
     if !executable(program)
-      echo program . " linter for " . language . " is not installed!"
+      echo language . " linter " . program . " not installed!"
     endif
   endfor
 endfor
@@ -49,7 +48,7 @@ endfor
 for language in keys(fixers)
   for program in fixers[language]
     if !executable(program)
-      echo program . " formatter for " . language . " is not installed!"
+      echo language . " formatter " . program . " not installed!"
     endif
   endfor
 endfor
@@ -58,7 +57,7 @@ for lang in keys(linters)
   let file = $HOME
   let file .= '/' . snippets_dir . '/' . lang . snippets_ext
   if empty(glob(file))
-    echo "snippet for for " . lang . " not found in snippets directory"
+    echo "snippet for " . lang . " not found in snippets directory!"
   endif
 endfor
 

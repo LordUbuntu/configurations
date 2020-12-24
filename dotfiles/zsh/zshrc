@@ -6,6 +6,7 @@
 alias note="vim `date +%F`.md" # used a ton for taking notes
 alias py='bpython'
 alias python='python3'
+alias pip='pip3'
 
 # niceitie aliases
 alias v='f -e $EDITOR'
@@ -184,12 +185,11 @@ fi
 ############
 
 # Assumes fasd and fzf have been installed via development/install.sh
-eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
-if ! [[ `which fzf` ]]
+if ! [[ -f `which fzf` ]]
 then
-  echo "fzf not installed"
   if ! [[ -f $HOME/.fzf.zsh ]]
   then
+    echo "fzf not installed"
     echo ".fzf.zsh not found!"
     read -p "commence git install? [Y/n] " res
     case $res in
@@ -197,9 +197,11 @@ then
       *)    exit 1;;
     esac
     git clone --depth 1 https://github.com/junegunn/fzf.git
-    yes | ~/.fzf/install
-    source ~/.fzf.zsh
+    yes | $HOME/.fzf/install
+    source $HOME/.fzf.zsh
   else
-    source ~/.fzf.zsh
+    source $HOME/.fzf.zsh
   fi
 fi
+
+eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"

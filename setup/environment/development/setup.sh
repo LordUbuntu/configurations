@@ -1,66 +1,31 @@
 #!/usr/bin/env bash
 # This script runs setup commands and automatically configures the environment for my programming/development environment
+# TODO this needs to be reworked to be distro agnostic
+# idea: this script will redirect to and run a setup script for a particular distro, rather than try to juggle for all of them
 
 
-
-
-
-echo """
-
-######################################
-# SETTING UP DEVELOPMENT ENVIRONMENT #
-######################################
-
-"""
-
-
-
-
-
-echo """
-
-##### SETTING UP PYTHON #####"""
-packages="neovim black flake8"
-if [[ -f `which pip3` ]]
+# distro particular dev setup
+pushd .
+if [[ -f `which apt` ]]
 then
-  echo -e "\tupdating pip3 to latest version..."
-  pip3 install --upgrade pip
-  if [[ $packages != "" ]]
-  then
-    echo -e "\tinstalling packages for python..."
-    pip3 install $packages
-  fi
-else
-  echo """##### SKIPPING PYTHON, CABAL NOT INSTALLED #####"""
-fi
-echo """##### DONE #####"""
-
-
-
-
-
-echo """
-
-##### SETTING UP HASKELL #####"""
-packages=""
-if [[ -f `which cabal` ]]
+  cd ../../system/popos/
+  ./setup.sh
+elif [[ -f `which yay` ]]
 then
-  echo -e "\tupdating cabal to latest version..."
-  cabal update
-  cabal install cabal-install
-  if [[ $packages != "" ]]
-  then
-    echo -e "\tinstalling packages for haskell..."
-    cabal install $packages
-  fi
-else
-  echo """##### SKIPPING HASKELL, CABAL NOT INSTALLED #####"""
+  cd ../../system/manjaro/
+  ./setup.sh
+elif [[ -f `which nix` ]]
+then
+  cd ../../system/nixos/
+  ./setup.sh
 fi
-echo """##### DONE #####"""
+popd
 
 
 
 
+
+# distro agnostic dev setup
 
 echo """
 
@@ -68,8 +33,7 @@ echo """
 if [[ $SHELL == "/bin/zsh" ]]
 then
   echo "zsh already installed and set as default shell, skipping..."
-fi
-if [[ -f `which zsh` ]]
+elif [[ -f `which zsh` ]] && [[ $SHELL == "/bin/zsh" ]]
 then
   echo "changing default shell for $(whoami) to zsh..."
   sudo chsh -s /bin/zsh $(whoami)

@@ -23,11 +23,11 @@ cd $HOME
 
 
 # PACKAGES
-tools="git "
 shell="zsh fzf "
-python="python3 python3-pip bpython "
+tools="git "
+python="bpython "
 haskell="cabal-install "
-langs=$python$haskell
+
 
 
 # UBUNTU BASED SETUP
@@ -35,9 +35,11 @@ if [[ -f `which apt` ]]
 then
   # distro specific overrides
   shell+="fd-find bat silversearcher-ag"
+  python+="python3 python3-pip"
 
   # native install packages
-  sudo apt install $shell $python $haskell $tools
+  sudo apt install $shell $tools \
+      $python $haskell 
 
   # janky install packages
   #   hyperfine (tui benchmarking program)
@@ -45,6 +47,10 @@ then
   wget https://github.com/sharkdp/hyperfine/releases/download/v1.11.0/hyperfine_1.11.0_amd64.deb
   sudo dpkg -i hyperfine_1.11.0_amd64.deb
   cd $HOME
+
+  # remove undesirable packages
+  sudo apt remove 'libreoffice-*' gnome-terminal
+  sudo apt autoremove
 fi
 
 
@@ -54,7 +60,9 @@ then
   # distro specific overrides
   tools+="hyperfine "
   shell+="fd bat the_silver_searcher "
+  python+="python python-pip "
 
   # native install packages
-  yay -S $shell $langs $tools
+  yay -S $shell $tools \
+      $python $haskell
 fi

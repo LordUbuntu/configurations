@@ -39,7 +39,7 @@ then
 
   # native install packages
   sudo apt install $shell $tools \
-      $python $haskell 
+      $python $haskell 'syncthing'
 
   # janky install packages
   #   hyperfine (tui benchmarking program)
@@ -49,7 +49,7 @@ then
   cd $HOME
 
   # remove undesirable packages
-  sudo apt remove 'libreoffice-*' gnome-terminal
+  sudo apt remove 'libreoffice-*'
   sudo apt autoremove
 fi
 

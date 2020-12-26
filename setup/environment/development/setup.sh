@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-# This script runs setup commands and automatically configures the environment for my programming/development environment
-# TODO this needs to be reworked to be distro agnostic
-# idea: this script will redirect to and run a setup script for a particular distro, rather than try to juggle for all of them
+# This script runs setup commands and automatically configures the environment for my programming/development environment based on what distro is currently running
 
 
-# distro particular dev setup
+
+
+
+#########################
+# DISTRO SPECIFIC SETUP #
+#########################
+
 pushd .
 if [[ -f `which apt` ]]
 then
@@ -25,32 +29,36 @@ popd
 
 
 
-# distro agnostic dev setup
+#########################
+# DISTRO AGNOSTIC SETUP #
+#########################
 
-echo """
+if [[ -f `which zsh` ]]
+then
+  echo """
 
-##### SETTING UP ZSH #####"""
-if [[ $SHELL == "/bin/zsh" ]]
-then
-  echo "zsh already installed and set as default shell, skipping..."
-elif [[ -f `which zsh` ]] && [[ $SHELL == "/bin/zsh" ]]
-then
-  echo "changing default shell for $(whoami) to zsh..."
-  sudo chsh -s /bin/zsh $(whoami)
+  ##### SETTING UP ZSH #####"""
+  if [[ $SHELL == "/bin/zsh" ]]
+  then
+    echo "zsh already installed and set as default shell, skipping..."
+  else
+    echo "changing default shell for $(whoami) to zsh..."
+    sudo chsh -s /bin/zsh $(whoami)
+  fi
+  echo """##### DONE #####"""
 else
-  echo "zsh not installed, skipping..."
+  echo """##### SKIPPING ZSH, NOT INSTALLED #####"""
 fi
-echo """##### DONE #####"""
 
 
 
 
 
-echo """
-
-##### SETTING UP SSH FOR GIT #####"""
 if [[ -f `which git` ]]
 then
+  echo """
+
+  ##### SETTING UP SSH FOR GIT #####"""
   email="$(git config user.email)"
   if [[ $email == "" ]]
   then
@@ -68,7 +76,7 @@ then
   fi
   # start an ssh agent if it doesn't exist
   ps -p $SSH_AGENT_PID > /dev/null || eval "$(ssh-agent -s)"
+  echo """##### DONE #####"""
 else
   echo """##### SKIPPING GIT, NOT INSTALLED #####"""
 fi
-echo """##### DONE #####"""

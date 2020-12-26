@@ -25,6 +25,7 @@ cd $HOME
 # PACKAGES
 shell="zsh fzf "
 tools="git "
+media="mpv ffmpeg "
 python="bpython "
 haskell="cabal-install "
 
@@ -36,10 +37,11 @@ then
   # distro specific overrides
   shell+="fd-find bat silversearcher-ag"
   python+="python3 python3-pip"
+  pop="syncthing "
 
   # native install packages
-  sudo apt install $shell $tools \
-      $python $haskell 'syncthing'
+  sudo apt install $shell $tools $media $pop \
+      $python $haskell
 
   # janky install packages
   #   hyperfine (tui benchmarking program)

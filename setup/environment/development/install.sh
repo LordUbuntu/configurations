@@ -24,11 +24,10 @@ cd $HOME
 
 # PACKAGES
 shell="zsh fzf "
-tools="git "
+tools="git neovim "
 media="mpv ffmpeg "
 python="bpython "
 haskell="cabal-install "
-
 
 
 # UBUNTU BASED SETUP
@@ -65,6 +64,6 @@ then
   python+="python python-pip "
 
   # native install packages
-  yay -S $shell $tools \
+  yay -S $shell $tools $media \
       $python $haskell
 fi

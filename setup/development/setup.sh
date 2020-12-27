@@ -3,7 +3,7 @@
 
 
 # install common dev packages
-source package/common_install.sh
+source package/install.sh
 
 
 ###########################

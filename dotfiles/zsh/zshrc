@@ -185,23 +185,6 @@ fi
 ############
 
 # Assumes fasd and fzf have been installed via development/install.sh
-if ! [[ -f `which fzf` ]]
-then
-  if ! [[ -f $HOME/.fzf.zsh ]]
-  then
-    echo "fzf not installed"
-    echo ".fzf.zsh not found!"
-    read -p "commence git install? [Y/n] " res
-    case $res in
-      [Yy]) continue;;
-      *)    exit 1;;
-    esac
-    git clone --depth 1 https://github.com/junegunn/fzf.git
-    yes | $HOME/.fzf/install
-    source $HOME/.fzf.zsh
-  else
-    source $HOME/.fzf.zsh
-  fi
-fi
-
 eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
+
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh

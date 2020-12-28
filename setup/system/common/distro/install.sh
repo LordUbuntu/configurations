@@ -6,6 +6,9 @@ packages=(
   mpv
   ffmpeg
   youtube-dl
+  mpd
+  mpc
+  ncmpcpp
 )
 
 pushd . > /dev/null

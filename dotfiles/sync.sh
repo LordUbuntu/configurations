@@ -6,21 +6,27 @@
 
 # file sources
 source_files=(
-  alacritty/alacritty.yml
+  zsh/zshrc
   git/gitconfig
+  alacritty/alacritty.yml
   nvim/init.vim
   nvim/UltiSnips
   sway/config
-  zsh/zshrc
+  mpd/mpd.conf
+  ncmpcpp/config
+  ncmpcpp/bindings
 )
 # file destinations
 destination_files=(
-  $HOME/.config/alacritty/alacritty.yml
+  $HOME/.zshrc
   $HOME/.gitconfig
+  $HOME/.config/alacritty/alacritty.yml
   $HOME/.config/nvim/init.vim
   $HOME/.config/nvim/UltiSnips
   $HOME/.config/sway/config
-  $HOME/.zshrc
+  $HOME/.config/mpd/mpd.conf
+  $HOME/.config/ncmpcpp/config
+  $HOME/.config/ncmpcpp/bindings
 )
 
 read -p "are you sure, this will overwrite prexisting files [Y/n] " res

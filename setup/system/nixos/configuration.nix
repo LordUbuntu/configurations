@@ -26,7 +26,7 @@ in
     gc = {
       automatic = true; # collect garbage automatically
       dates = "daily";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 3d";
     };
   };
   nixpkgs.config = {

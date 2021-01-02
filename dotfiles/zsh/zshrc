@@ -75,7 +75,7 @@ setopt prompt_subst
 function merge { vimdiff $1 $2 }
 
 # abbreviates directory fish style
-function shrink {
+function _shrink_path {
   local paths=(${PWD/$HOME/\~}) 'cur_dir'
   paths=(${(s:/:)paths})
 
@@ -91,14 +91,14 @@ function shrink {
 }
 
 # updates vcs info status
-function vcs_show {
+function _vcs_show {
   setopt prompt_subst
   autoload -Uz vcs_info
   zstyle ':vcs_info:*' check-for-changes true
   zstyle ':vcs_info:*' stagedstr '+'
   zstyle ':vcs_info:*' unstagedstr '~'
   zstyle ':vcs_info:*' patch-format "%10>..>%p%<< (%n applied)"
-  zstyle ':vcs_info:*' nvcsformats "%F{yellow}%B$(shrink)%b%f"
+  zstyle ':vcs_info:*' nvcsformats "%F{yellow}%B$(_shrink_path)%b%f"
   zstyle ':vcs_info:*' formats '%F{yellow}%B%r/%S%%b%f %F{cyan}%b%f %F{green}%c%f %F{yellow}%u%f'
   vcs_info
 }
@@ -108,7 +108,7 @@ function preexec {
 }
 
 function precmd {
-  vcs_show # display directory/git info
+  _vcs_show # display directory/git info
 
   # calculate and show how much time has passed since last command execution
   if [ $timer ]
@@ -170,6 +170,7 @@ export PATH
 export LC_CTYPE="en_CA.UTF-8"
 export EDITOR="nvim"
 export OPENER="xdg-open"
+export MPD_HOST=$HOME/.config/mpd/socket
 
 if [[ -f `which fzf` ]]
 then
@@ -184,7 +185,5 @@ fi
 # PROGRAMS #
 ############
 
-# Assumes fasd and fzf have been installed via development/install.sh
 eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
-
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh

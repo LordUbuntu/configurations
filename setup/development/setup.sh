@@ -60,7 +60,7 @@ then
     echo "zsh already installed and set as default shell, skipping..."
   else
     echo "changing default shell for $(whoami) to zsh..."
-    sudo chsh -s /bin/zsh $(whoami)
+    sudo chsh -s $(which zsh) $(whoami)
   fi
   echo """##### DONE #####"""
 else

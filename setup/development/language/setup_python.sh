@@ -1,5 +1,10 @@
 # setup script for python programming language
-packages="neovim black flake8"
+packages="
+  neovim
+  black
+  flake8
+  buku
+"
 
 echo """
 

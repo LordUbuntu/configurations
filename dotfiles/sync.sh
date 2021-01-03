@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # exclude files by commenting them out
+# possibly replace this with a python script instead, since the datatypes
+#   are far better
 
 
 

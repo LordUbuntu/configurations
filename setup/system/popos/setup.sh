@@ -27,4 +27,6 @@ echo """
 
 """
 # setup common system environment
-source ../common/setup.sh
+pushd ../common >/dev/null
+source setup.sh
+popd >/dev/null

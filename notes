@@ -1,0 +1,28 @@
+the directory system and runtime on bootstrap follows in the following order.
+
+bootstrap.sh
+|-> system setup script (for current distro)
+|   \-> common setup script
+|       \-> common install script
+|           |-> distro agnostic install script
+|           \-> distro specific install script (uses common_packages)
+|-> development environment setup script (uses development_*)
+|   |-> package install script
+|   |   \-> distro specific package install script
+|   |       \-> distro specific install script (appends common_packages)
+|   |-> setup language script (installs language-specific packages)
+|   \-> setup development environment
+\-> dotfile sync script
+
+which script-wise is:
+bootstrap.sh
+setup/system/${current distro}/setup.sh
+  setup/system/common/setup.sh
+    setup/system/common/distro/install.sh
+      setup/system/common/distro/agnostic_install.sh
+      setup/system/common/distro/${current distro}_install.sh
+setup/system/common/development/setup.sh
+  setup/system/common/development/package/install.sh
+    setup/system/common/development/package/${current distro}_install.sh
+  setup/system/common/development/language/${languages}_install.sh
+dotfiles/sync.sh

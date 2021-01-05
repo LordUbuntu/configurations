@@ -1,5 +1,5 @@
 font:
-  size: 13
+  size: 11
   normal:
     family: Hack
     style: Regular
@@ -12,8 +12,8 @@ font:
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
-    x: 2
-    y: 2
+    x: 1
+    y: 1
 
 
 schemes:
@@ -72,8 +72,8 @@ window:
     columns: 80
     lines: 26
   padding:
-    x: 3
-    y: 3
+    x: 0
+    y: 0
   dynamic_padding: true
   dynamic_title: true
   decorations: full
@@ -100,7 +100,7 @@ mouse_bindings:
 mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
-  hide_when_typing: false
+  hide_when_typing: true
   url:
     launcher:
       program: xdg-open
@@ -110,12 +110,12 @@ mouse:
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
-  save_to_clipboard: false
+  save_to_clipboard: true
 
 
 cursor:
   style: Block
-  unfocused_hollow: false
+  unfocused_hollow: true
 
 
 background_opacity: 1.0

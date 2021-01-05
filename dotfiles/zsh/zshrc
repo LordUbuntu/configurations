@@ -2,17 +2,21 @@
 #  ALIASES  #
 #############
 
+# abbreviation aliases
+alias mkexec='chmod +x'
+
 # common utility aliases
 alias note="vim `date +%F`.md" # used a ton for taking notes
 alias py='bpython'
-alias python='python3'
-alias pip='pip3'
+[[ `command -v apt` ]] && alias python='python3'
+[[ `command -v apt` ]] && alias pip='pip3'
 
 # niceitie aliases
 alias v='f -e $EDITOR'
 alias o='a -e $OPENER'
-alias fd='fd-find --color=always'
-alias bat='bat --color=always'
+[[ `command -v apt` ]] && alias fd='fd-find --color=always'
+[[ `command -v apt` ]] && alias bat='bat --color=always'
+alias tree='tree -CF'
 alias emacs='emacs -nw'
 
 # standard aliases
@@ -172,7 +176,7 @@ export EDITOR="nvim"
 export OPENER="xdg-open"
 export MPD_HOST=$HOME/.config/mpd/socket
 
-if [[ -f `which fzf` ]]
+if [[ `command -v fzf` ]]
 then
   export FZF_COMPLETION_TRIGGER='**'
   export FZF_DEFAULT_OPTS=""

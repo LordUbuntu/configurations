@@ -13,6 +13,7 @@ common_packages=(
   alacritty
   httpie
   exa
+  bcal
   nnn
   cmatrix
   fd                    # fd-find on ubuntu-based systems

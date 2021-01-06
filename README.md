@@ -19,4 +19,17 @@ Simply run `bootstrap.sh` and the scripts will source and run the relevant bits 
 
 How It Works
 ==
-<!-- TODO: write out notes in here with nice tree and other pretty prints -->
+The entire system consists of scripts sourcing bits of other scripts depending on what programs and what distro are installed. Script-wise the bootstrap process sources and runs bash scripts in this order:
+```
+bootstrap.sh
+setup/system/${current distro}/setup.sh
+  setup/system/common/setup.sh
+    setup/system/common/distro/install.sh
+      setup/system/common/distro/agnostic_install.sh
+      setup/system/common/distro/${current distro}_install.sh
+setup/system/common/development/setup.sh
+  setup/system/common/development/package/install.sh
+    setup/system/common/development/package/${current distro}_install.sh
+  setup/system/common/development/language/${languages}_install.sh
+dotfiles/sync.sh
+```

@@ -33,7 +33,7 @@ development_packages=(
   zsh
   git
   ssh
-  nvim
+  neovim
   emacs
   micro
   universal-ctags

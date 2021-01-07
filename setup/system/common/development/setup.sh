@@ -135,13 +135,12 @@ if [[ `command -v emacs` ]]
 then
   if [[ `command -v doom` ]]
   then
-    read -p "update DOOM emacs? [Y/n] " res
+    read -p "upgrade DOOM emacs? [Y/n] " res
     case $res in
       [Yy]) 
         echo """
-##### SETTING UP DOOM FOR EMACS #####"""
-        git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
-        ~/.emacs.d/bin/doom install
+##### UPDATING DOOM #####"""
+        `command -v doom` upgrade
         echo """##### DONE #####
         """
         ;;

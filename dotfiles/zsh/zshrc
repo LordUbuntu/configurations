@@ -7,17 +7,16 @@ alias mkexec='chmod +x'
 alias py='bpython'
 
 # common utility aliases
-alias note="vim `date +%F`.md" # used a ton for taking notes
-[[ `command -v apt` ]] && alias python='python3'
-[[ `command -v apt` ]] && alias pip='pip3'
-
-# niceitie aliases
 alias v='f -e $EDITOR'
 alias o='a -e $OPENER'
-[[ `command -v apt` ]] && alias fd='fd-find --color=always'
-[[ `command -v apt` ]] && alias bat='bat --color=always'
-alias tree='tree -CF' # or exa -T
-alias emacs='emacs -nw'
+alias emacs='emacs &; disown'
+alias note="vim `date +%F`.md" # used a ton for taking notes
+
+# niceitie aliases
+[[ `command -v apt` ]] && alias python='python3'
+[[ `command -v apt` ]] && alias pip='pip3'
+[[ `command -v apt` ]] && alias fd='fdfind --color=always'
+[[ `command -v apt` ]] && alias bat='batcat --color=always'
 
 # standard aliases
 alias rm='rm -I'                  # or possibly rm -Irf
@@ -31,6 +30,8 @@ alias grep='grep --color=yes'     # or ripgrep (binary name is rg)
 alias fgrep='fgrep --color=auto'  # ...
 alias egrep='egrep --color=auto'  # ...
 alias mkdir='mkdir -p'
+alias tree='tree -CF' # or exa -T
+# check out nnn -de
 
 
 
@@ -158,8 +159,9 @@ level='%(2L|%L|)'
 # PROMPTS
 Functy='$userhost $elem ${vcs_info_msg_0_}
 $errcode$state%f= '
-Fancy="$userhost $elem %1~, $errcode$state%f = "
 Functional='$errcode$state%f = '
+Verbose='$userhost in ${vcs_info_msg_0_}
+%(?||%F{red}%?) > %f'
 
 PROMPT=$Functy
 
@@ -181,7 +183,7 @@ if [[ `command -v fzf` ]]
 then
   export FZF_COMPLETION_TRIGGER='**'
   export FZF_DEFAULT_OPTS=""
-  export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+  export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --follow --exclude .git"
 fi
 
 

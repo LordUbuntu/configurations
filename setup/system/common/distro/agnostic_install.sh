@@ -21,7 +21,7 @@ if [[ ! `command -v fzf` ]]
 then
   echo """##### INSTALLING FZF #####"""
   pushd $HOME >/dev/null
-  git clone --depth 1 https://github.com/junegunn/fzf.git
+  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
   yes | $HOME/.fzf/install
   popd >/dev/null
   echo """##### DONE #####"""

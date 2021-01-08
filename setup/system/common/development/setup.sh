@@ -133,24 +133,8 @@ fi
 # setup doom
 if [[ `command -v emacs` ]]
 then
-  if [[ `command -v doom` ]]
+  if [[ ! `command -v doom` ]]
   then
-    read -p "upgrade DOOM emacs? [Y/n] " res
-    case $res in
-      [Yy]) 
-        echo """
-##### UPDATING DOOM #####"""
-        `command -v doom` upgrade
-        echo """##### DONE #####
-        """
-        ;;
-      *)
-        echo """
-##### SKIPPING DOOM, ALREADY INSTALLED #####
-"""
-        ;;
-    esac
-  else
     echo """
 ##### SETTING UP DOOM FOR EMACS #####"""
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d

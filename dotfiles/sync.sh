@@ -15,6 +15,7 @@ programs=(
   nvim
   sway
   zathura
+  doom
 )
 # file sources
 source_files=(
@@ -25,6 +26,7 @@ source_files=(
   nvim/UltiSnips
   sway/config
   zathura/zathurarc
+  emacs/doom
 )
 # file destinations
 destination_files=(
@@ -35,6 +37,7 @@ destination_files=(
   $HOME/.config/nvim/UltiSnips
   $HOME/.config/sway/config
   $HOME/.config/zathura/zathurarc
+  $HOME/.config/doom
 )
 
 

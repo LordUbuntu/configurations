@@ -193,8 +193,8 @@ inoremap ii <esc>
 
 " FZF navigation mappings
 nmap <C-p> :Files<CR>
+nmap <C-a> :Rg<CR>
 nmap <leader><space><space> :Buffers<CR>
-nmap <C-a> :Ag<CR>
 " tags?
 
 

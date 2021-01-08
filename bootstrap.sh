@@ -35,6 +35,9 @@ development_packages=(
   ssh
   neovim
   emacs
+    shellcheck
+    pandoc
+    sbcl # consider getting a lisp setup running
   micro
   universal-ctags
 

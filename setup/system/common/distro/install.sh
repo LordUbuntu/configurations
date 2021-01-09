@@ -17,9 +17,7 @@ echo """
 #######################################
 
 """
-pushd . >/dev/null
-source distro/agnostic_install.sh
-popd >/dev/null
+source_dir distro/agnostic_install.sh
 
 
 # distro specific setup
@@ -30,12 +28,10 @@ echo """
 #######################################
 
 """
-pushd . >/dev/null
-if [[ `command -v apt` ]]
+if [[ $(command -v apt) ]]
 then
-  source distro/popos_install.sh
-elif [[ `command -v yay` ]]
+  source_dir distro/popos_install.sh
+elif [[ $(command -v yay) ]]
 then
-  source distro/manjaro_install.sh
+  source_dir distro/manjaro_install.sh
 fi
-popd >/dev/null

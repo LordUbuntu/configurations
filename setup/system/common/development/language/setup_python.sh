@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 # setup script for python programming language
 packages="
   neovim
@@ -5,11 +6,10 @@ packages="
   flake8
   buku
 "
-[[ `command -v apt` ]] && pip="pip3" || pip="pip"
+[[ $(command -v apt) ]] && pip="pip3" || pip="pip"
 
-echo """
-##### SETTING UP PYTHON #####"""
-if [[ `command -v $pip` ]]
+echo -e "\n##### SETTING UP PYTHON #####"
+if [[ $(command -v $pip) ]]
 then
   echo "updating pip to latest version..."
   $pip install --upgrade pip
@@ -19,9 +19,6 @@ then
     $pip install $packages
   fi
 else
-  echo """
-##### SKIPPING PYTHON, PIP NOT INSTALLED #####
-  """
+  echo -e "\n##### SKIPPING PYTHON, PIP NOT INSTALLED #####\n"
 fi
-echo """##### DONE #####
-"""
+echo -e "##### DONE #####\n"

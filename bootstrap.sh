@@ -1,7 +1,51 @@
 #!/usr/bin/bash
 # this file will bootstrap configurations for the current running system
 
-common_packages=(
+
+
+
+# function definitions
+
+# temporarily change directory and source script file
+function source_dir {
+  local path=$1
+  local directory
+  local file
+
+  # handle errors
+  if [[ ! -f $path ]]
+  then
+    # print err msg
+    echo "ERR: could not find '$path'"
+    echo "does it exist?"
+    exit 1
+  fi
+
+  # get parts of file path
+  directory=$(dirname "$path")
+  file=$(basename "$path")
+
+  # temporarily change to file and source it
+  pushd "$directory" >/dev/null || exit
+  source $file
+  popd >/dev/null || exit
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# package definitions
+export common_packages=(
   mpv
   ffmpeg
   youtube-dl
@@ -27,17 +71,18 @@ common_packages=(
   bpython
   # ssh       # openssh server
   # endlessh  # torture hackers who try to bruteforce into my servers with ssh
+  pandoc
+  # texlive # figure out latex packages
 )
-development_packages=(
+export development_packages=(
   # tools
   zsh
   git
   ssh
   neovim
   emacs
-    shellcheck
-    pandoc
-    sbcl # consider getting a lisp setup running
+    # shellcheck
+    # sbcl # consider getting a lisp setup running
   micro
   universal-ctags
 
@@ -46,42 +91,36 @@ development_packages=(
   python-pip
   cabal-install
 )
-development_languages=(
+export development_languages=(
+  # shell # todo
+  # clang # todo
+  # lisp # common lisp # todo
   python
   haskell
 )
 
 
 # run setup for current system (includes common system setup)
-pushd . >/dev/null
-if [[ `command -v apt` ]]
+if [[ $(command -v apt) ]]
 then
-  cd setup/system/popos
-  source setup.sh
-elif [[ `command -v yay` ]]
+  source_dir setup/system/popos/setup.sh
+elif [[ $(command -v yay) ]]
 then
-  cd setup/system/manjaro
-  source setup.sh
-elif [[ `command -v nix` ]]
+  source_dir setup/system/manjaro/setup.sh
+elif [[ $(command -v nix) ]]
 then
-  cd setup/system/nixos
-  source setup.sh
+  source_dir setup/system/manjaro/setup.sh
 fi
-popd >/dev/null
 
 
 # continue if not running nix
-if [[ ! `command -v nix` ]]
+if [[ ! $(command -v nix) ]]
 then
   # run setup for development environment
-  pushd setup/system/common/development >/dev/null
-  source setup.sh
-  popd >/dev/null
+  source_dir setup/system/common/development/setup.sh
 
   # sync relevant dotfiles to system
-  pushd dotfiles >/dev/null
-  source sync.sh
-  popd >/dev/null
+  source_dir dotfiles/sync.sh
 else
   echo "skipping the rest, nix already has everything covered"
 fi

@@ -14,10 +14,10 @@ echo """
 
 """
 
-if [[ `command -v apt` ]]
+if [[ $(command -v apt) ]]
 then
   source popos_install.sh
-elif [[ `command -v yay` ]]
+elif [[ $(command -v yay) ]]
 then
   source manjaro_install.sh
 fi

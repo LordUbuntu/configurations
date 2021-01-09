@@ -31,7 +31,7 @@ do
   echo $tool
 done
 
-read -p "install niceities [Y/n] " ans
+read -rp "install niceities [Y/n] " ans
 if [[ $ans == "Y" ]] || [[ $ans == "y" ]]
 then
   sudo apt install $packages

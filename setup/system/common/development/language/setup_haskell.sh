@@ -1,9 +1,9 @@
+#!/usr/bin/bash
 # haskell language setup script
 packages="hlint"
 
-echo """
-##### SETTING UP HASKELL #####"""
-if [[ `command -v cabal` ]]
+echo -e "\n##### SETTING UP HASKELL #####"
+if [[ $(command -v cabal) ]]
 then
   echo "updating cabal to latest version..."
   cabal update
@@ -18,5 +18,4 @@ else
 ##### SKIPPING HASKELL, CABAL NOT INSTALLED #####
   """
 fi
-echo """##### DONE #####
-"""
+echo -e "##### DONE #####\n"

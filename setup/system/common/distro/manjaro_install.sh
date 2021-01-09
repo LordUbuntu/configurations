@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # common install for arch based systems
 pkgs=""
-for pkg in ${common_packages[@]}
+for pkg in "${common_packages[@]}"
 do
   # exceptions are listed in here
   case $pkg in
@@ -16,5 +16,5 @@ done
 
 # install common packages
 echo "packages collected, installing..."
-echo $pkgs
+echo "$pkgs"
 yay -S $pkgs

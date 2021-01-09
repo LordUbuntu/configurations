@@ -3,7 +3,7 @@
 
 # collect the correct packages for ubuntu-based systems and install them
 pkgs=""
-for pkg in ${common_packages[@]}
+for pkg in "${common_packages[@]}"
 do
   # substitute names for certain packages
   case $pkg in
@@ -29,6 +29,6 @@ do
 done
 
 # install common packages
-echo """packages collected, installing..."""
-echo $pkgs
+echo "packages collected, installing..."
+echo "$pkgs"
 sudo apt install $pkgs

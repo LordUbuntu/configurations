@@ -127,3 +127,5 @@ echo """
 ########
 
 """
+
+echo "remember to run sync script in Sync"

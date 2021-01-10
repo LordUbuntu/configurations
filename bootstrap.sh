@@ -4,7 +4,9 @@
 
 
 
-# function definitions
+########################
+# FUNCTION DEFINITIONS #
+########################
 
 # temporarily change directory and source script file
 function source_dir {
@@ -42,11 +44,15 @@ function source_dir {
 
 
 
+#######################
+# PACKAGE DEFINITIONS #
+#######################
 
-
-# package definitions
+# common user packages
 export common_packages=(
   mpv
+  cmus # better than mpd for my usecase
+  picard # musicbrainz music tagging
   ffmpeg
   youtube-dl
   zathura*
@@ -62,7 +68,7 @@ export common_packages=(
   cmatrix
   fd                    # fd-find on ubuntu-based systems
   bat
-  the_silver_searcher   # silversearcher-ag on ubuntu-based systems
+  the_silver_searcher
   ripgrep
   fzf
   fasd
@@ -72,31 +78,36 @@ export common_packages=(
   # ssh       # openssh server
   # endlessh  # torture hackers who try to bruteforce into my servers with ssh
   pandoc
-  # texlive # figure out latex packages
+  texlive texlive-latex-extra
 )
+# common development packages
 export development_packages=(
   # tools
   zsh
   git
   ssh
+  universal-ctags
+  ccls
+  shellcheck
+
+  # editors
   neovim
   emacs
-    # shellcheck
-    # sbcl # consider getting a lisp setup running
   micro
-  universal-ctags
 
   # languages
   python
   python-pip
   cabal-install
+  sbcl
+  gcc
+  g++
 )
+# language configs
 export development_languages=(
-  # shell # todo
-  # clang # todo
-  # lisp # common lisp # todo
   python
   haskell
+  lisp
 )
 
 

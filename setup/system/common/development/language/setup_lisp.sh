@@ -11,7 +11,10 @@ then
     pushd . >/dev/null || exit
     cd "$HOME" || exit
     curl -O https://beta.quicklisp.org/quicklisp.lisp quicklisp.lisp
-    sbcl --load quicklisp.lisp --eval "(quicklisp-quickstart:install)"
+    sbcl --load quicklisp.lisp \
+        --eval "(quicklisp-quickstart:install)" \
+        --eval "(ql:add-to-init-file)" \
+        --eval "(quit)"
     rm quicklisp.lisp
     popd >/dev/null || exit
     echo "quicklisp installed for sbcl!"

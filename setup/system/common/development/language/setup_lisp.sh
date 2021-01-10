@@ -12,6 +12,7 @@ then
     cd "$HOME" || exit
     curl -O https://beta.quicklisp.org/quicklisp.lisp quicklisp.lisp
     sbcl --load quicklisp.lisp --eval "(quicklisp-quickstart:install)"
+    rm quicklisp.lisp
     popd >/dev/null || exit
     echo "quicklisp installed for sbcl!"
   else

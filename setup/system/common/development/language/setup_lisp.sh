@@ -8,15 +8,12 @@ then
   if [[ ! -f $HOME/quicklisp/setup.lisp ]]
   then
     echo "sbcl installed, installing quicklisp..."
-    pushd . >/dev/null || exit
-    cd "$HOME" || exit
-    curl -O https://beta.quicklisp.org/quicklisp.lisp quicklisp.lisp
-    sbcl --load quicklisp.lisp \
-        --eval "(quicklisp-quickstart:install)" \
-        --eval "(ql:add-to-init-file)" \
-        --eval "(quit)"
-    rm quicklisp.lisp
-    popd >/dev/null || exit
+    curl -o /tmp/ql.lisp http://beta.quicklisp.org/quicklisp.lisp
+    sbcl --no-sysinit --no-userinit --load /tmp/ql.lisp \
+        --eval '(quicklisp-quickstart:install :path "~/.quicklisp")' \
+        --eval '(ql:add-to-init-file)' \
+        --quit
+    rm /tmp/ql.lisp
     echo "quicklisp installed for sbcl!"
   else
     echo "quicklisp already installed!"

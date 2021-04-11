@@ -242,6 +242,7 @@ autocmd FileType cpp setlocal shiftwidth=8 tabstop=8 softtabstop=8
 
 
 
+let g:c_syntax_for_h = 1
 
 " +-----------------------+
 " | Plugin Configurations |

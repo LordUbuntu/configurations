@@ -11,5 +11,5 @@
 	; ...
 ; [web]
 ;		browser = firefox
-; [init]
-;		defaultBranch = main ; or "core"
+[init]
+	defaultBranch = main ; or "core"

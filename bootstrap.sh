@@ -78,7 +78,13 @@ export common_packages=(
   # ssh       # openssh server
   # endlessh  # torture hackers who try to bruteforce into my servers with ssh
   pandoc
-  texlive texlive-latex-extra
+  texlive
+    texlive-xetex
+    texlive-puglishers
+    texlive-latex-extra
+    texlive-lang-*
+    texlive-fonts-*
+
 )
 # common development packages
 export development_packages=(

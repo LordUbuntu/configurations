@@ -165,17 +165,20 @@ set shiftwidth=2 tabstop=2 softtabstop=2
 " +-----------------+
 " | CUSTOM MAPPINGS |
 " +-----------------+
+" map leader key to double semicolon
+let mapleader = ";;"
 
-" map leader key to ';'
-let mapleader = ';'
-
-" nmap <leader>wj <C-w>j
-" nmap <leader>wk <C-w>k
+" navigation
+nmap <leader>h <C-w>j
+nmap <leader>j <C-w>j
+nmap <leader>k <C-w>k
+nmap <leader>l <C-w>j
 
 " buffer switching
 " TODO eliminate this
-nmap <leader><space>1 <Plug>lightline#bufferline#go(1)
-nmap <leader><space> :bn<CR>
+nmap <leader>1 <Plug>lightline#bufferline#go(1)
+nmap <leader>n :bn<CR>
+nmap <leader>p :bp<CR>
 
 " konomi code habit breaker
 noremap <up> <nop>
@@ -188,13 +191,13 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 
 " esc key habit breaker
-noremap ii <esc>
-inoremap ii <esc>
+noremap \\ <esc>
+inoremap \\ <esc>
 
 " FZF navigation mappings
 nmap <C-p> :Files<CR>
 nmap <C-a> :Rg<CR>
-nmap <leader><space><space> :Buffers<CR>
+nmap <leader>b :Buffers<CR>
 " tags?
 
 
@@ -216,6 +219,7 @@ nmap <leader><space><space> :Buffers<CR>
 
 " --- Special rules
 autocmd FileType markdown setlocal spell
+autocmd FileType text setlocal spell
 autocmd FileType asm set filetype=nasm
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
 autocmd BufNewFile,BufRead *.h set filetype=c
@@ -288,7 +292,7 @@ let g:NERDCustomDelimiters = {
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:UltiSnipsExpandTrigger = '<leader><leader>'
+let g:UltiSnipsExpandTrigger = '<leader><tab>'
 let g:UltiSnipsSnippetsDir = $HOME . '/' . snippets_dir
 
 " -- Pear Tree

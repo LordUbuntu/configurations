@@ -8,8 +8,8 @@
 	tool = vimdiff
 [diff]
 	tool = vimdiff
-	; ...
-; [web]
-;		browser = firefox
+	;; ...
+[web]
+    browser = firefox
 [init]
-	defaultBranch = main ; or "core"
+	defaultBranch = main  ;; alternatives: "core", "nexus", "root", "base"

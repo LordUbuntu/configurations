@@ -91,6 +91,7 @@ export development_packages=(
   # tools
   zsh
   git
+  gitsome  # simply great github integration
   ssh
   universal-ctags
   ccls

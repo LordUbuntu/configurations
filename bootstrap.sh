@@ -51,14 +51,11 @@ function source_dir {
 # common user packages
 export common_packages=(
   mpv
-  cmus # better than mpd for my usecase
-  picard # musicbrainz music tagging
+  cmus
+  picard
   ffmpeg
   youtube-dl
   zathura*
-  # mpd
-  # mpc
-  # ncmpcpp
   hack-font # fonts-hack for ubuntu, (nerd fonts for most else?)
   alacritty
   httpie
@@ -87,11 +84,11 @@ export common_packages=(
 
 )
 # common development packages
+# TODO merge with larger package collection
 export development_packages=(
   # tools
   zsh
   git
-  gitsome  # simply great github integration
   ssh
   universal-ctags
   ccls
@@ -127,7 +124,7 @@ then
   source_dir setup/system/manjaro/setup.sh
 elif [[ $(command -v nix) ]]
 then
-  source_dir setup/system/manjaro/setup.sh
+  source_dir setup/system/nixos/setup.sh
 fi
 
 

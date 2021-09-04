@@ -6,7 +6,6 @@
 
 
 
-
 " +-------------+
 " | ENVIRONMENT |
 " +-------------+
@@ -89,7 +88,7 @@ Plug 'kalekundert/vim-coiled-snake', { 'for': 'python' } " py folding++
 Plug 'junegunn/limelight.vim', { 'for': 'markdown' }  " focus writing
 " -- Quality of Life
 Plug 'tmsvg/pear-tree' " smart pairs
-Plug 'ludovicchabant/vim-gutentags' " automatic ctags
+" Plug 'ludovicchabant/vim-gutentags' " automatic ctags
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter' " sets working directory to proj root
@@ -191,8 +190,8 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 
 " esc key habit breaker
-noremap \\ <esc>
-inoremap \\ <esc>
+noremap ii <esc>
+inoremap ii <esc>
 
 " FZF navigation mappings
 nmap <C-p> :Files<CR>

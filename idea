@@ -1,0 +1,17 @@
+maybe simplify this system by having a single top-level package list declaration that is then modified for naming exceptions on lower levels along with manual install scripts for different distros instead of all this agnostic/specific nonsense and nested file sourcings.
+
+
+
+
+
+
+
+
+bootstrap will still use source_dir function
+general flow will be: bootstrap, common agnostic installs (each marked by a case name so they can be selected), distro specific automatic installs, distro specific manual installs, then finally sync dotfiles to system.
+
+package names (automatic and manual) are listed in bootstrap in an array (or read from a seperate file into an array). If a name is not found it will be noted later on in the manual or automatic installs during their parsing phase as an error and the script will terminate prematurely.
+
+each distro will have it's own local setup, auto install, and manual install scripts along with any perticular other material. Nix being special it will contain just the nix configs, will move them over, run setup commands, build, and be done with.
+
+dotfiles sync as usual.

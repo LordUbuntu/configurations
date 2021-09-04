@@ -58,8 +58,8 @@ export common_packages=(
   zathura*
   hack-font # fonts-hack for ubuntu, (nerd fonts for most else?)
   alacritty
-  httpie
-  exa
+  # httpie
+  # exa
   bcal
   nnn
   cmatrix
@@ -70,7 +70,7 @@ export common_packages=(
   fzf
   fasd
   hyperfine             # must be done manually for ubuntu
-  syncthing             # will be brig in the future
+  syncthing             # TODO find an alternative maybe
   bpython
   # ssh       # openssh server
   # endlessh  # torture hackers who try to bruteforce into my servers with ssh
@@ -139,3 +139,93 @@ then
 else
   echo "skipping the rest, nix already has everything covered"
 fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+# a list of all the packages I use for reference
+all_packages=(
+  # tools
+  zsh
+  git
+  ssh
+  shellcheck
+
+  # editors
+  neovim
+  emacs
+  micro
+
+  # languages
+  python
+  python-pip
+  cabal-install
+  sbcl
+  gcc
+  g++
+
+  bpython
+  black
+  flake8
+  buku
+  quicklisp
+  asdf
+  hlint
+  cabal
+  hoogle
+  ccls
+  universal-ctags
+
+  # programs
+  mpv
+  cmus
+  picard
+  ffmpeg
+  youtube-dl
+  zathura*
+  alacritty
+  obs-studio
+  spotify
+  # some kind of input method engine for internationalization
+  # wps office or libre office
+  klavaro
+  dwarf-fortress
+
+  # tools
+  httpie
+  exa
+  bcal
+  nnn
+  cmatrix
+  fd
+  bat
+  the_silver_searcher
+  ripgrep
+  fzf
+  fasd
+  hyperfine
+  ssh
+  endlessh
+  syncthing             # TODO find an alternative maybe
+
+  # mark(up|down) languages
+  pandoc
+  texlive
+    texlive-xetex
+    texlive-puglishers
+    texlive-latex-extra
+    texlive-lang-*
+    texlive-fonts-*
+
+  # fonts
+  hack-font # fonts-hack for ubuntu, (nerd fonts for most else?)
+)

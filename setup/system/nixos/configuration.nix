@@ -4,163 +4,208 @@
 
 { config, pkgs, ... }:
 
-let
-  nixos-unstable =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
-in
 {
-  # TODO create a generic config.nix for use across devs
-  # import said file to detach it from configuration.nix
-  # 
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
 
-  # Nix
+  # Nix build system configuration
   nix = {
     autoOptimiseStore = true;
-    # useSandbox = true; # slows down builds but further reduces build impurities
+    useSandbox = true; # slows down builds but further reduces build impurities
     gc = {
       automatic = true; # collect garbage automatically
       dates = "daily";
       options = "--delete-older-than 3d";
     };
   };
+
+
+  # Nixpkgs configuration
   nixpkgs.config = {
-    allowUnfree = true;
-    pulseaudio = true;
-    packageOverrides = pkgs: {
-      unstable = import nixos-unstable {
-        config = config.nixpkgs.config;
-      };
-    };
+    # allowUnfree = true; # allow proprietary blobs (stallman will cry)
+    pulseaudio = true; # this just hurts in general, get pipewire in 'ere
   };
 
 
-  # Environment
-    # Packages
-  # environment.systemPackages =
-  #   let devTools = with pkgs; [ curl wget neovim git ];
-  #       devLangs = with pkgs; [ gcc python2 python3 ];
-  #       desktop = with pkgs; [ sway kitty firefox ];
-  #       misc = with pkgs; [ cmatrix dwarf-fortress syncthing ];
-  #   in builtins.concatLists [ devTools devLangs desktop misc ];
-  # environment.variables = {
-  #   EDITOR="nvim";
-  #   BROWSER="firefox";
-  #   # ...
-  # };
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    curl
-    wget
-    neovim
-    fzf
-    git
-    tree
-    python3
-    python38Packages.pip
-    gcc
-    alacritty
-    firefox-wayland
-  ];
-  environment.variables = {
-    EDITOR="nvim";
-    BROWSER="firefox";
-  };
-
-
-  # User-Groups
-  users.defaultUserShell = pkgs.zsh;
-  users.users.jaybee = {
-    isNormalUser = true;
-    useDefaultShell = true;
-    extraGroups = [ "wheel" "audio" "video" "networkmanager" "sway" "systemd-journal" ]; # wheel == ring == sudo
-    createHome = true;
-  };
-
-
-  # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-  #   Systemd-boot boot loader (UEFI)
+  # Boot configuration
   boot = {
     cleanTmpDir = true;
-    hardwareScan = true; # Usually does a good job providing modules you need, but may crash the system
+    # hardwareScan = true; # Usually does a good job providing modules you need, but may crash the system
     loader = {
-      systemd-boot = {
-        enable = true; # Use the systemd-boot EFI boot loader.
-	configurationLimit = 3;
-	memtest86.enable = true;
-      };
-      efi.canTouchEfiVariables = true;
       timeout = 3;
-    };
-    plymouth = {
-      enable = true;
-      # TODO change bootsplash theme to something from that repo i found
-      # TODO add more plymouth themes to nixos based off the git repo i found.
+      efi.canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+	version = 2;
+        devices = [ "nodev" ];
+        efiSupport = true;
+        useOSProber = true;
+	configurationLimit = 25;
+	# memtest86.enable = true; # a memory testing program, requires unfree
+      };
     };
   };
 
 
-  # Networking
+  # Network configuration
   networking = {
-    hostName = "venus"; # Define your hostname.
-    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    networkmanager.enable = true; # Enables wireless support via network manager
-    tcpcrypt.enable = true; # best effort tcp encryption
-    useDHCP = false; # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+    # Open ports in the firewall.
+    # networking.firewall.allowedTCPPorts = [ ... ];
+    # networking.firewall.allowedUDPPorts = [ ... ];
+    # Or disable the firewall altogether.
+    # networking.firewall.enable = false;
+    hostName = "mercury";
+    useDHCP = false;
     interfaces = {
-      enp3s0.useDHCP = true; # Per-interface useDHCP will be mandatory in the future, so this generated config replicates the default behaviour.
+      enp2s0.useDHCP = true;
+      wlp4s0.useDHCP = true;
     };
-    firewall = { # TODO better configure firewall
-      enable = false;
-      # allowedTCPPorts = [ ];
-      # allowedUDPPorts = [ ];
+    # enable wireless support via wpa_supplicant
+    wireless = {
+      enable = true;
+      userControlled.enable = true;
+      networks = {
+        TELUS1380 = {
+          pskRaw = "389d4e21e14f3ee86a621e29aa0c6a9335abb337f27fb11372c395da80adf2cb";
+        };
+      };
     };
-    # TODO enable and configure wireguard
+    dhcpcd.wait = "background";
   };
 
 
-  # Services
+  # Set your time zone.
+  time.timeZone = "America/Vancouver";
+
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_CA.UTF-8";
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+  };
+
+  
   services = {
-    sshd.enable = true;
-    printing.enable = true; # Enable CUPS to print documents
-    haveged.enable = true; # refill entropy
-    localtime.enable = true; # set time by location
-    openssh = {
-      enable = true; # TODO enable openssh daemon
-      allowSFTP = true;
-      # ports = [ 63621 ];
-    };
-    redshift = {
-      enable = true;
-      brightness.day = "1";
-      brightness.night = "0.65";
-      temperature.day = 8000;
-      temperature.night = 1900;
-    };
-  #   syncthing = {
-  #     enable = true;
-  #     dataDir = "/home/jaybee/syncthing";
-  #   };
-  # Enable the X11 windowing system.
-    xserver = {
-      enable = true;
-      layout = "us";
-      libinput.enable = true;
-      displayManager.lightdm.enable = true;
-      # windowManager.xmonad.enable = true;
-    };
+    printing.enable = true;
   };
 
 
-  # Programs
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.jaybee = {
+    isNormalUser = true;
+    defaultUserShell = pkgs.zsh;
+    useDefaultShell = true;
+    extraGroups = [ "wheel" "systemd-journal" ];
+    createHome = true;
+    # todo: switch to doas if possible
+  };
+
+
+  environment.systemPackages = with pkgs; [
+    # -- general
+    alacritty
+    firefox
+    # syncthing
+    # searx
+    # dwarf-fortress # requires unfree
+    # spotify # requires unfree
+    spotify-tui
+    klavaro
+    libreoffice
+    # some kind of input method engine for internationalization
+
+
+    # -- multimedia
+    ffmpeg
+    youtube-dl
+    mpv
+    cmus
+    picard # musicbrainz music tagging
+    zathura
+    obs-studio
+    obs-wlrobs
+
+
+    # -- tools
+    zsh
+    bpytop
+    htop
+    bat
+    bcal
+    curl
+    fasd
+    fd
+    fzf
+    git
+    hyperfine
+    nnn
+    httpie
+    ripgrep-all
+    silver-searcher
+    tree
+    universal-ctags
+    wget
+    exa
+    openssh
+    cmatrix
+    fortune
+    buku
+    # endlessh
+    # syncthing             # TODO setup configurations for this
+
+
+    # -- programming
+    # editors
+    neovim
+    emacs-nox
+    micro
+    # python
+    python38Full
+    python38Packages.pip
+    python38Packages.bpython
+    python38Packages.black
+    python38Packages.flake8
+    # common lisp
+    sbcl
+    lispPackages.quicklisp
+    lispPackages.asdf-package-system
+    # haskell
+    cabal-install
+    hlint
+    # c/c++
+    gcc
+    clang
+    ccls
+    universal-ctags
+    # bash/zsh
+    shellcheck
+
+
+    # -- fonts
+    hack-font
+
+    
+    # mark(up|down) languages
+    pandoc
+    # codebraid  # TODO investigate
+    # tectonic   # TODO investiagte
+    # TODO research latex packages and configs for nixos
+
+
+    # -- desktop
+    # TODO gotta work on desktop environment more
+    # remember stumpwm, haskell wm, python wm, c wms, swaywm (focus)
+  ];
+
+
   programs = {
     mtr.enable = true;
     ssh.startAgent = true;
@@ -174,86 +219,43 @@ in
     bash = {
       enableCompletion = true;
     };
-    sway = {
-      enable = true;
-      extraPackages = with pkgs; [
-	swaybg
-	swayidle
-	unstable.swaylock-fancy
-	waybar
-	bemenu 
-        grim
-	imv
-	kanshi
-	mako
-	xwayland
-	redshift-wlr
-	wl-clipboard
-	# clipman
-	# oguri
-      ];
-    };
+    # sway = {
+    #   enable = true;
+    #   extraPackages = with pkgs; [
+    #     swaybg
+    #     swayidle
+    #     unstable.swaylock-fancy
+    #     waybar
+    #     bemenu 
+    #     grim
+    #     imv
+    #     kanshi
+    #     mako
+    #     xwayland
+    #     redshift-wlr
+    #     wl-clipboard
+    #     # clipman
+    #     # oguri
+    #   ];
+    # };
   };
 
 
-  # Hardware
-  hardware = {
-    bluetooth.enable = false; # TODO change to 'true'
-    pulseaudio.enable = true; # Enable pulseaudio to play sound
-    opengl = { # Enable opengl rendering support for wayland
-      enable = true;
-      driSupport = true;
-    };
-  };
+  security.doas.enable = true;
 
 
-  # Fonts
-  fonts = {
-    enableFontDir = true;
-    enableGhostscriptFonts = true;
-    fonts = with pkgs; [
-      corefonts # Microsoft free fonts
-      fira-code
-      hack-font
-      nerdfonts
-      unifont
-    ];
-    fontconfig.defaultFonts.monospace = [ "Hack" ];
-  };
-
-
-  # Locale
-  i18n = {
-    defaultLocale = "en_CA.UTF-8";
-    inputMethod = {
-      enabled = "fcitx";
-      fcitx.engines = with pkgs.fcitx-engines; [ libpinyin unikey ]; # cloudpinyin 
-    };
-  };
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-  };
-
-
-  # System
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system = {
     autoUpgrade = {
       enable = true; # change to true for automatic updates
-      channel = "https://nixos.org/channels/nixos-20.03";
+      channel = "https://nixos.org/channels/nixos-21.05";
     };
-    # This value determines the NixOS release from which the default
-    # settings for stateful data, like file locations and database versions
-    # on your system were taken. It‘s perfectly fine and recommended to leave
-    # this value at the release version of the first install of this system.
-    # Before changing this value read the documentation for this option
-    # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    stateVersion = "20.03"; # Did you read the comment?  # You should change this ONLY after NixOS release notes say you should.
+    stateVersion = "21.05"; # You should change this ONLY after NixOS release notes say you should.
   };
 
-  
-  # Miscellaneous
-  sound.enable = true; # Enable sound.
-  time.timeZone = "America/Vancouver"; # Set your time zone.
-  location.provider = "geoclue2";
 }

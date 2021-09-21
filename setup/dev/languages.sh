@@ -27,7 +27,7 @@ if [[ $(command -v cabal) ]]
 then
   cabal update
   cabal install cabal-install
-  cabal install $packages
+  cabal install $hask_pkgs
   echo -e "\n##### HASKELL PACKAGES INSTALLED #####\n\n"
 else
   echo -e "skipping haskell, cabal not installed...\n\n"

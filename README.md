@@ -1,9 +1,6 @@
 Configurations
 ==
-This repository documents and tracks the configuration files (dotfiles) and environment/system setup scripts (setup) that I use to, in effect, make my environment portable across time and space. It was born out of necessity because I cannot settle on less than two distros at any one time and I can't stop tinkering with my systems. This system isn't perfect but it just so happens to be the semi-certainty of consistency that tech nomads such as myself seek. And so before you lay the cumulative work of lots of thinking and programming: a cobbled collection of scripts and configuration files that in a somewhat sensible manner somehow succeed in providing some system consistency between distros I occasion.
-
-
-At least it's not written in PHP.
+This repository documents and tracks the configuration files (dotfiles) and environment/system setup scripts (setup) that I use to, in effect, make my environment portable across time and space. It was born out of necessity because I cannot settle on less than two distros at any one time and I can't stop tinkering with my systems. And so before you lay the cumulative work of lots of thinking and programming: a cobbled collection of scripts and configuration files that in a somewhat sensible manner somehow succeed in providing some system consistency between distros I occasion.
 
 Dotfiles
 --
@@ -19,17 +16,16 @@ Simply run `bootstrap.sh` and the scripts will source and run the relevant bits 
 
 How It Works
 ==
-The entire system consists of scripts sourcing bits of other scripts depending on what programs and what distro are installed. Script-wise the bootstrap process sources and runs bash scripts in this order:
+The system since being simplified consists of a few scripts that:
+* setup and install packages for the given distro
+* setup and install packages for the programming languages
+* setup of user environment programs
+* synchronize dotfiles with local user
 ```
 bootstrap.sh
-setup/system/${current distro}/setup.sh
-  setup/system/common/setup.sh
-    setup/system/common/distro/install.sh
-      setup/system/common/distro/agnostic_install.sh
-      setup/system/common/distro/${current distro}_install.sh
-setup/system/common/development/setup.sh
-  setup/system/common/development/package/install.sh
-    setup/system/common/development/package/${current distro}_install.sh
-  setup/system/common/development/language/${languages}_install.sh
-dotfiles/sync.sh
+  setup/system/popos/setup.sh
+    setup/system/popos/manual.sh
+  setup/dev/languages.sh
+  setup/setup.sh
+  dotfiles/sync.sh
 ```

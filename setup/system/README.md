@@ -1,2 +1,0 @@
-
-each directory contains a collection of setup scripts and payloads. This ensures that for the given system a ubiquitous environment can be setup. In additon to this, each directory also contians distro specific installation and setup scripts tailored for that particular distor. Eg: nixos has its configuration.nix, manjaro has distro_install scripts, popos has tweaker scripts to setup my standard UX (with little change to the distro itself), etc.

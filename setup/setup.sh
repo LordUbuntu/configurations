@@ -1,71 +1,5 @@
-#!/usr/bin/env bash
-# This script runs setup commands and automatically configures the environment for my programming/development environment based on what distro is currently running
-
-
-# install common dev packages
-
-##########################
-# PACKAGE SPECIFIC SETUP #
-##########################
-
-# development_packages=(
-  # # tools
-  # zsh
-  # git
-  # ssh
-  # nvim
-  # emacs
-  # micro
-  # universal-ctags
-#
-  # # languages
-  # python
-  # python-pip
-  # cabal-install
-# )
-echo """
-
-#######################################
-# SETTING UP PACKAGES FOR DEVELOPMENT #
-#######################################
-
-"""
-source_dir package/install.sh
-
-
-###########################
-# LANGUAGE SPECIFIC SETUP #
-###########################
-
-# development_languages=(
-  # python
-  # haskell
-# )
-echo """
-
-#################################
-# SETTING UP SELECTED LANGUAGES #
-#################################
-
-"""
-for language in "${development_languages[@]}"
-do
-  file="setup_$language.sh"
-  if [[ -f language/$file ]]
-  then
-    source "language/$file"
-  else
-    echo "$file doesn't exist for $language, skipping!"
-  fi
-done
-
-
-
-
-
-#######################
-# TOOL SPECIFIC SETUP #
-#######################
+#!/usr/bin/bash
+# configures user environment for programs
 
 echo """
 
@@ -76,7 +10,7 @@ echo """
 """
 
 
-# setup zsh as default shell if it is installed and not the default shell
+# setup zsh as default shell
 if [[ $(command -v zsh) ]]
 then
   echo -e "\n##### SETTING UP ZSH #####"
@@ -94,7 +28,7 @@ else
 fi
 
 
-# setup git for current user if installed but user.email not set
+# setup git for current user
 if [[ $(command -v git) ]]
 then
   echo -e "\n##### SETTING UP GIT #####"
@@ -113,7 +47,7 @@ else
 fi
 
 
-# set up ssh for git
+# setup ssh for git
 if [[ $(command -v ssh) ]]
 then
   echo -e "\n##### SETTING UP SSH #####"

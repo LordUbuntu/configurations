@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
+# hard links repo config files with local user config files
 # exclude files by commenting them out
 # XXX 
 # - Really considering an alternative language for all these scripts or even the whole suite were bash not so ubiquitous...
@@ -6,12 +7,21 @@
 #   niceities that other better languages have spoiled me with...
 
 
+echo """
+
+##########################
+# SYNCHRONIZING DOTFILES #
+##########################
+
+"""
+
+
 # file programs
 programs=(
   "zsh"
   "git"
   "alacritty"
-  "nvim" # ignore the duplicates, bash makes them necessary
+  "nvim"
   "nvim"
   "sway"
   "zathura"
@@ -50,15 +60,6 @@ case $res in
     ;;
 esac
 
-
-echo """
-
-##########################
-# SYNCHRONIZING DOTFILES #
-##########################
-
-"""
-
 # programs are the "key" in this sense
 len=$(( ${#programs[@]} - 1 ))
 
@@ -73,7 +74,7 @@ do
   # sync files if program installed
   if [[ $(command -v "$prog") ]]
   then
-    # for a single file
+    # for a file
     if [[ -f $src ]]
     then
       # create a directory if it does not exist
@@ -118,14 +119,3 @@ do
     echo "program $prog not installed, not syncing files..."
   fi
 done
-
-
-echo """
-
-########
-# DONE #
-########
-
-"""
-
-echo "remember to run sync script in Sync"

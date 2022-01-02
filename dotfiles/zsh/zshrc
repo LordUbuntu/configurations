@@ -2,6 +2,8 @@
 #  ALIASES  #
 #############
 
+EDITOR=nvim
+
 # abbreviation aliases
 alias mkexec='chmod +x'
 alias py='bpython'
@@ -30,8 +32,7 @@ alias fgrep='fgrep --color=auto'  # ...
 alias egrep='egrep --color=auto'  # ...
 alias mkdir='mkdir -p'
 alias tree='tree -CF' # or exa -T
-alias nnn='nnn -E'
-# check out nnn -de
+alias nnn='nnn -dDeEFrx'
 
 
 
@@ -150,12 +151,12 @@ zstyle :compinstall filename '/home/jaybee/.zshrc'
 
 # COLORS AND SYMBOLS
 elem=`print "\U220a"`
-err=`print "\U21af"`
-state=`print "|\U03a8\U3009"`
 userhost='%(!|%F{red}|%F{green})%B%n@%m%b%f'
+err=`print "\U21af"`
 errcode="%(?||%F{red}$err%? )%f"
 errcodeminimal="%(?||%F{red}%? )"
-level='%(2L|%L|)'
+level='%B%F{yellow}%(2L|%L|)%b%f'
+state=`print "|$level\U03a8\U3009"`
 
 # PROMPTS
 Functy='$userhost $elem ${vcs_info_msg_0_}
@@ -192,5 +193,11 @@ fi
 # PROGRAMS #
 ############
 
+# FASD
 eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+# NNN
+if [ -f /usr/share/nnn/quitcd/quitcd.bash_zsh ]; then
+    source /usr/share/nnn/quitcd/quitcd.bash_zsh
+fi

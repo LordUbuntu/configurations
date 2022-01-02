@@ -32,6 +32,8 @@ packages="
   youtube-dl
   zathura*
   alacritty
+  discord
+  pass
   obs-studio
   klavaro
   dwarf-fortress

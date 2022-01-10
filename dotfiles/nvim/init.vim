@@ -1,7 +1,6 @@
-" Title: NeoVim Configuration File
-" Desc: A self-contained NeoVim configuration file
-" Author: Jacobus Burger <therealjacoburger@gmail.com>
-" Date: 2020-08-23
+" A self-contained NeoVim configuration file
+" Jacobus Burger <therealjacoburger@gmail.com>
+" 2021-01-05
 
 
 
@@ -22,6 +21,8 @@ let linters = {
     \ 'cpp': ['g++'],
     \ 'haskell': ['hlint', 'ghc'],
 \}
+
+
 
 " -- Setup environment if not already installed
 if empty(glob('~/.config/nvim/autoload/plug.vim')) " install vim-plug
@@ -72,6 +73,7 @@ call plug#begin()
 " -- Sytnax
 Plug 'sheerun/vim-polyglot' " extended syntax highlighting
 Plug 'dense-analysis/ale' " Asynchronous Lint Engine
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " tree sitter
 " -- Snippets
 Plug 'SirVer/ultisnips' " | Plug 'honza/vim-snippets'
 Plug 'ervandew/supertab'
@@ -103,21 +105,33 @@ Plug 'Konfekt/FastFold'
 " Plug 'metakirby5/codi.vim' " interactive REPL scratchpad
 Plug 'kevinhwang91/vim-ibus-sw' " ibus input method handling
 " -- Themes
-Plug 'sainnhe/edge'
-Plug 'lifepillar/vim-solarized8'
-Plug 'chriskempson/base16-vim'
-Plug 'morhetz/gruvbox'
-Plug 'tomasr/molokai'
-Plug 'sickill/vim-monokai'
-Plug 'haishanh/night-owl.vim'
+"  -- Warm
+Plug 'shaunsingh/seoul256.nvim'
+Plug 'ellisonleao/gruvbox.nvim'
+Plug 'sainnhe/sonokai'
+Plug 'savq/melange'
+Plug 'sainnhe/everforest'
+"  -- Cool
+Plug 'Yagua/nebulous.nvim'
+Plug 'folke/tokyonight.nvim'
+Plug 'shaunsingh/solarized.nvim'
+"  -- Icons
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 filetype plugin indent on
 
-" - Theme Settings
-set t_Co=256 termguicolors encoding=utf-8 fileencoding=utf-8
-set background=dark
-colorscheme gruvbox
 
+" - Theme Settings
+set t_Co=256 termguicolors encoding=UTF-8 fileencoding=utf-8
+set background=dark
+
+if has('termguicolors')
+  set termguicolors
+endif
+
+let g:sonokai_style = 'shusia'
+let g:sonokai_enable_italic = 1
+colorscheme sonokai
 
 
 
@@ -310,7 +324,7 @@ let g:lightline#bufferline#show_number = 1
 let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#unnamed = '[No Name]'
 let g:lightline = {
-    \ 'colorscheme': 'gruvbox',
+    \ 'colorscheme': 'sonokai',
     \ 'active': {
     \   'left': [
     \               ['mode', 'paste'],

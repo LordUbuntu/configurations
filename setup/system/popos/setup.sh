@@ -57,6 +57,7 @@ packages="
   texlive-lang-*
   texlive-fonts-*
   fonts-hack
+  ncdu
 "
 sudo apt install $packages
 source manual.sh

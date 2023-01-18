@@ -175,6 +175,12 @@ packer.startup(function(use)
     "catppuccin/nvim",
     as = "catppuccin",
   }
+
+  use {
+    "eddyekofo94/gruvbox-flat.nvim",
+    as = "gruvbox-flat",
+  }
+
   use {
     "kyazdani42/nvim-web-devicons",
     module = "nvim-web-devicons",

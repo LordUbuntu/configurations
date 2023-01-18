@@ -45,7 +45,6 @@ set.updatetime = 100
 -----------------
 -- INDENTATION
 -----------------
-vim.cmd [[filetype plugin on]]
 vim.cmd [[filetype plugin indent on]]
 set.smartindent = true
 set.tabstop = 2
@@ -74,7 +73,7 @@ autocmd('Filetype', {
 })
 -- 4 space tabs
 autocmd('Filetype', {
-  pattern = { 'cs', 'java', 'python' },
+  pattern = { 'cs', 'java', 'py' },
   command = 'setlocal shiftwidth=4 tabstop=4 softtabstop=4',
 })
 -- 8 space tabs

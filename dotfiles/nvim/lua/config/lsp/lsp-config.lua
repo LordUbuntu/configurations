@@ -47,7 +47,8 @@ note: often of the form
 require('lspconfig').[server].setup({
     -- configs go here, see url
 })
-]]--
+]]
+
 lspconfig.sumneko_lua.setup({
   -- ... other configs
   settings = {

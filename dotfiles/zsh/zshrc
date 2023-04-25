@@ -33,6 +33,8 @@ alias egrep='egrep --color=auto'  # ...
 alias mkdir='mkdir -p'
 alias tree='tree -CF' # or exa -T
 
+alias activate='source env/bin/activate'
+
 
 
 ##############
@@ -152,6 +154,7 @@ zstyle :compinstall filename '/home/jaybee/.zshrc'
 elem=`print "\U220a"`
 userhost='%(!|%F{red}|%F{green})%B%n@%m%b%f'
 errcode="%(?||%F{red}↯%? )%f"
+errcodeminimal="%(?||%F{red}%? )"
 level='%B%F{yellow}%(2L|Δ%L|)%b%f'
 state=`print "⟨Ψ$level⟩"`
 

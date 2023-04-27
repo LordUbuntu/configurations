@@ -10,7 +10,7 @@ end
 masonlsp.setup({
     -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
     -- note: must use lsp names, not mason names
-    ensure_installed = { "clangd", "sumneko_lua", "pylsp" },
+    ensure_installed = { "clangd", "lua_ls", "pylsp" },
 
     -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
     -- This setting has no relation with the `ensure_installed` setting.

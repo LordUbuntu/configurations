@@ -60,7 +60,7 @@ autocmd('Filetype', {
   command = 'setlocal shiftwidth=2 tabstop=2 softtabstop=2',
 })
 autocmd('Filetype', {
-  pattern = { 'hs', 'vim' },
+  pattern = { 'hs', 'vim', 'pl' },
   command = 'setlocal shiftwidth=2 tabstop=2 softtabstop=2',
 })
 autocmd('Filetype', {
@@ -81,8 +81,8 @@ autocmd('Filetype', {
   pattern = { 'asm', 'c', 'cpp' },
   command = 'setlocal shiftwidth=8 tabstop=8 softtabstop=8',
 })
--- expand folds
-autocmd({'BufReadPost', 'FileReadPost'}, {
-  pattern = { '*' },
-  command = 'normal zR',
-})
+
+--------------
+-- Filetypes
+--------------
+g.filetype_pl = "prolog"

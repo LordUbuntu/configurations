@@ -6,7 +6,6 @@ EDITOR=nvim
 
 # abbreviation aliases
 alias mkexec='chmod +x'
-alias py='bpython'
 
 # common utility aliases
 alias v='f -e $EDITOR'
@@ -14,10 +13,11 @@ alias o='a -e $OPENER'
 alias note="vim $(date +%F).md" # used a ton for taking notes
 
 # niceitie aliases
-[[ $(command -v apt) ]] && alias python='python3'
-[[ $(command -v apt) ]] && alias pip='pip3'
-[[ $(command -v apt) ]] && alias fd='fdfind'
-[[ $(command -v apt) ]] && alias bat='batcat --color=always'
+[[ $(type python3) ]] && alias python='python3'
+[[ $(type pip3) ]]    && alias pip='pip3'
+[[ $(type bpython) ]] && alias py='bpython'
+[[ $(type fdfind) ]]  && alias fd='fdfind'
+[[ $(type batcat) ]]  && alias bat='batcat --color=always'
 
 # standard aliases
 alias rm='rm -I'                  # or possibly rm -Irf
@@ -168,15 +168,17 @@ $errcode$state%f '
 #  ENV  #
 #########
 
-# set environment variables
-PATH="$PATH:$HOME/.cabal/bin:$HOME/.local/bin:$HOME/.emacs.d/bin:$HOME/bin"
-PATH="$PATH:$HOME/.perl5/bin"  # needed for perl5
-PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
+# set environment variables taking system state into consideration
+PATH="$PATH:$HOME/.local/bin:$HOME/bin"
+[[ $(type emacs) ]] && PATH="$PATH:$HOME/.emacs.d/bin"
+[[ $(type cabal) ]] && PATH="$PATH:$HOME/.cabal/bin"
+[[ $(type perl) ]] && PATH="$PATH:$HOME/.perl5/bin"  # needed for perl5
+[[ -f /usr/local/cuda/bin ]] && PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
+
 export PATH
 export LC_CTYPE="en_CA.UTF-8"
 export EDITOR="nvim"
 export OPENER="xdg-open"
-export MPD_HOST=$HOME/.config/mpd/socket
 
 if [[ $(command -v fzf) ]]
 then

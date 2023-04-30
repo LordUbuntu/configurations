@@ -156,7 +156,13 @@ elem=`print "\U220a"`
 userhost='%(!|%F{red}|%F{green})%B%n@%m%b%f'
 errcode="%(?||%F{red}↯%? )%f"
 errcodeminimal="%(?||%F{red}%? )"
-level='%B%F{yellow}%(2L|Δ%L|)%b%f'
+# indicate whether subshell is within nnn or shell
+if [[ -n "$NNNLVL" ]]
+then
+  level='%B%F{yellow}%(2L|♞%L|)%b%f'
+else
+  level='%B%F{yellow}%(2L|Δ%L|)%b%f'
+fi
 state=`print "⟨Ψ$level⟩"`
 
 # PROMPTS
@@ -221,6 +227,7 @@ fi
 # NNN
 if [[ $(type nnn) ]]
 then
+  # cd on quit, better alias
   nnn_bin="$(which nnn)"
   function nnn {
     # Block nesting of nnn in subshells
@@ -244,13 +251,16 @@ then
 
     # The backslash allows one to alias n to nnn if desired without making
     # infinitely recursive alias
-    $nnn_bin "$@"
+    $nnn_bin -a "$@"
 
     if [ -f "$NNN_TMPFILE" ]; then
             . "$NNN_TMPFILE"
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
   }
+
+  # bookmarks
+  export NNN_BMS="h:$HOME;m:$HOME/Sync/Media;n:$HOME/Sync/Notes;p:$HOME/Sync/Projects;c:$HOME/Sync/Projects/Programming"
 fi
 
 

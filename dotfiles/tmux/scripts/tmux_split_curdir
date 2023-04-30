@@ -1,0 +1,12 @@
+#!/usr/bin/zsh
+
+cwd=
+cc=$(tmux display -p '#{pane_current_command}')
+if [[ $cc == "nnn" ]]
+then
+  cwd=$(lsof -w -c nnn | grep cwd | tail -n 1 | awk '{print $9}')
+else
+  cwd=$(tmux display -p '#{pane_current_path}')
+fi
+
+tmux split-window -c "$cwd"

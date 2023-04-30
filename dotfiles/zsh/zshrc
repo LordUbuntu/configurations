@@ -16,8 +16,9 @@ then
   alias python='python3'
   alias pip='pip3'
   alias py='bpython'
-  alias fd='fdfind'
-  alias bat='batcat --color=always'
+  # functions instead of alias for use inside this file
+  function fd { fdfind $@ }
+  function bat { batcat $@ --color=always }
 fi
 
 # standard aliases
@@ -190,17 +191,30 @@ export OPENER="xdg-open"
 if [[ $(type fzf) ]]
 then
   export FZF_COMPLETION_TRIGGER='**'
-  export FZF_DEFAULT_OPTS=""
-  export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --follow --exclude .git"
+  export FZF_DEFAULT_OPTS="--prompt='🔭 ' --height 80% --layout=reverse --border"
+  export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+
+  # neovim fzf (with preview)
+  function nf {
+    [[ -z $(type nvim) ]] && return
+
+    selection=$(fzf --preview 'bat {}')
+    if [[ -z "$selection" ]]
+    then
+      return
+    else
+      nvim $selection
+    fi
+  }
 fi
 
 # FASD
 if [[ $(type fasd) ]]
 then
-  alias v='f -e $EDITOR'
-  alias o='a -e $OPENER'
   eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
   [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+  alias v='f -e $EDITOR'
+  alias o='a -e $OPENER'
 fi
 
 # NNN

@@ -180,6 +180,7 @@ PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 [[ $(type emacs) ]] && PATH="$PATH:$HOME/.emacs.d/bin"
 [[ $(type cabal) ]] && PATH="$PATH:$HOME/.cabal/bin"
 [[ $(type perl) ]] && PATH="$PATH:$HOME/.perl5/bin"  # needed for perl5
+[[ $(type tmux) ]] && PATH="$PATH:$HOME/.config/tmux/scripts"
 [[ -f /usr/local/cuda/bin ]] && PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
 
 export PATH
@@ -250,6 +251,15 @@ fi
 # NNN
 if [[ $(type nnn) ]]
 then
+  export NNN_PAGER="batcat"
+  export NNN_FIFO=/tmp/nnn.fifo
+
+  # bookmarks
+  export NNN_BMS="h:$HOME;m:$HOME/Sync/Media;n:$HOME/Sync/Notes;p:$HOME/Sync/Projects;c:$HOME/Sync/Projects/Programming"
+
+  # plugins
+  export NNN_PLUG="n:nuke"
+
   # cd on quit, better alias
   nnn_bin="$(which nnn)"
   function nnn {
@@ -274,16 +284,19 @@ then
 
     # The backslash allows one to alias n to nnn if desired without making
     # infinitely recursive alias
-    $nnn_bin -a "$@"
+    # now with tmux context detector
+    if [[ -n "$TMUX" ]]
+    then
+      $nnn_bin -a $@
+    else
+      tmux new-session $nnn_bin -a $@
+    fi
 
     if [ -f "$NNN_TMPFILE" ]; then
             . "$NNN_TMPFILE"
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
   }
-
-  # bookmarks
-  export NNN_BMS="h:$HOME;m:$HOME/Sync/Media;n:$HOME/Sync/Notes;p:$HOME/Sync/Projects;c:$HOME/Sync/Projects/Programming"
 fi
 
 

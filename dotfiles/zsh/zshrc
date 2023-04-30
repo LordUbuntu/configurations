@@ -193,6 +193,8 @@ export OPENER="xdg-open"
 # PROGRAMS #
 ############
 
+# with ripgrep don't forget ripgrep-all (rga)
+
 # FZF
 if [[ $(type fzf) ]]
 then
@@ -201,8 +203,9 @@ then
   export FZF_DEFAULT_OPTS="--prompt='🔭 ' --height 80% --layout=reverse --border"
   export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --follow --exclude .git"
 
-  # neovim fzf (with preview)
+  # neovim + fzf = "Neovim File fuzzy search" -> nf
   function nf {
+    # ensure neovim is installed
     [[ -z $(type nvim) ]] && return
 
     selection=$(fzf --preview 'batcat {} --color=always')
@@ -211,6 +214,26 @@ then
       return
     else
       nvim $selection
+    fi
+  }
+
+  # neovim + fzf + ripgrep = "Neovim Line fuzzy search" -> nl
+  function nl {
+    # ensure neovim and ripgrep are installed
+    [[ -z $(type nvim) ]] && return
+    [[ -z $(type rg) ]] && return
+
+    # filter rg selections into fzf with preview
+    selection=$(rg -n . | fzf -d ':' --preview 'batcat {1} --color=always --highlight-line {2}')
+    if [[ -z "$selection" ]]
+    then
+      return
+    else
+      # split answer into line number and file name, then open there
+      arr=(${(s/:/)selection})  # note: zsh specific syntax
+      filename=$arr[1]
+      linenum=$arr[2]
+      nvim $(printf "+%s %s" $linenum $filename)
     fi
   }
 fi

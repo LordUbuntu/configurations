@@ -17,8 +17,8 @@ then
   alias pip='pip3'
   alias py='bpython'
   # functions instead of alias for use inside this file
-  function fd { fdfind $@ }
-  function bat { batcat $@ --color=always }
+  alias fd='fdfind'
+  alias bat='batcat'
 fi
 
 # standard aliases
@@ -209,14 +209,24 @@ then
   # doesn't seem to work for some reason when using fd or bat despite function definitions above
   export FZF_COMPLETION_TRIGGER='**'
   export FZF_DEFAULT_OPTS="--prompt='🔭 ' --height 80% --layout=reverse --border"
-  export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --follow --exclude .git"
+  if [[ $(type apt) ]]
+  then
+    export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --follow --exclude .git"
+  else
+    export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+  fi
 
   # neovim + fzf = "Neovim File fuzzy search" -> nf
   function nf {
     # ensure neovim is installed
     [[ -z $(type nvim) ]] && return
 
-    selection=$(fzf --preview 'batcat {} --color=always')
+    if [[ $(type apt) ]]
+    then
+      selection=$(fzf --preview 'batcat {} --color=always')
+    else
+      selection=$(fzf --preview 'bat {} --color=always')
+    fi
     if [[ -z "$selection" ]]
     then
       return
@@ -232,7 +242,12 @@ then
     [[ -z $(type rg) ]] && return
 
     # filter rg selections into fzf with preview
-    selection=$(rg -n . | fzf -d ':' --preview 'batcat {1} --color=always --highlight-line {2}')
+    if [[ $(type apt) ]]
+    then
+      selection=$(rg -n . | fzf -d ':' --preview 'batcat {1} --color=always --highlight-line {2}')
+    else
+      selection=$(rg -n . | fzf -d ':' --preview 'bat {1} --color=always --highlight-line {2}')
+    fi
     if [[ -z "$selection" ]]
     then
       return
@@ -267,7 +282,6 @@ then
   export NNN_PLUG="p:preview-tui;n:nuke;m:cmusq;g:gitroot"
 
   # cd on quit, better alias
-  # nnn_bin="$(which nnn)"
   function n {
     # Block nesting of nnn in subshells
     if [[ "${NNNLVL:-0}" -ge 1 ]]; then

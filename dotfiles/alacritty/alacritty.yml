@@ -16,7 +16,11 @@ font:
     y: 1
 
 
+# TODO: use import and make a themes subdirectory
+# import:
+#   - ~/.config/alacritty/themes/theme.yml
 schemes:
+  # Dark Themes
   monokai_classic: &monokai
     primary:
       background: '#272822'
@@ -39,28 +43,55 @@ schemes:
      magenta: '#AE81FF'
      cyan:    '#A1EFE4'
      white:   '#F9F8F5'
-  monokai_soda: &monokai_soda
+  monokai_pro: &monokai_pro
     primary:
-      background: '#1a1a1a'
-      foreground: '#c4c5b5'
+      background: '#2D2A2E'
+      foreground: '#FCFCFA'
     normal:
-      black:   '#1a1a1a'
-      red:     '#f4005f'
-      green:   '#98e024'
-      yellow:  '#fa8419'
-      blue:    '#9d65ff'
-      magenta: '#f4005f'
-      cyan:    '#58d1eb'
-      white:   '#c4c5b5'
+      black:   '#403E41'
+      red:     '#FF6188'
+      green:   '#A9DC76'
+      yellow:  '#FFD866'
+      blue:    '#FC9867'
+      magenta: '#AB9DF2'
+      cyan:    '#78DCE8'
+      white:   '#FCFCFA'
     bright:
-      black:   '#625e4c'
-      red:     '#f4005f'
-      green:   '#98e024'
-      yellow:  '#e0d561'
-      blue:    '#9d65ff'
-      magenta: '#f4005f'
-      cyan:    '#58d1eb'
-      white:   '#f6f6ef'
+      black:   '#727072'
+      red:     '#FF6188'
+      green:   '#A9DC76'
+      yellow:  '#FFD866'
+      blue:    '#FC9867'
+      magenta: '#AB9DF2'
+      cyan:    '#78DCE8'
+      white:   '#FCFCFA'
+  chalk_dark: &chalk
+    name: Chalk (dark)
+    author: Chris Kempson
+    primary:
+      background: "#151515"
+      foreground: "#d0d0d0"
+    cursor:
+      text: "#151515"
+      cursor: "#d0d0d0"
+    normal:
+      black: "#151515"
+      red: "#fb9fb1"
+      green: "#acc267"
+      yellow: "#ddb26f"
+      blue: "#6fc2ef"
+      magenta: "#e1a3ee"
+      cyan: "#12cfc0"
+      white: "#d0d0d0"
+    bright:
+      black: "#505050"
+      red: "#fb9fb1"
+      green: "#acc267"
+      yellow: "#ddb26f"
+      blue: "#6fc2ef"
+      magenta: "#e1a3ee"
+      cyan: "#12cfc0"
+      white: "#f5f5f5"
   tomorrow_dark: &tomorrow
     primary:
       background: '0x1d1f21'
@@ -86,8 +117,84 @@ schemes:
       magenta: '0xb77ee0'
       cyan:    '0x54ced6'
       white:   '0x282a2e'
-colors: *monokai
-
+    # Default colors
+  solarized_dark: &solarized_dark
+    primary:
+      background: '#002b36' # base03
+      foreground: '#839496' # base0
+    cursor:
+      text:   '#002b36' # base03
+      cursor: '#839496' # base0
+    normal:
+      black:   '#073642' # base02
+      red:     '#dc322f' # red
+      green:   '#859900' # green
+      yellow:  '#b58900' # yellow
+      blue:    '#268bd2' # blue
+      magenta: '#d33682' # magenta
+      cyan:    '#2aa198' # cyan
+      white:   '#eee8d5' # base2
+    bright:
+      black:   '#002b36' # base03
+      red:     '#cb4b16' # orange
+      green:   '#586e75' # base01
+      yellow:  '#657b83' # base00
+      blue:    '#839496' # base0
+      magenta: '#6c71c4' # violet
+      cyan:    '#93a1a1' # base1
+      white:   '#fdf6e3' # base3
+  # Light Themes
+  solarized_light: &solarized_light
+    primary:
+      background: '#fdf6e3' # base3
+      foreground: '#657b83' # base00
+    cursor:
+      text:   '#fdf6e3' # base3
+      cursor: '#657b83' # base00
+    normal:
+      black:   '#073642' # base02
+      red:     '#dc322f' # red
+      green:   '#859900' # green
+      yellow:  '#b58900' # yellow
+      blue:    '#268bd2' # blue
+      magenta: '#d33682' # magenta
+      cyan:    '#2aa198' # cyan
+      white:   '#eee8d5' # base2
+    bright:
+      black:   '#002b36' # base03
+      red:     '#cb4b16' # orange
+      green:   '#586e75' # base01
+      yellow:  '#657b83' # base00
+      blue:    '#839496' # base0
+      magenta: '#6c71c4' # violet
+      cyan:    '#93a1a1' # base1
+      white:   '#fdf6e3' # base3
+  papercolor_light: &papercolor
+    primary:
+      background: '0xeeeeee'
+      foreground: '0x444444'
+    cursor:
+      text: '0xeeeeee'
+      cursor: '0x444444'
+    normal:
+      black:   '0xeeeeee'
+      red:     '0xaf0000'
+      green:   '0x008700'
+      yellow:  '0x5f8700'
+      blue:    '0x0087af'
+      magenta: '0x878787'
+      cyan:    '0x005f87'
+      white:   '0x444444'
+    bright:
+      black:   '0xbcbcbc'
+      red:     '0xd70000'
+      green:   '0xd70087'
+      yellow:  '0x8700af'
+      blue:    '0xd75f00'
+      magenta: '0xd75f00'
+      cyan:    '0x005faf'
+      white:   '0x005f87'
+colors: *monokai_pro
 
 window:
   dimensions:

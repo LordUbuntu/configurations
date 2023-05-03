@@ -179,8 +179,18 @@ packer.startup(function(use)
   }
 
   use {
-    "eddyekofo94/gruvbox-flat.nvim",
-    as = "gruvbox-flat",
+    'tanvirtin/monokai.nvim',
+    as = 'monokai',
+  }
+
+  use {
+    'shaunsingh/solarized.nvim',
+    as = 'solarized',
+  }
+
+  use {
+    'NLKNguyen/papercolor-theme',
+    as = 'papercolor',
   }
 
   use {

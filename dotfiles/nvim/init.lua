@@ -4,7 +4,10 @@ require('packer_init')
 -- specialized configurations across files
 require('core.option')
 require('core.keymap')
-require('core.color')
+
+-- theme
+require('themes.monokai')
+-- vim.cmd [[ set background=light ]]  -- light theme
 
 
 -- NOTES TO SELF:

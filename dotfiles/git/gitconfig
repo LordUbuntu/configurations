@@ -3,13 +3,6 @@
 	name = Jacobus Burger
 [core]
 	autocrlf = input
-	editor = vim
-[merge]
-	tool = vimdiff
-[diff]
-	tool = vimdiff
-	;; ...
-[web]
-    browser = firefox
+	editor = nvim
 [init]
 	defaultBranch = main  ;; alternatives: "core", "nexus", "root", "base"

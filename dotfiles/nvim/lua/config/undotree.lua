@@ -3,6 +3,8 @@ if not ok then
   return
 end
 
+
+-- setup plugin
 undotree.setup({
   float_diff = true,  -- using float window previews diff, set this `true` will disable layout option
   layout = "left_bottom", -- "left_bottom", "left_left_bottom"
@@ -20,3 +22,14 @@ undotree.setup({
     ['q'] = "quit",             -- quit undotree
   },
 })
+
+
+-- define keymaps
+vim.keymap.set('n', '<leader>ut', require('undotree').toggle, { noremap = true, silent = true })
+-- register whichkey mappings
+local wk_ok, wk = pcall(require, 'which-key')
+if wk_ok then
+  wk.register({
+    ["<leader>ut"] = { require('undotree').toggle, "Toggle Undo Tree" },
+  })
+end

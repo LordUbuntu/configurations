@@ -34,18 +34,14 @@ map('n', '<leader>bk', '<cmd>bd<cr>')
 -- PLUGIN
 ------------
 
--- hop keymaps
-map('n', '<leader>ha', '<cmd>HopAnywhere<CR>')
-map('n', '<leader>hl', '<cmd>HopLine<CR>')
-map('n', '<leader>hw', '<cmd>HopWord<CR>')
-map('n', '<leader>hp', '<cmd>HopPattern<CR>')
+-- hop
+-- can't seem to remove this right now without whichkey failing to detect it
+vim.keymap.set('n', '<leader>ha', '<cmd>HopAnywhere<CR>')
+vim.keymap.set('n', '<leader>hl', '<cmd>HopLine<CR>')
+vim.keymap.set('n', '<leader>hw', '<cmd>HopWord<CR>')
+vim.keymap.set('n', '<leader>hp', '<cmd>HopPattern<CR>')
 
 -- telescope
 map('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
-
--- undotree
-map('n', '<leader>ut', "<cmd>lua require('undotree').toggle()<cr>", { silent = true })
-map('n', '<leader>uo', "<cmd>lua require('undotree').open()<cr>", { silent = true })
-map('n', '<leader>uc', "<cmd>lua require('undotree').close()<cr>", { silent = true })

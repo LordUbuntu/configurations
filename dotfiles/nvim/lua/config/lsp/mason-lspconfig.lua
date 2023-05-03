@@ -1,8 +1,12 @@
 -- plugin: mason-lspconfig
 -- url: https://github.com/williamboman/mason-lspconfig.nvim
 -- note: probably dumb to put this here
-local mason_ok, masonlsp = pcall(require, "mason-lspconfig")
+local mason_ok, mason = pcall(require, "mason")
 if not mason_ok then
+  return
+end
+local masonlsp_ok, masonlsp = pcall(require, "mason-lspconfig")
+if not masonlsp_ok then
   return
 end
 

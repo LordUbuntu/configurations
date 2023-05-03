@@ -1,17 +1,21 @@
-local ok, indentblankline = pcall(require, "indent-blankline")
+local ok, indentblankline = pcall(require, "indent_blankline")
 if not ok then
   return
 end
 
 
 vim.opt.list = true
-vim.opt.listchars:append "space:⋅"
-vim.opt.listchars:append "eol:↴"
+vim.opt.listchars = "space:⋅,eol:↴,tab:  ⇥,trail:…"
 
-require("indent_blankline").setup {
-  space_char_blankline = " ",
+
+indentblankline.setup {
+  enabled = true,
+  show_end_of_line = true,
+  use_treesitter = false,
+  show_first_indent_level = false,
   show_current_context = true,
   show_current_context_start = true,
-  -- show_first_indent_level = false,
-  -- use_treesitter = true,
+  context_char = "┃",
+  char_blankline = "│",
+  space_char_blankline = " ",
 }

@@ -34,6 +34,8 @@ set.foldmethod = "expr"
 set.foldexpr = "nvim_treesitter#foldexpr()"
 set.splitright = true
 set.splitbelow = true
+-- set.list = true
+-- set.listchars = "space: ,eol: ,tab:   ,trail: "
 
 -----------------
 -- PERFORMANCE

@@ -70,19 +70,6 @@ packer.startup(function(use)
     'lewis6991/impatient.nvim',
     config = function() require("config.impatient") end,
   }
-  -- fast motions
-  use {  -- hop motions
-    'phaazon/hop.nvim',
-    branch = 'v2', -- optional but strongly recommended
-    cmd = { "HopWord", "HopLine", "HopPattern", "HopAnywhere" },
-    config = function() require("config.hop") end,
-  }
-  -- consider substituting lightspeed with leap
-  use {  -- futurevision sneak
-    "ggandor/lightspeed.nvim",
-    -- keys = { "s", "S", "f", "F", "t", "T", "gs", "gS" },
-    config = function() require("config.lightspeed") end,
-  }
   -- other
   use {
     "folke/which-key.nvim",
@@ -91,7 +78,7 @@ packer.startup(function(use)
   }
   use {
     "lukas-reineke/indent-blankline.nvim",
-    event = "BufReadPre",
+    event = "BufWinEnter",
     config = function() require("config.indentblankline") end,
   }
 	use {
@@ -111,10 +98,21 @@ packer.startup(function(use)
   }
   use {
     'jiaoshijie/undotree',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
+    requires = 'nvim-lua/plenary.nvim',
     config = function() require("config.undotree") end,
+  }
+  -- fast motions
+  use {  -- hop motions
+    'phaazon/hop.nvim',
+    branch = 'v2', -- optional but strongly recommended
+    cmd = { "HopWord", "HopLine", "HopPattern", "HopAnywhere" },
+    config = function() require("config.hop") end,
+  }
+  -- consider substituting lightspeed with leap
+  use {  -- futurevision sneak
+    "ggandor/lightspeed.nvim",
+    -- keys = { "s", "S", "f", "F", "t", "T", "gs", "gS" },
+    config = function() require("config.lightspeed") end,
   }
 
 
@@ -154,7 +152,11 @@ packer.startup(function(use)
   }
   use {
     "williamboman/mason-lspconfig.nvim",
-    config = function() require("config.lsp.mason-lspconfig") end,
+    requires = "williamboman/mason.nvim",
+    config = function()
+      require("config.lsp.mason")
+      require("config.lsp.mason-lspconfig")
+    end,
   }
   use {
     "neovim/nvim-lspconfig",

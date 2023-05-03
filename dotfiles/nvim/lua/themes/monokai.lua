@@ -5,7 +5,7 @@ end
 
 
 -- setup theme
-local palette = monokai.classic  -- consider .soda instead...
+local palette = monokai.classic
 monokai.setup({
   palette = palette,
   -- example hlgroups:

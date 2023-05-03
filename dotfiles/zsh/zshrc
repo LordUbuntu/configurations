@@ -18,7 +18,7 @@ then
   alias py='bpython'
   # functions instead of alias for use inside this file
   alias fd='fdfind'
-  alias bat='batcat'
+  alias bat='batcat --theme "Monokai Extended"'
 fi
 
 # standard aliases
@@ -223,9 +223,9 @@ then
 
     if [[ $(type apt) ]]
     then
-      selection=$(fzf --preview 'batcat {} --color=always')
+      selection=$(fzf --preview 'batcat {} --color=always --theme "Monokai Extended"')
     else
-      selection=$(fzf --preview 'bat {} --color=always')
+      selection=$(fzf --preview 'bat {} --color=always --theme "Monokai Extended"')
     fi
     if [[ -z "$selection" ]]
     then
@@ -244,9 +244,9 @@ then
     # filter rg selections into fzf with preview
     if [[ $(type apt) ]]
     then
-      selection=$(rg -n . | fzf -d ':' --preview 'batcat {1} --color=always --highlight-line {2}')
+      selection=$(rg -n . | fzf -d ':' --preview 'batcat {1} --color=always --theme "Monokai Extended" --highlight-line {2}')
     else
-      selection=$(rg -n . | fzf -d ':' --preview 'bat {1} --color=always --highlight-line {2}')
+      selection=$(rg -n . | fzf -d ':' --preview 'bat {1} --color=always --theme "Monokai Extended" --highlight-line {2}')
     fi
     if [[ -z "$selection" ]]
     then

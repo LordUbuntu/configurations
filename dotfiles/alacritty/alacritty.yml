@@ -45,7 +45,7 @@ schemes:
      white:   '#F9F8F5'
   monokai_pro: &monokai_pro
     primary:
-      background: '#2D2A2E'
+      background: '#303030'
       foreground: '#FCFCFA'
     normal:
       black:   '#403E41'

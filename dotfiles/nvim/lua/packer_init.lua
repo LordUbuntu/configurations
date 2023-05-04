@@ -179,8 +179,8 @@ packer.startup(function(use)
   }
 
   use {
-    'tanvirtin/monokai.nvim',
-    as = 'monokai',
+    "loctvl842/monokai-pro.nvim",
+    as = 'monokai-pro',
   }
 
   use {

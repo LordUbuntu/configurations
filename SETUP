@@ -1,0 +1,14 @@
+My new solution to setting up all this crap:
++ User specifies packages in a plaintext file
++ A shell script function reads in from that list of packages as an array
+  + It then gets the actual names (depending on the operating system) and substitutes as it goes through the array
+  + At the end, it then issues a command and requests permission
+  + Installs packages
++ Another script now starts the environment setup for specific programs that were installed in the previous step (checks they were first and reports that it's skipping them if they weren't)
++ Lastly, config files are copied and linked onto system where they're supposed to go, and the program finally concludes
+
+
+
+Some nice features in the future might be a fzf selection for additional packages, and maybe each program is a fully contained module that sorts out all its own stuff?
+
+I should consider switching to home-manger in the future, I'm basically trying to emulate the nix approach anyways :/

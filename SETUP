@@ -26,3 +26,7 @@ Now that I think about it, maybe this program should be a python script instead.
 
 # config.sh
 # for each program in dotfiles, copy over configs for programs that are installed...
+
+
+
+See test.sh for an example of how to temporarily give control to user for encountered problems...

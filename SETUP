@@ -12,3 +12,17 @@ My new solution to setting up all this crap:
 Some nice features in the future might be a fzf selection for additional packages, and maybe each program is a fully contained module that sorts out all its own stuff?
 
 I should consider switching to home-manger in the future, I'm basically trying to emulate the nix approach anyways :/
+
+Now that I think about it, maybe this program should be a python script instead... but then again, posix shell is highly portable between linux systems even if it is primitive and unpleasant...
+
+
+#!/bin/sh
+# install.sh
+# read packages into array variable from specified plaintext file
+# substitute package names as needed for system and request install
+
+# setup.sh
+# for each specified program, setup environment and other relevant bits for that program, informing of any missing packages at the end
+
+# config.sh
+# for each program in dotfiles, copy over configs for programs that are installed...

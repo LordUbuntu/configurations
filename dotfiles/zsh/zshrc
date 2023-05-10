@@ -9,6 +9,7 @@ alias mkexec='chmod +x'
 
 # common utility aliases
 alias note="vim $(date +%F).md" # used a ton for taking notes
+alias activate="source env/bin/activate"
 
 # workaround because ubuntu doesn't follow naming conventions apparently
 if [[ $(type apt) ]]
@@ -185,7 +186,6 @@ PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 [[ $(type emacs) ]] && PATH="$PATH:$HOME/.emacs.d/bin"
 [[ $(type cabal) ]] && PATH="$PATH:$HOME/.cabal/bin"
 [[ $(type perl) ]] && PATH="$PATH:$HOME/.perl5/bin"  # needed for perl5
-[[ $(type tmux) ]] && PATH="$PATH:$HOME/.config/tmux/scripts"
 [[ -f /usr/local/cuda/bin ]] && PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
 
 export PATH

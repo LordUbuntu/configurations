@@ -65,15 +65,16 @@ setopt glob extended_glob
 setopt bad_pattern
 setopt bare_glob_qual brace_ccl glob_dots ksh_glob mark_dirs
 # - VIM
-bindkey -v
-zmodload zsh/complist
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'k' vi-up-line-or-history
+# jeffreytse/zsh-vi-mode plugin makes this redundant
+# bindkey -v
+# zmodload zsh/complist
+# autoload -Uz edit-command-line
+# zle -N edit-command-line
+# bindkey -M vicmd v edit-command-line
+# bindkey -M menuselect 'h' vi-backward-char
+# bindkey -M menuselect 'l' vi-forward-char
+# bindkey -M menuselect 'j' vi-down-line-or-history
+# bindkey -M menuselect 'k' vi-up-line-or-history
 export KEYTIMEOUT=1
 # - Style
 setopt prompt_subst
@@ -348,17 +349,21 @@ then
   source $HOME/.zcomet/bin/zcomet.zsh
 
   # setup plugins
-  #   fish-like syntax highlighting
-  zcomet load zsh-users/zsh-syntax-highlighting
-  #   fish-like autosuggestions
-  zcomet load zsh-users/zsh-autosuggestions
-  bindkey '' autosuggest-accept
+  #   vim
+  zcomet load jeffreytse/zsh-vi-mode
+  #   jump to a parent directory without typing ../../../...
+  zcomet load Tarrasch/zsh-bd
   #   remind yourself of aliases
   zcomet load MichaelAquilina/zsh-you-should-use
   export YSU_MESSAGE_POSITION="before"
   export YSU_MESSAGE_FORMAT="$(tput setaf 3)Found %alias_type for %command: %alias$(tput sgr0)"
   #   get extra autocompletions
   zcomet load zsh-users/zsh-completions
+  #   fish-like syntax highlighting
+  zcomet load zsh-users/zsh-syntax-highlighting
+  #   fish-like autosuggestions
+  zcomet load zsh-users/zsh-autosuggestions
+  bindkey '' autosuggest-accept
 else
   git clone https://github.com/agkozak/zcomet.git $HOME/.zcomet/bin
 fi

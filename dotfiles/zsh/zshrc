@@ -189,37 +189,6 @@ export OPENER="xdg-open"
 
 
 
-###########
-# Plugins #
-###########
-
-if [[ -f $HOME/.zcomet/bin/zcomet.zsh ]]
-then
-  # source zcomet
-  source $HOME/.zcomet/bin/zcomet.zsh
-
-  # setup plugins
-  #   vim
-  zcomet load jeffreytse/zsh-vi-mode
-  #   jump to a parent directory without typing ../../../...
-  zcomet load Tarrasch/zsh-bd
-  #   remind yourself of aliases
-  zcomet load MichaelAquilina/zsh-you-should-use
-  export YSU_MESSAGE_POSITION="before"
-  export YSU_MESSAGE_FORMAT="$(tput setaf 3)Found %alias_type for %command: %alias$(tput sgr0)"
-  #   get extra autocompletions
-  zcomet load zsh-users/zsh-completions
-  #   fish-like syntax highlighting
-  zcomet load zsh-users/zsh-syntax-highlighting
-  #   fish-like autosuggestions
-  zcomet load zsh-users/zsh-autosuggestions
-  bindkey '' autosuggest-accept
-else
-  git clone https://github.com/agkozak/zcomet.git $HOME/.zcomet/bin
-fi
-
-
-
 ############
 # PROGRAMS #
 ############
@@ -239,6 +208,7 @@ then
   else
     export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
   fi
+  [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
   # neovim + fzf = "Neovim File fuzzy search" -> nf
   function nf {
@@ -287,6 +257,7 @@ fi
 # McFly and FZF
 if type mcfly-fzf &> /dev/null
 then
+  [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
   eval "$(mcfly init zsh)"
   eval "$(mcfly-fzf init zsh)"
 fi
@@ -321,6 +292,7 @@ fi
 if [[ $(type fasd) ]]
 then
   eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
+  [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
   alias v='f -e $EDITOR'
   alias o='a -e $OPENER'
 fi
@@ -370,6 +342,38 @@ fi
 
 
 
+###########
+# Plugins #
+###########
+
+if [[ -f $HOME/.zcomet/bin/zcomet.zsh ]]
+then
+  # source zcomet
+  source $HOME/.zcomet/bin/zcomet.zsh
+
+  # setup plugins
+  #   vim
+  zcomet load jeffreytse/zsh-vi-mode
+  zvm_after_init_commands+=('[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh')
+  #   jump to a parent directory without typing ../../../...
+  zcomet load Tarrasch/zsh-bd
+  #   remind yourself of aliases
+  zcomet load MichaelAquilina/zsh-you-should-use
+  export YSU_MESSAGE_POSITION="before"
+  export YSU_MESSAGE_FORMAT="$(tput setaf 3)Found %alias_type for %command: %alias$(tput sgr0)"
+  #   get extra autocompletions
+  zcomet load zsh-users/zsh-completions
+  #   fish-like syntax highlighting
+  zcomet load zsh-users/zsh-syntax-highlighting
+  #   fish-like autosuggestions
+  zcomet load zsh-users/zsh-autosuggestions
+  bindkey '' autosuggest-accept
+else
+  git clone https://github.com/agkozak/zcomet.git $HOME/.zcomet/bin
+fi
+
+
+
 ###############
 # Completions #
 ###############
@@ -392,4 +396,3 @@ then
   autoload -Uz compinit
   compinit
 fi
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh

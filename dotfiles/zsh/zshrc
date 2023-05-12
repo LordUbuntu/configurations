@@ -2,8 +2,6 @@
 #  ALIASES  #
 #############
 
-EDITOR=nvim
-
 # abbreviation aliases
 alias mkexec='chmod +x'
 
@@ -49,6 +47,7 @@ SAVEHIST=200
 setopt bang_hist hist_ignore_space hist_beep beep
 setopt share_history inc_append_history extended_history
 setopt interactive_comments # correct_all 
+autoload -Uz vcs_info # gitstuff
 # - Storage
 setopt hist_find_no_dups hist_ignore_all_dups
 setopt hist_fcntl_lock hist_reduce_blanks
@@ -65,16 +64,24 @@ setopt glob_complete auto_param_slash
 setopt glob extended_glob
 setopt bad_pattern
 setopt bare_glob_qual brace_ccl glob_dots ksh_glob mark_dirs
-# - I/O
+# - VIM
 bindkey -v
-bindkey '^?' backward-delete-char
-bindkey '^h' backward-delete-char
-bindkey '^[[Z' reverse-menu-complete
+zmodload zsh/complist
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history
+export KEYTIMEOUT=1
 # - Style
 setopt prompt_subst
+autoload -U colors && colors
 
 
 
+# TODO get rid of this whole section after replacing prompt with starship
 ###############
 #  FUNCTIONS  #
 ###############
@@ -143,13 +150,6 @@ function precmd {
 #  THEMEING  #
 ##############
 
-# AUTOLOADS
-autoload -Uz compinstall  # && compinstall
-autoload -U colors && colors
-autoload -Uz compinit
-autoload -Uz vcs_info
-zstyle :compinstall filename '/home/jaybee/.zshrc'
-
 # COLORS AND SYMBOLS
 elem=`print "\U220a"`
 userhost='%(!|%F{red}|%F{green})%B%n@%m%b%f'
@@ -168,9 +168,7 @@ else
     level="%B%F{yellow}%(2L|%L$symbol|)%b%f"
   fi
 fi
-
 state=`print "⟨Ψ$level⟩"`
-
 # PROMPTS
 PROMPT='$userhost $elem ${vcs_info_msg_0_}
 $errcode$state%f '
@@ -199,7 +197,35 @@ export OPENER="xdg-open"
 # PROGRAMS #
 ############
 
-# with ripgrep don't forget ripgrep-all (rga)
+# TODO add espanso
+# TODO autosetup ripgrep and ripgrep-all
+
+# RipGrep-All
+if [[ $(type rga) ]]
+then
+  # reach for Abyss File - get path to file with matching data
+  function af {
+    [[ -z $(type fzf) ]] && return
+    RG_PREFIX="rga --files-with-matches"
+    file="$(
+      FZF_DEFAULT_COMMAND="$RG_PREFIX '$1'" \
+        fzf --sort --preview="[[ ! -z {} ]] && rga --pretty --context 5 {q} {}" \
+          --phony -q "$1" \
+          --bind "change:reload:$RG_PREFIX {q}" \
+          --preview-window="70%:wrap"
+    )"
+    echo $file
+  }
+
+  # Ripgrep-All File - attempt to open a file interactively with ripgrep-all and fzf
+  function raf {
+    [[ -z $(type xdg-open) ]] && return
+    file=$(af)
+    echo "opening $file"
+    xdg-open "$file"
+  }
+fi
+
 
 # FZF
 if [[ $(type fzf) ]]
@@ -258,31 +284,6 @@ then
   }
 fi
 
-if [[ $(type rga) ]]
-then
-  # reach for Abyss File - get path to file with matching data
-  function af {
-    [[ -z $(type fzf) ]] && return
-    RG_PREFIX="rga --files-with-matches"
-    file="$(
-      FZF_DEFAULT_COMMAND="$RG_PREFIX '$1'" \
-        fzf --sort --preview="[[ ! -z {} ]] && rga --pretty --context 5 {q} {}" \
-          --phony -q "$1" \
-          --bind "change:reload:$RG_PREFIX {q}" \
-          --preview-window="70%:wrap"
-    )"
-    echo $file
-  }
-
-  # Ripgrep-All File - attempt to open a file interactively with ripgrep-all and fzf
-  function raf {
-    [[ -z $(type xdg-open) ]] && return
-    file=$(af)
-    echo "opening $file"
-    xdg-open "$file"
-  }
-fi
-
 # FASD
 if [[ $(type fasd) ]]
 then
@@ -337,17 +338,52 @@ fi
 
 
 
-# The following lines were added by compinstall
-zstyle ':completion:*' expand prefix suffix
-zstyle ':completion:*' file-sort access
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' list-suffixes true
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]} m:{[:lower:][:upper:]}={[:upper:][:lower:]} r:|[._-]=** r:|=**' 'l:|=* r:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' preserve-prefix '//[^/]##/'
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' special-dirs true
-zstyle :compinstall filename '/home/jaybee/.zshrc'
+###########
+# Plugins #
+###########
 
-autoload -Uz compinit
-compinit
+if [[ -f $HOME/.zcomet/bin/zcomet.zsh ]]
+then
+  # source zcomet
+  source $HOME/.zcomet/bin/zcomet.zsh
+
+  # setup plugins
+  #   fish-like syntax highlighting
+  zcomet load zsh-users/zsh-syntax-highlighting
+  #   fish-like autosuggestions
+  zcomet load zsh-users/zsh-autosuggestions
+  bindkey '' autosuggest-accept
+  #   remind yourself of aliases
+  zcomet load MichaelAquilina/zsh-you-should-use
+  export YSU_MESSAGE_POSITION="before"
+  export YSU_MESSAGE_FORMAT="$(tput setaf 3)Found %alias_type for %command: %alias$(tput sgr0)"
+  #   get extra autocompletions
+  zcomet load zsh-users/zsh-completions
+else
+  git clone https://github.com/agkozak/zcomet.git $HOME/.zcomet/bin
+fi
+
+
+
+###############
+# Completions #
+###############
+
+# setup standard completions with compinstall
+autoload -Uz compinstall
+if [[ $(type compinstall) ]]
+then
+  # The following lines were added by compinstall
+  zstyle ':completion:*' expand prefix suffix
+  zstyle ':completion:*' file-sort access
+  zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+  zstyle ':completion:*' list-suffixes true
+  zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]} m:{[:lower:][:upper:]}={[:upper:][:lower:]} r:|[._-]=** r:|=**' 'l:|=* r:|=*'
+  zstyle ':completion:*' menu select=long
+  zstyle ':completion:*' preserve-prefix '//[^/]##/'
+  zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+  zstyle ':completion:*' special-dirs true
+  zstyle :compinstall filename '/home/jaybee/.zshrc'
+  autoload -Uz compinit
+  compinit
+fi

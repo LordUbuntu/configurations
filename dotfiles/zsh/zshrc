@@ -4,9 +4,6 @@
 #  ALIASES  #
 #############
 
-# abbreviation aliases
-alias mkexec='chmod +x'
-
 # common utility aliases
 alias note="vim $(date +%F).md" # used a ton for taking notes
 alias activate="source env/bin/activate"
@@ -32,7 +29,9 @@ alias grep='grep --color=yes'     # or ripgrep (binary name is rg)
 alias fgrep='fgrep --color=auto'  # ...
 alias egrep='egrep --color=auto'  # ...
 alias mkdir='mkdir -p'
-alias tree='tree -CF' # or exa -T
+alias mkexec='chmod +x'
+alias home='cd $HOME'
+[[ $(type exa) ]] && alias tree='exa -T' || alias tree='tree -CF'
 
 
 
@@ -83,7 +82,8 @@ autoload -U colors && colors
 
 
 
-# TODO get rid of this whole section after replacing prompt with starship
+# TODO pick between starship or spaceship prompt
+# TODO replace section with one of the aforementioned prompts
 ############
 #  PROMPT  #
 ############

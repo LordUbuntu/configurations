@@ -6,7 +6,7 @@
 
 # common utility aliases
 alias note="vim $(date +%F).md" # used a ton for taking notes
-alias activate="source env/bin/activate"
+alias activate="source .env/bin/activate"
 
 # workaround because ubuntu doesn't follow naming conventions apparently
 if [[ $(type apt) ]]
@@ -79,94 +79,6 @@ setopt bare_glob_qual brace_ccl glob_dots ksh_glob mark_dirs
 # - Style
 setopt prompt_subst
 autoload -U colors && colors
-
-
-
-# TODO pick between starship or spaceship prompt
-# TODO replace section with one of the aforementioned prompts
-############
-#  PROMPT  #
-############
-
-# opens two files to compare and modify
-function merge { vimdiff $1 $2 }
-
-# abbreviates directory fish style
-function _shrink_path {
-  local paths=(${PWD/$HOME/\~}) 'cur_dir'
-  paths=(${(s:/:)paths})
-
-  # TODO shorten all but the last path name by iterating the index
-  len=$(( ${#paths[@]} - 1 ))
-  for i in $(seq 1 $len )
-  do
-    cur_dir+="${paths[$i]:0:1}"
-    cur_dir+='/'
-  done
-  cur_dir+="${paths[$(( -1 ))]}"
-  print -P "$cur_dir"
-}
-
-# updates vcs info status
-function _vcs_show {
-  setopt prompt_subst
-  autoload -Uz vcs_info
-  zstyle ':vcs_info:*' check-for-changes true
-  zstyle ':vcs_info:*' stagedstr '+'
-  zstyle ':vcs_info:*' unstagedstr '~'
-  zstyle ':vcs_info:*' patch-format "%10>..>%p%<< (%n applied)"
-  zstyle ':vcs_info:*' nvcsformats "%F{yellow}%B$(_shrink_path)%b%f"
-  zstyle ':vcs_info:*' formats '%F{yellow}%B%r/%S%%b%f %F{cyan}%b%f %F{green}%c%f %F{yellow}%u%f'
-  vcs_info
-}
-
-function preexec {
-  timer=$(( $(date +%s%0N) / 1000000000 )) # start timer
-}
-
-function precmd {
-  _vcs_show # display directory/git info
-
-  # calculate and show how much time has passed since last command execution
-  if [ $timer ]
-  then
-    now=$(( $(date +%s%0N) / 1000000000 ))
-    elapsed=$(( $now - $timer ))  # elapsed time in milliseconds
-    delta=$(print -P "\U0394")
-
-    threshold=3   # seconds to display elapsed time
-    if [[ $(( $elapsed )) -gt $threshold ]]
-    then
-      export RPROMPT="%F{cyan}$delta${elapsed}s%f "
-    else
-      export RPROMPT=""
-    fi
-  fi
-  unset timer
-}
-
-# COLORS AND SYMBOLS
-elem=`print "\U220a"`
-userhost='%(!|%F{red}|%F{green})%B%n@%m%b%f'
-errcode="%(?||%F{red}↯%? )%f"
-# indicate subshell levels
-if [[ -n "$NNNLVL" ]]
-then
-  symbol='♞ '
-  level="%B%F{yellow}%(2L|$symbol|)%b%f"
-else
-  symbol='🖥'
-  if [[ $TMUX ]]
-  then
-    level="%B%F{yellow}%(3L|$(($SHLVL - 1))$symbol|)%b%f"
-  else
-    level="%B%F{yellow}%(2L|%L$symbol|)%b%f"
-  fi
-fi
-state=`print "⟨Ψ$level⟩"`
-# PROMPTS
-PROMPT='$userhost $elem ${vcs_info_msg_0_}
-$errcode$state%f '
 
 
 
@@ -365,6 +277,109 @@ then
   alias nnn="n -e"
   alias NNN="sudo -E n -dH"
 fi
+
+
+
+# TODO pick between starship or spaceship prompt
+# TODO replace section with one of the aforementioned prompts
+############
+#  PROMPT  #
+############
+
+# # opens two files to compare and modify
+# function merge { vimdiff $1 $2 }
+#
+# # abbreviates directory fish style
+# function _shrink_path {
+#   local paths=(${PWD/$HOME/\~}) 'cur_dir'
+#   paths=(${(s:/:)paths})
+#
+#   # TODO shorten all but the last path name by iterating the index
+#   len=$(( ${#paths[@]} - 1 ))
+#   for i in $(seq 1 $len )
+#   do
+#     cur_dir+="${paths[$i]:0:1}"
+#     cur_dir+='/'
+#   done
+#   cur_dir+="${paths[$(( -1 ))]}"
+#   print -P "$cur_dir"
+# }
+#
+# # updates vcs info status
+# function _vcs_show {
+#   setopt prompt_subst
+#   autoload -Uz vcs_info
+#   zstyle ':vcs_info:*' check-for-changes true
+#   zstyle ':vcs_info:*' stagedstr '+'
+#   zstyle ':vcs_info:*' unstagedstr '~'
+#   zstyle ':vcs_info:*' patch-format "%10>..>%p%<< (%n applied)"
+#   zstyle ':vcs_info:*' nvcsformats "%F{yellow}%B$(_shrink_path)%b%f"
+#   zstyle ':vcs_info:*' formats '%F{yellow}%B%r/%S%%b%f %F{cyan}%b%f %F{green}%c%f %F{yellow}%u%f'
+#   vcs_info
+# }
+#
+# function preexec {
+#   timer=$(( $(date +%s%0N) / 1000000000 )) # start timer
+# }
+#
+# function precmd {
+#   _vcs_show # display directory/git info
+#
+#   # calculate and show how much time has passed since last command execution
+#   if [ $timer ]
+#   then
+#     now=$(( $(date +%s%0N) / 1000000000 ))
+#     elapsed=$(( $now - $timer ))  # elapsed time in milliseconds
+#     delta=$(print -P "\U0394")
+#
+#     threshold=3   # seconds to display elapsed time
+#     if [[ $(( $elapsed )) -gt $threshold ]]
+#     then
+#       export RPROMPT="%F{cyan}$delta${elapsed}s%f "
+#     else
+#       export RPROMPT=""
+#     fi
+#   fi
+#   unset timer
+# }
+
+# COLORS AND SYMBOLS
+# elem=`print "\U220a"`
+# userhost='%(!|%F{red}|%F{green})%B%n@%m%b%f'
+# errcode="%(?||%F{red}↯%? )%f"
+# # indicate subshell levels
+# if [[ -n "$NNNLVL" ]]
+# then
+#   symbol='♞ '
+#   level="%B%F{yellow}%(2L|$symbol|)%b%f"
+# else
+#   symbol='🖥'
+#   if [[ $TMUX ]]
+#   then
+#     level="%B%F{yellow}%(3L|$(($SHLVL - 1))$symbol|)%b%f"
+#   else
+#     level="%B%F{yellow}%(2L|%L$symbol|)%b%f"
+#   fi
+# fi
+# state=`print "⟨Ψ$level⟩"`
+# PROMPTS
+# PROMPT='$userhost $elem ${vcs_info_msg_0_}
+# $errcode$state%f '
+
+# starship prompt
+if [[ $(type starship) ]]
+then
+  # start prompt
+  eval "$(starship init zsh)"
+fi
+
+
+
+
+
+
+
+
 
 
 

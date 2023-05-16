@@ -1,0 +1,37 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+##### PROMPT BASIC #####
+add_newline = false
+continuation_prompt = '[•](bold black)'
+
+
+
+##### MODULES #####
+[character]
+success_symbol = '[ι](bold green)'
+error_symbol = '[ι](bold red)'
+# alternatives ιλμ
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+fish_style_pwd_dir_length = 3
+truncation_symbol = '…'
+style = "bold blue"
+read_only = '!'
+read_only_style = 'bold red'
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[username]
+show_always = true
+style_user = 'bold green'
+style_root = 'bold red'
+format = '[$user]($style) at '
+
+[hostname]
+ssh_only = false
+ssh_symbol = '🪐'
+style = 'bold yellow'
+format = '[$ssh_symbol$hostname]($style) in '
+# alternatives 🚀🪐

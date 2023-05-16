@@ -9,7 +9,7 @@ alias note="vim $(date +%F).md" # used a ton for taking notes
 alias activate="source .env/bin/activate"
 
 # workaround because ubuntu doesn't follow naming conventions apparently
-if [[ $(type apt) ]]
+if type apt &> /dev/null
 then
   alias -g python='python3'
   alias -g pip='pip3'
@@ -31,7 +31,7 @@ alias egrep='egrep --color=auto'  # ...
 alias mkdir='mkdir -p'
 alias mkexec='chmod +x'
 alias home='cd $HOME'
-[[ $(type exa) ]] && alias tree='exa -T' || alias tree='tree -CF'
+type exa &> /dev/null && alias tree='exa -T' || alias tree='tree -CF'
 
 
 
@@ -88,9 +88,8 @@ autoload -U colors && colors
 
 # set environment variables taking system state into consideration
 PATH="$PATH:$HOME/.local/bin:$HOME/bin"
-[[ $(type emacs) ]] && PATH="$PATH:$HOME/.emacs.d/bin"
-[[ $(type cabal) ]] && PATH="$PATH:$HOME/.cabal/bin"
-[[ $(type perl) ]] && PATH="$PATH:$HOME/.perl5/bin"  # needed for perl5
+type emacs &> /dev/null && PATH="$PATH:$HOME/.emacs.d/bin"
+type cabal &> /dev/null && PATH="$PATH:$HOME/.cabal/bin"
 [[ -f /usr/local/cuda/bin ]] && PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
 
 export PATH
@@ -143,12 +142,12 @@ fi
 # TODO autosetup ripgrep and ripgrep-all
 
 # FZF
-if [[ $(type fzf) ]]
+if type fzf &> /dev/null
 then
   # doesn't seem to work for some reason when using fd or bat despite function definitions above
   export FZF_COMPLETION_TRIGGER='**'
   export FZF_DEFAULT_OPTS="--prompt='🔭 ' --pointer='→' --marker='⚗' --height 100% --layout=reverse --border=rounded --header='CTRL-C or ESC to quit'"
-  if [[ $(type apt) ]]
+  if type apt &> /dev/null
   then
     export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --follow --exclude .git"
   else
@@ -161,7 +160,7 @@ then
     # ensure neovim is installed
     [[ -z $(type nvim) ]] && return
 
-    if [[ $(type apt) ]]
+    if type apt &> /dev/null
     then
       selection=$(fzf --query="$@" --preview 'batcat {}')
     else
@@ -182,7 +181,7 @@ then
     [[ -z $(type rg) ]] && return
 
     # filter rg selections into fzf with preview
-    if [[ $(type apt) ]]
+    if type apt &> /dev/null
     then
       selection=$(rg -n . | fzf --query="$@" -d ':' --preview 'batcat {1} --highlight-line {2}')
     else
@@ -201,7 +200,7 @@ then
 fi
 
 # RipGrep-All
-if [[ $(type rga) ]]
+if type rga &> /dev/null
 then
   # reach for Abyss File - get path to file with matching data
   function af {
@@ -227,7 +226,7 @@ then
 fi
 
 # FASD
-if [[ $(type fasd) ]]
+if type fasd &> /dev/null
 then
   eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
   [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
@@ -236,7 +235,7 @@ then
 fi
 
 # NNN
-if [[ $(type nnn) ]]
+if type nnn &> /dev/null
 then
   export NNN_FIFO=/tmp/nnn.fifo
 
@@ -390,7 +389,7 @@ fi
 
 # setup standard completions with compinstall
 autoload -Uz compinstall
-if [[ $(type compinstall) ]]
+if type compinstall &> /dev/null
 then
   # The following lines were added by compinstall
   zstyle ':completion:*' expand prefix suffix

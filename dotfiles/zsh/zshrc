@@ -367,10 +367,11 @@ fi
 # $errcode$state%f '
 
 # starship prompt
-if [[ $(type starship) ]]
+if type starship &> /dev/null
 then
   # start prompt
   eval "$(starship init zsh)"
+  export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 fi
 
 

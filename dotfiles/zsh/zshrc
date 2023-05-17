@@ -1,5 +1,4 @@
-# TODO
-# - setup starship prompt
+# zmodload zsh/zprof
 #############
 #  ALIASES  #
 #############
@@ -82,23 +81,6 @@ autoload -U colors && colors
 
 
 
-#########
-#  ENV  #
-#########
-
-# set environment variables taking system state into consideration
-PATH="$PATH:$HOME/.local/bin:$HOME/bin"
-type emacs &> /dev/null && PATH="$PATH:$HOME/.emacs.d/bin"
-type cabal &> /dev/null && PATH="$PATH:$HOME/.cabal/bin"
-[[ -f /usr/local/cuda/bin ]] && PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
-
-export PATH
-export LC_CTYPE="en_CA.UTF-8"
-export EDITOR="nvim"
-export OPENER="xdg-open"
-
-
-
 ###########
 # Plugins #
 ###########
@@ -120,6 +102,8 @@ then
   zcomet load MichaelAquilina/zsh-you-should-use
   export YSU_MESSAGE_POSITION="before"
   export YSU_MESSAGE_FORMAT="$(tput setaf 3)Found %alias_type for %command: %alias$(tput sgr0)"
+  #   lazy load pyenv
+  # zcomet trigger pyenv mattberther/zsh-pyenv
   #   get extra autocompletions
   zcomet load zsh-users/zsh-completions
   #   fish-like syntax highlighting
@@ -137,9 +121,35 @@ fi
 # PROGRAMS #
 ############
 
-# TODO someday try mcfly again
 # TODO add espanso
-# TODO autosetup ripgrep and ripgrep-all
+
+# EMACS
+if type emacs &> /dev/null
+then
+  PATH="$PATH:$HOME/.emacs.d/bin"
+fi
+
+# CABAL
+if type cabal &> /dev/null
+then
+  PATH="$PATH:$HOME/.cabal/bin"
+fi
+
+# NVIDIA CUDA
+if [[ -f /usr/local/cuda/bin ]]
+then
+  PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
+fi
+
+# PYENV
+if [[ -d $HOME/.pyenv ]]
+then
+  export PYENV_ROOT="$HOME/.pyenv"
+  PATH="$PATH:$PYENV_ROOT/bin"
+  # eval "$(pyenv init -)"
+else
+  git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+fi
 
 # FZF
 if type fzf &> /dev/null
@@ -279,12 +289,10 @@ fi
 
 
 
-# TODO pick between starship or spaceship prompt
-# TODO replace section with one of the aforementioned prompts
 ############
 #  PROMPT  #
 ############
-# starship prompt
+# STARSHIP
 if type starship &> /dev/null
 then
   # start prompt
@@ -296,11 +304,17 @@ fi
 
 
 
+#########
+#  ENV  #
+#########
 
+# set environment variables taking system state into consideration
+PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 
-
-
-
+export PATH
+export LC_CTYPE="en_CA.UTF-8"
+export EDITOR="nvim"
+export OPENER="xdg-open"
 
 
 
@@ -326,3 +340,4 @@ then
   autoload -Uz compinit
   compinit
 fi
+# zprof

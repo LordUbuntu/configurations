@@ -11,7 +11,7 @@ let b.='?⍵∊⍴~↑↓⍳○*←→  ?⍵⍷⍴⍨↑↓⍸⍥⍣⍞⍬ '
 let b.='⍺⌈⌊∥∇∆∘''⎕⍎⍕⊢ ⍺⌈⌊⊚∇∆⍤⌸⌷≡≢⊣ '
 let b.='⊂⊃∩∪⊥⊤|⍝⍀⌿    ⊆⊃∩∪⊥⊤|⍪⍙⍠   '
 
-let p=exists('g:apl_prefix_key')?g:apl_prefix_key:'`'
+let p=exists('g:apl_prefix_key')?g:apl_prefix_key:"'"
 exe 'lno<buffer> '.p.'<space> '.p
 exe 'cno<buffer> '.p.'<space> '.p
 let[A,B]=map([a,b],"split(v:val,'\\zs *')")

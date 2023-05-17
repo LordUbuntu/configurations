@@ -6,7 +6,7 @@ require('core.option')
 require('core.keymap')
 
 -- theme
-require('themes.monokai')
+require('themes.monokai-pro')
 -- vim.cmd [[ set background=light ]]  -- light theme
 
 

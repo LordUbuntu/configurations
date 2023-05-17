@@ -90,6 +90,11 @@ packer.startup(function(use)
     config = function() require("config.comment") end,
   }
   use {
+    'folke/todo-comments.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function() require("config.todo-comments") end,
+  }
+  use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
     requires = {
       "nvim-lua/plenary.nvim"

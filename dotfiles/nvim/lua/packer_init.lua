@@ -172,6 +172,11 @@ packer.startup(function(use)
     },
     config = function() require("config.lsp.lsp-config") end,
   }
+  use {
+    'folke/trouble.nvim',
+    requires = 'nvim-tree/nvim-web-devicons',
+    config = function() require("config.lsp.trouble") end,
+  }
 
 
   --------------------

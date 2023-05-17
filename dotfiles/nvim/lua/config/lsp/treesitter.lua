@@ -19,11 +19,11 @@ treesitter.setup {
       "css",
       "bash",
   },
-  sync_install = false,
+  sync_install = true,
   auto_install = false,  -- set to true for automagic install of missing TS
   highlight = {
     -- `false` will disable the whole extension
     enable = true,
-    -- additional_vim_regex_highlighting = false,  -- may cause slowdowns and duplications
+    additional_vim_regex_highlighting = true,  -- may cause slowdowns and duplications
   },
 }

@@ -1,3 +1,6 @@
+-- plugin: todo-comments
+-- url: https://github.com/folke/todo-comments.nvim
+-- note: keywords must be capitalized and end with a colon like `KEY:`
 local ok, todo = pcall(require, "todo-comments")
 if not ok then
   return

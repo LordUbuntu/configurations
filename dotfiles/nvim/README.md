@@ -1,5 +1,7 @@
 # My Neovim Setup
 
+## Structure
+
 This directory contains all the files I use for my Neovim setup.
 
 + `init.lua` is the top-most config
@@ -9,3 +11,7 @@ This directory contains all the files I use for my Neovim setup.
 + `lua/core` is where core modules go (like keymaps)
 
 Not everything is Neovim ready though, so there are some Vim files here as well to compensate for that. The `syntax` and `ftdetect` directories are for those situations that aren't yet covered. Mostly, just files that I work with on occasion. For very special cases (like apl), there are special keymaps in `keymap`
+
+## TODO
+
+I need to reorganized the lua subdirectory to be more modular, maybe get rid of core and move it to top init. I also need to switch packaging to lazy, and rework configs and modules to complete my preferred custom config

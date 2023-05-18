@@ -103,7 +103,7 @@ then
   export YSU_MESSAGE_POSITION="before"
   export YSU_MESSAGE_FORMAT="$(tput setaf 3)Found %alias_type for %command: %alias$(tput sgr0)"
   #   lazy load pyenv
-  # zcomet trigger pyenv mattberther/zsh-pyenv
+  zcomet trigger pyenv mattberther/zsh-pyenv
   #   get extra autocompletions
   zcomet load zsh-users/zsh-completions
   #   fish-like syntax highlighting

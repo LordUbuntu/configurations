@@ -117,7 +117,7 @@ then
   zcomet load zsh-users/zsh-syntax-highlighting
   #   fish-like autosuggestions
   zcomet load zsh-users/zsh-autosuggestions
-  bindkey '' autosuggest-accept
+  bindkey '^l' autosuggest-accept
 else
   git clone https://github.com/agkozak/zcomet.git $HOME/.zcomet/bin
 fi

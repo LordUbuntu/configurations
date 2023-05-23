@@ -122,11 +122,12 @@ conflicted = '✘'
 up_to_date = '✔'
 ahead = '↑${count}'
 behind = '↓${count}'
+diverged = ''
 untracked = '?${count}'
 modified = '+${count}'
 staged = '●${count}'
 renamed = '»${count}'
-format = '([\[$ahead$behind$untracked$modified$renamed$staged$conflicted$up_to_date\]]($style))'
+format = '([\[($ahead_behind)$untracked$modified$renamed$staged$conflicted$up_to_date\]]($style))'
 [git_commit]
 tag_disabled = false
 tag_symbol = '🏷'

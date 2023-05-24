@@ -128,7 +128,9 @@ fi
 # PROGRAMS #
 ############
 
-# TODO add espanso
+# set environment variables taking system state into consideration
+PATH="$PATH:$HOME/.local/bin:$HOME/bin"
+
 
 # EMACS
 if type emacs &> /dev/null
@@ -156,6 +158,13 @@ then
   # eval "$(pyenv init -)"
 else
   git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+fi
+
+# TMUX
+if type tmux &> /dev/null
+then
+  # hide subshell status when in tmux
+  # TODO: How do I ?
 fi
 
 # FZF
@@ -266,8 +275,11 @@ then
   function n {
     # Block nesting of nnn in subshells
     if [[ "${NNNLVL:-0}" -ge 1 ]]; then
-        echo "nnn is already running"
-        return
+      echo "nnn is already running"
+      return
+    else
+      # hide subshell status when in nnn
+      SHLVL=$(($SHLVL - 1))
     fi
 
     # The behaviour is set to cd on quit (nnn checks if NNN_TMPFILE is set)
@@ -314,9 +326,6 @@ fi
 #########
 #  ENV  #
 #########
-
-# set environment variables taking system state into consideration
-PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 
 export PATH
 export LC_CTYPE="en_CA.UTF-8"

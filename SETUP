@@ -30,3 +30,14 @@ Now that I think about it, maybe this program should be a python script instead.
 
 
 See test.sh for an example of how to temporarily give control to user for encountered problems...
+
+
+
+
+
+
+Maybe instead I could do something like what dotfile managers do?
+- manage configs in a dotfile folder synced with git like what I've already been doing, but instead each program that is named has an associated directory to copy from and an associated package which is installed if it is not installed already (before linking dotfiles), and not linking dotfiles for programs not installed unless forced.
+
+
+remember to use `link` command

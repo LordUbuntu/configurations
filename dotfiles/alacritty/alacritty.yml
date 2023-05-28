@@ -21,6 +21,28 @@ font:
 #   - ~/.config/alacritty/themes/theme.yml
 schemes:
   # Dark Themes
+  gruvbox_dark: &gruvbox_dark
+    primary:
+      background: '#282828'
+      foreground: '#ebdbb2'
+    normal:
+      black:   '#282828'
+      red:     '#cc241d'
+      green:   '#98971a'
+      yellow:  '#d79921'
+      blue:    '#458588'
+      magenta: '#b16286'
+      cyan:    '#689d6a'
+      white:   '#a89984'
+    bright:
+      black:   '#928374'
+      red:     '#fb4934'
+      green:   '#b8bb26'
+      yellow:  '#fabd2f'
+      blue:    '#83a598'
+      magenta: '#d3869b'
+      cyan:    '#8ec07c'
+      white:   '#ebdbb2'
   monokai_pro: &monokai_pro
     primary:
       background: '#2D2A2E'
@@ -43,33 +65,6 @@ schemes:
       magenta: '#AB9DF2'
       cyan:    '#78DCE8'
       white:   '#FCFCFA'
-  chalk_dark: &chalk
-    name: Chalk (dark)
-    author: Chris Kempson
-    primary:
-      background: "#151515"
-      foreground: "#d0d0d0"
-    cursor:
-      text: "#151515"
-      cursor: "#d0d0d0"
-    normal:
-      black: "#151515"
-      red: "#fb9fb1"
-      green: "#acc267"
-      yellow: "#ddb26f"
-      blue: "#6fc2ef"
-      magenta: "#e1a3ee"
-      cyan: "#12cfc0"
-      white: "#d0d0d0"
-    bright:
-      black: "#505050"
-      red: "#fb9fb1"
-      green: "#acc267"
-      yellow: "#ddb26f"
-      blue: "#6fc2ef"
-      magenta: "#e1a3ee"
-      cyan: "#12cfc0"
-      white: "#f5f5f5"
   tomorrow_dark: &tomorrow
     primary:
       background: '0x1d1f21'
@@ -146,6 +141,28 @@ schemes:
       magenta: '#6c71c4' # violet
       cyan:    '#93a1a1' # base1
       white:   '#fdf6e3' # base3
+  gruvbox_light: &gruvbox_light
+    primary:
+      background: '#fbf1c7'
+      foreground: '#3c3836'
+    normal:
+      black:   '#fbf1c7'
+      red:     '#cc241d'
+      green:   '#98971a'
+      yellow:  '#d79921'
+      blue:    '#458588'
+      magenta: '#b16286'
+      cyan:    '#689d6a'
+      white:   '#7c6f64'
+    bright:
+      black:   '#928374'
+      red:     '#9d0006'
+      green:   '#79740e'
+      yellow:  '#b57614'
+      blue:    '#076678'
+      magenta: '#8f3f71'
+      cyan:    '#427b58'
+      white:   '#3c3836'
   papercolor_light: &papercolor
     primary:
       background: '0xeeeeee'
@@ -171,7 +188,7 @@ schemes:
       magenta: '0xd75f00'
       cyan:    '0x005faf'
       white:   '0x005f87'
-colors: *monokai_pro
+colors: *gruvbox_dark
 
 window:
   dimensions:

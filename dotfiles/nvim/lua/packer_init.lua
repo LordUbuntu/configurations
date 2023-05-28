@@ -194,6 +194,11 @@ packer.startup(function(use)
   }
 
   use {
+    "ellisonleao/gruvbox.nvim",
+    as = 'gruvbox',
+  }
+
+  use {
     'shaunsingh/solarized.nvim',
     as = 'solarized',
   }

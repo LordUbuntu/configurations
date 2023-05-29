@@ -1,0 +1,4 @@
+if [[ -n "$TMUX" ]]
+then
+  SHLVL=$((SHLVL - 1))
+fi

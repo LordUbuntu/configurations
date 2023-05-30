@@ -28,6 +28,9 @@ map('n', '<leader>bn', '<cmd>bn<CR>')
 map('n', '<leader>bp', '<cmd>bp<CR>')
 map('n', '<leader>bk', '<cmd>bd<cr>')
 
+-- clear search highlight
+map('n', '<leader>l', '<cmd>nohlsearch<CR>')
+
 
 
 ------------

@@ -140,6 +140,24 @@ packer.startup(function(use)
     requires = 'winston0410/cmd-parser.nvim',
     config = function() require("config.rangehighlight") end
   }
+  -- highlight colorcolumn as you approach it
+  use {
+    'Bekaboo/deadcolumn.nvim',
+    -- doesn't need setup
+  }
+  -- focused writing
+  -- twilight
+  use {
+    'folke/twilight.nvim',
+    config = function() require("config.twilight") end,
+  }
+
+  -- zen mode
+  use {
+    'folke/zen-mode.nvim',
+    requires = 'folke/twilight.nvim',
+    config = function() require("config.zenmode") end,
+  }
 
 
   --------------

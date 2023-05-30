@@ -92,7 +92,7 @@ packer.startup(function(use)
   use {
     'folke/todo-comments.nvim',
     requires = 'nvim-lua/plenary.nvim',
-    config = function() require("config.todo-comments") end,
+    config = function() require("config.todocomments") end,
   }
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
@@ -122,12 +122,23 @@ packer.startup(function(use)
   -- tmux integration
   use {
     "aserowy/tmux.nvim",
-    config = function() require("config.tmux") end
+    config = function() require("config.tmux") end,
   }
   -- show color of color codes
+  -- use {
+  --   'norcalli/nvim-colorizer.lua',
+  --   config = function() require("config.colorizer") end,
+  -- }
   use {
-    'norcalli/nvim-colorizer.lua',
-    config = function() require("config.colorizer") end
+    'uga-rosa/ccc.nvim',
+    as = 'ccc',
+    config = function() require("config.ccc") end,
+  }
+  -- highlight ranges in commandline
+  use {
+    'winston0410/range-highlight.nvim',
+    requires = 'winston0410/cmd-parser.nvim',
+    config = function() require("config.rangehighlight") end
   }
 
 

@@ -119,6 +119,11 @@ packer.startup(function(use)
     -- keys = { "s", "S", "f", "F", "t", "T", "gs", "gS" },
     config = function() require("config.lightspeed") end,
   }
+  -- tmux integration
+  use{
+      "aserowy/tmux.nvim",
+      config = function() require("config.tmux") end
+  }
 
 
   --------------

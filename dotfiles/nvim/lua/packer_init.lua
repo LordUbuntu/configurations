@@ -120,9 +120,14 @@ packer.startup(function(use)
     config = function() require("config.lightspeed") end,
   }
   -- tmux integration
-  use{
-      "aserowy/tmux.nvim",
-      config = function() require("config.tmux") end
+  use {
+    "aserowy/tmux.nvim",
+    config = function() require("config.tmux") end
+  }
+  -- show color of color codes
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function() require("config.colorizer") end
   }
 
 

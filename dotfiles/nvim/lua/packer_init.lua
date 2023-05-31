@@ -258,6 +258,15 @@ packer.startup(function(use)
     requires = "kyazdani42/nvim-web-devicons",
     config = function() require("config.bufferline") end,
   }
+  -- switch between light and dark mode based on system theme (see darkman)
+  use {
+    '4e554c4c/darkman.nvim',
+    run = 'go build -o bin/darkman.nvim',
+    config = function()
+      -- see: https://github.com/4e554c4c/darkman.nvim
+      require("darkman").setup({})
+    end,
+  }
 
 
   -- automatically sync packages after bootstrap

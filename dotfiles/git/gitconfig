@@ -1,8 +1,20 @@
 [user]
-	email = therealjacoburger@gmail.com
-	name = Jacobus Burger
+  email = therealjacoburger@gmail.com
+  name = Jacobus Burger
 [core]
-	autocrlf = input
-	editor = nvim
+  autocrlf = input
+  editor = nvim
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only --features=interactive
 [init]
-	defaultBranch = main  ;; alternatives: "core", "nexus", "root", "base"
+  defaultBranch = main  ;; alternatives: "core", "nexus", "root", "base"
+
+[delta]
+  color = always
+  true-color = auto
+  hyperlinks = true
+  colors-only = true
+  diff-so-fancy = true
+  line-numbers = true
+  syntax-theme = gruvbox-dark

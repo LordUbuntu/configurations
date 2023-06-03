@@ -6,7 +6,7 @@ This is a list of the tools I use and how I use them in my dev env.
 * Starship - Grand Unified Prompt
 * Gruvbox - Universal Warm Theme (until I find or make a better one)
 * Zsh - Powerful configurable shell
-* NVim - Modern VI
+* NVim - Modern VI Text Editor
 * Alacritty (to become WezTerm) - Blazingly Fast Terminal Emulator
 
 * CLI Tools
@@ -15,3 +15,5 @@ This is a list of the tools I use and how I use them in my dev env.
   * Ripgrep(all) - Find file contents _FAST_
   * FASD (to become something else?) - Jump to frecent directories instantly
   * NNN - A nice filesystem navigator
+  * Delta - A better diff command to use with git etc
+

@@ -47,7 +47,7 @@ fi
 
 # - History
 HISTFILE=$HOME/.history
-HISTSIZE=1000
+HISTSIZE=10000
 SAVEHIST=200
 # - Behaviour
 setopt bang_hist hist_ignore_space hist_beep beep
@@ -124,6 +124,12 @@ fi
 
 
 
+##############
+#  ENV SETUP #
+##############
+
+
+
 ############
 # PROGRAMS #
 ############
@@ -131,6 +137,31 @@ fi
 # set environment variables taking system state into consideration
 PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 
+# ZELLIJ
+if type zellij &> /dev/null
+then
+  # check if currently in a zellij session
+  if [[ ! -z "$ZELLIJ" ]]
+  then
+    # because of recursion,
+    # if SHLVL was not previously decremented
+    #   hide zellij entry shell (set SHLVL to SHLVL - 1)
+    if [[ ! "$PROG_SUBSH" ]]
+    then
+      SHLVL=$((SHLVL - 1))
+      export PROG_SUBSH=true
+    fi
+  else
+    # autoattach to zellij session
+    # if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+    #     zellij attach -c
+    # start zellij on terminal start
+    # else
+    #     zellij
+    #     exit
+    # fi
+  fi
+fi
 
 # EMACS
 if type emacs &> /dev/null
@@ -160,19 +191,13 @@ else
   git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 fi
 
-# TMUX
-if type tmux &> /dev/null
-then
-  # hide subshell status when in tmux
-  # TODO: How do I ?
-fi
-
 # FZF
 if type fzf &> /dev/null
 then
   # doesn't seem to work for some reason when using fd or bat despite function definitions above
   export FZF_COMPLETION_TRIGGER='**'
-  export FZF_DEFAULT_OPTS="--prompt='🔭 ' --pointer='→' --marker='⚗' --height 100% --layout=reverse --border=rounded --header='CTRL-C or ESC to quit'"
+  # 🔭 or 
+  export FZF_DEFAULT_OPTS="--prompt='λ ' --pointer='→' --marker='•' --height 100% --layout=reverse --border=rounded --header='CTRL-C or ESC to quit'"
   if type apt &> /dev/null
   then
     export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --follow --exclude .git"
@@ -323,16 +348,14 @@ fi
 
 
 
-#########
-#  ENV  #
-#########
+#################
+#  ENV EXPORTS  #
+#################
 
 export PATH
 export LC_CTYPE="en_CA.UTF-8"
 export EDITOR="nvim"
 export OPENER="xdg-open"
-
-
 
 ###############
 # Completions #

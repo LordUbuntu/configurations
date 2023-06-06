@@ -7,10 +7,34 @@ return {
   -- zen-mode config
   {
     'folke/zen-mode.nvim',
-    dependencies = {
-      'folke/twilight.nvim',
-    },
+    lazy = true,
     cmd = "ZenMode",
+    dependencies = {
+      -- twilight config
+      {
+        'folke/twilight.nvim',
+        opts = {
+          dimming = {
+            alpha = 0.25, -- amount of dimming
+            -- we try to get the foreground from the highlight groups or fallback color
+            color = { "Normal", "#ffffff" },
+            term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
+            inactive = true, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
+          },
+          context = 13, -- amount of lines we will try to show around the current line
+          treesitter = true, -- use treesitter when available for the filetype
+          -- treesitter is used to automatically expand the visible text,
+          -- but you can further control the types of nodes that should always be fully expanded
+          expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
+            "function",
+            "method",
+            "table",
+            "if_statement",
+          },
+          exclude = {}, -- exclude these filetypes
+        },
+      },
+    },
     opts = {
       window = {
         backdrop = 0.95, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
@@ -63,31 +87,6 @@ return {
       -- callback where you can add custom code when the Zen window closes
       on_close = function()
       end,
-    },
-  },
-  -- twilight config
-  {
-    'folke/twilight.nvim',
-    lazy = true,
-    opts = {
-      dimming = {
-        alpha = 0.25, -- amount of dimming
-        -- we try to get the foreground from the highlight groups or fallback color
-        color = { "Normal", "#ffffff" },
-        term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
-        inactive = true, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
-      },
-      context = 13, -- amount of lines we will try to show around the current line
-      treesitter = true, -- use treesitter when available for the filetype
-      -- treesitter is used to automatically expand the visible text,
-      -- but you can further control the types of nodes that should always be fully expanded
-      expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
-        "function",
-        "method",
-        "table",
-        "if_statement",
-      },
-      exclude = {}, -- exclude these filetypes
     },
   },
 }

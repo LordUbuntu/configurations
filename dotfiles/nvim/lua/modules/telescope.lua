@@ -17,7 +17,7 @@ return {
   config = function()
     require('telescope').setup({
       defaults = {
-        prompt_prefix = ' ',
+        prompt_prefix = 'λ ',
         selection_caret = '→ ',
         layout_strategy = 'horizontal',
         layout_config = {

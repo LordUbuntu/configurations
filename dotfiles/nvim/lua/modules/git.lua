@@ -2,10 +2,6 @@
 -- see:
 -- * gitsigns: https://github.com/lewis6991/gitsigns.nvim
 
--- true if buf file in repo, false otherwise
-local gitfile = require('core.helpers').gitfile
-
-
 return {
   -- gitsigns
   {

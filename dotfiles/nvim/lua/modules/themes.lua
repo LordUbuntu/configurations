@@ -2,13 +2,14 @@
 -- * gruvbox: https://github.com/ellisonleao/gruvbox.nvim
 -- * catppuccin: https://github.com/catppuccin/nvim
 -- * rose-pine: https://github.com/rose-pine/neovim
+-- * oh-lucy: https://github.com/Yazeed1s/oh-lucy.nvim
 return {
   -- gruvbox: a warm bright theme with pastel 'retro groove' colors
   --          inspired by badwolf, jellybeans, and solarized.
   -- see: https://github.com/ellisonleao/gruvbox.nvim
   {
     'ellisonleao/gruvbox.nvim',
-    -- priority = 1000,  -- ensure theme comes before all else
+    name = 'gruvbox',
     lazy = true,
     opts = {
       undercurl = true,
@@ -108,6 +109,21 @@ return {
           StatusLine = { fg = 'love', bg = 'love', blend = 10 },
         }
       })
+    end,
+  },
+  -- oh-lucy: a soft and clear warm theme
+  -- see: https://github.com/Yazeed1s/oh-lucy.nvim
+  {
+    'Yazeed1s/oh-lucy.nvim',
+    name = 'oh-lucy',
+    lazy = true,
+    config = function()
+      vim.g.oh_lucy_italic_comments = true
+      vim.g.oh_lucy_italic_keywords = true
+      vim.g.oh_lucy_italic_booleans = false
+      vim.g.oh_lucy_italic_functions = false
+      vim.g.oh_lucy_italic_variables = true
+      vim.g.oh_lucy_transparent_background = false
     end,
   },
   -- darkman: A neovim plugin for interfacing with the freedesktop

@@ -23,6 +23,7 @@ return {
     },
     -- keep all plugin keymap registries here
     config = function()
+
 			require("which-key").register({
         ['<leader>'] = {
           b = {
@@ -36,13 +37,11 @@ return {
               name = 'Block Comment',
               c = { name = 'Block Comment Toggle' },
             },
-            c = {
-              name = 'Line Comment',
-              c = { name = 'Line Comment Toggle' },
-              O = { name = 'Add Line Comment Above' },
-              o = { name = 'Add Line Comment Below' },
-              A = { name = 'Add Line Comment To End' },
-            },
+            c = { 'Line Comment' },
+            ['cc'] = { name = 'Line Comment Toggle' },
+            ['cO'] = { name = 'Add Line Comment Above' },
+            ['co'] = { name = 'Add Line Comment Below' },
+            ['cA'] = { name = 'Add Line Comment To End' },
           },
           h = {
             name = 'Hop',

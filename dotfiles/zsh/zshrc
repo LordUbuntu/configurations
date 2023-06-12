@@ -29,12 +29,6 @@ alias home='cd $HOME'
 alias note="nvim $(date +%F).md"
 alias activate="source .env/bin/activate"
 type exa &> /dev/null && alias tree='exa -T' || alias tree='tree -CF'
-if type fasd &> /dev/null
-then
-  function j {
-    cd "$(fasd -ldR | fzf)"
-  }
-fi
 
 # workaround because ubuntu doesn't follow naming conventions apparently
 if type apt &> /dev/null
@@ -291,10 +285,19 @@ fi
 # FASD
 if type fasd &> /dev/null
 then
-  eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
-  [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-  alias v='f -e $EDITOR'
-  alias o='a -e $OPENER'
+  # eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
+  eval "$(fasd --init)"
+  function f { fasd -Rlf "$@" }
+  function a { fasd -Rla "$@" }
+  function s { fasd -Rs  "$@" }
+  function sf { fasd -Rlf "$@" | fzf }
+  function sa { fasd -Rla "$@" | fzf }
+  function sd { fasd -Rld "$@" | fzf }
+  function d { fasd -Rld "$@" }
+  function z { cd "$(d)" }
+  function zz { cd "$(sd)" }
+  function v { $EDITOR $(f | fzf -m) }
+  function o { $OPENER "$(sa $@)" }
 fi
 
 # NNN

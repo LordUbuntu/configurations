@@ -29,6 +29,12 @@ alias home='cd $HOME'
 alias note="nvim $(date +%F).md"
 alias activate="source .env/bin/activate"
 type exa &> /dev/null && alias tree='exa -T' || alias tree='tree -CF'
+if type fasd &> /dev/null
+then
+  function j {
+    cd "$(fasd -ldR | fzf)"
+  }
+fi
 
 # workaround because ubuntu doesn't follow naming conventions apparently
 if type apt &> /dev/null
@@ -169,10 +175,16 @@ then
   PATH="$PATH:$HOME/.emacs.d/bin"
 fi
 
-# CABAL
+# HASKELL
 if type cabal &> /dev/null
 then
   PATH="$PATH:$HOME/.cabal/bin"
+fi
+
+# RUST
+if type cargo &> /dev/null
+then
+  PATH="$PATH:$HOME/.cargo/bin"
 fi
 
 # NVIDIA CUDA

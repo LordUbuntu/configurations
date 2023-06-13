@@ -117,7 +117,6 @@ then
   zcomet load zsh-users/zsh-syntax-highlighting
   #   fish-like autosuggestions
   zcomet load zsh-users/zsh-autosuggestions
-  bindkey '^l' autosuggest-accept
 else
   git clone https://github.com/agkozak/zcomet.git $HOME/.zcomet/bin
 fi
@@ -128,14 +127,14 @@ fi
 #  ENV SETUP #
 ##############
 
+# set environment variables taking system state into consideration
+PATH="$PATH:$HOME/.local/bin:$HOME/bin"
+
 
 
 ############
 # PROGRAMS #
 ############
-
-# set environment variables taking system state into consideration
-PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 
 # ZELLIJ
 if type zellij &> /dev/null
@@ -161,6 +160,13 @@ then
     #     exit
     # fi
   fi
+fi
+
+# NVIM
+if type nvim &> /dev/null
+then
+  alias vim="nvim"
+  alias chad="NVIM_APPNAME=NvChad nvim"
 fi
 
 # EMACS

@@ -285,17 +285,15 @@ fi
 # FASD
 if type fasd &> /dev/null
 then
-  # eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
-  eval "$(fasd --init)"
-  function f { fasd -Rlf "$@" }
-  function a { fasd -Rla "$@" }
-  function s { fasd -Rs  "$@" }
+  eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
+  unalias s
+  unalias sf
+  unalias sd
+  unalias zz
+  function s  { fasd -Rs  "$@" | fzf | awk '{print $2}' }
   function sf { fasd -Rlf "$@" | fzf }
-  function sa { fasd -Rla "$@" | fzf }
   function sd { fasd -Rld "$@" | fzf }
-  function d { fasd -Rld "$@" }
-  function z { cd "$(d)" }
-  function zz { cd "$(sd)" }
+  function zz { cd "$(sd $@)" }
   function v { $EDITOR $(f | fzf -m) }
   function o { $OPENER "$(sa $@)" }
 fi

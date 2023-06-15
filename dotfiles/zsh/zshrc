@@ -165,7 +165,6 @@ fi
 # NVIM
 if type nvim &> /dev/null
 then
-  alias vim="nvim"
   alias chad="NVIM_APPNAME=NvChad nvim"
 fi
 

@@ -11,6 +11,7 @@ return {
     'ellisonleao/gruvbox.nvim',
     name = 'gruvbox',
     lazy = true,
+    priority = 1000,
     opts = {
       undercurl = true,
       underline = true,
@@ -43,6 +44,7 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     lazy = true,
+    priority = 1000,
     config = function()
       vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
     end,
@@ -54,6 +56,7 @@ return {
     'rose-pine/neovim',
     name = 'rose-pine',
     lazy = true,
+    priority = 1000,
     config = function()
       local ok, rosepine = pcall(require, 'rose-pine')
       if not ok then

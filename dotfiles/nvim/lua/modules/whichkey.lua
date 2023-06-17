@@ -1,7 +1,7 @@
 -- Current Line which-key: show a popup of possible keybindings
 -- see: https://github.com/folke/which-key.nvim
 return {
-	{
+  {
     'folke/which-key.nvim',
     event = "VeryLazy",
     opts = {
@@ -30,19 +30,6 @@ return {
             name = 'Buffer',
             c = { '<cmd>BufferLinePick<cr>', 'Choose Buffer' },
           },
-          -- comment
-          g = {
-            name = 'Comment',
-            b = {
-              name = 'Block Comment',
-              c = { name = 'Block Comment Toggle' },
-            },
-            c = { 'Line Comment' },
-            ['cc'] = { name = 'Line Comment Toggle' },
-            ['cO'] = { name = 'Add Line Comment Above' },
-            ['co'] = { name = 'Add Line Comment Below' },
-            ['cA'] = { name = 'Add Line Comment To End' },
-          },
           h = {
             name = 'Hop',
             a = { '<cmd>HopAnywhere<CR>', 'Hop to Anywhere' },
@@ -54,7 +41,7 @@ return {
             name = 'Mode',
             z = { '<cmd>ZenMode<cr>', 'Toggle Zen Mode' },
           },
-          t = {
+          f = {
             name = 'Telescope',
             b = { '<cmd>Telescope buffers<cr>', 'Find Buffer' },
             f = { '<cmd>Telescope find_files<cr>', 'Find File' },
@@ -77,7 +64,7 @@ return {
           ['?'] = { name = 'Keymap Legend' },  -- TODO: use legendary.nvim
           L = { name = 'Lazy NVim' },
        }
-			})
-		end
-	}
+      })
+    end
+  }
 }

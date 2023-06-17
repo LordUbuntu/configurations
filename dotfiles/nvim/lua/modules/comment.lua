@@ -4,15 +4,7 @@
 -- register declarative lazy.nvim config
 return {
   'numToStr/Comment.nvim',
-  keys = {
-    'gcc',
-    'gbc',
-    'gc',
-    'gb',
-    'gcO',
-    'gco',
-    'gcA',
-  },
+  event = 'VeryLazy',  -- I always use this module
   opts = {
     ---Add a space b/w comment and the line
     ---@type boolean|fun():boolean

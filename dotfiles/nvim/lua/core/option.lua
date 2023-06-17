@@ -24,9 +24,10 @@ set.spelllang = "en_ca"
 -- USER EXPEREINCE
 ---------------------
 set.termguicolors = true
+set.wrap = true
 set.textwidth = 80
-set.colorcolumn = "81"
-set.formatoptions = set.formatoptions + "t"
+set.colorcolumn = "80"
+-- set.formatoptions = set.formatoptions + "t"
 set.number = true
 set.relativenumber = true
 set.linebreak = true

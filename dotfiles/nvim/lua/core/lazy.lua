@@ -76,7 +76,7 @@ lazy.setup(
         init = " ",
         import = " ",
         keys = " ",
-        lazy = "󰒲 ",
+        lazy = "z ",
         loaded = "●",
         not_loaded = "○",
         plugin = " ",

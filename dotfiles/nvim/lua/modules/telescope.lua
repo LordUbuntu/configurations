@@ -46,9 +46,5 @@ return {
         },
       },
     })
-    local builtin = require('telescope.builtin')
-    local themes = require('telescope.themes')
-
-    builtin.find_files(themes.get_cursor())
   end,
 }

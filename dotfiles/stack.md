@@ -20,3 +20,7 @@ This is a list of the tools I use and how I use them in my dev env.
   * NNN - A nice filesystem navigator
   * Delta - A better diff command to use with git etc
   * Btop - A great system monitor
+  * DUF - A better df
+  * EXA - A better ls/tree/etc
+  * BAT - A better cat
+  * FD - A better find

@@ -6,7 +6,10 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "j-hui/fidget.nvim",
+      {
+        "j-hui/fidget.nvim",
+        tag = 'legacy',  -- while breaking changes are underway
+      },
       "folke/neodev.nvim",
       "RRethy/vim-illuminate",
       "hrsh7th/cmp-nvim-lsp",
@@ -29,7 +32,14 @@ return {
       require("neodev").setup()
 
       -- Turn on LSP status information
-      require("fidget").setup()
+      require("fidget").setup({
+        text = {
+          spinner = 'dots_snake',
+        },
+        window = {
+          border = 'rounded',
+        },
+      })
 
       -- Set up cool signs for diagnostics
       local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }

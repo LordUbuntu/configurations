@@ -12,6 +12,7 @@ return {
     name = 'gruvbox',
     lazy = true,
     priority = 1000,
+    event = 'VeryLazy',
     opts = {
       undercurl = true,
       underline = true,
@@ -45,6 +46,7 @@ return {
     name = "catppuccin",
     lazy = true,
     priority = 1000,
+    event = 'VeryLazy',
     config = function()
       vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
     end,
@@ -57,6 +59,7 @@ return {
     name = 'rose-pine',
     lazy = true,
     priority = 1000,
+    event = 'VeryLazy',
     config = function()
       local ok, rosepine = pcall(require, 'rose-pine')
       if not ok then
@@ -120,6 +123,8 @@ return {
     'Yazeed1s/oh-lucy.nvim',
     name = 'oh-lucy',
     lazy = true,
+    priority = 1000,
+    event = 'VeryLazy',
     config = function()
       vim.g.oh_lucy_italic_comments = true
       vim.g.oh_lucy_italic_keywords = true
@@ -136,6 +141,7 @@ return {
   --  https://darkman.whynothugo.nl/
   {
     '4e554c4c/darkman.nvim',
+    event = 'VeryLazy',
     build = 'go build -o bin/darkman.nvim',
     config = function()
       require("darkman").setup({})

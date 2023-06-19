@@ -4,6 +4,19 @@ return {
   {
     'folke/which-key.nvim',
     event = "VeryLazy",
+    dependencies = {
+      -- legendary: a searchable legend of keymaps
+      -- see: https://github.com/mrjones2014/legendary.nvim
+      {
+        'mrjones2014/legendary.nvim',
+        dependencies = { 'kkharji/sqlite.lua' },
+      },
+      -- dressing: improve default vim.ui interfaces
+      -- see: https://github.com/stevearc/dressing.nvim
+      {
+        'stevearc/dressing.nvim',
+      },
+    },
     opts = {
       plugins = {
         marks = true, -- shows a list of your marks on ' and `
@@ -23,8 +36,13 @@ return {
     },
     -- keep all plugin keymap registries here
     config = function()
+      require('legendary').setup({
+        which_key = {
+          auto_register = true,
+        },
+      })
 
-			require("which-key").register({
+      require("which-key").register({
         ['<leader>'] = {
           b = {
             name = 'Buffer',
@@ -40,6 +58,11 @@ return {
           m = {
             name = 'Mode',
             z = { '<cmd>ZenMode<cr>', 'Toggle Zen Mode' },
+          },
+          n = {
+            name = 'N³',
+            e = { '<cmd>NnnExplorer<cr>', 'Explore files with NNN' },
+            p = { '<cmd>NnnPicker<cr>', 'Pick file with NNN' },
           },
           f = {
             name = 'Telescope',

@@ -9,9 +9,9 @@ return {
     event = 'VeryLazy',
     opts = {
       signs = {
-        add          = { text = '│' },
-        change       = { text = '│' },
-        delete       = { text = '_' },
+        add          = { text = '+' },
+        change       = { text = 'Δ' },
+        delete       = { text = '-' },
         topdelete    = { text = '‾' },
         changedelete = { text = '~' },
         untracked    = { text = '┆' },

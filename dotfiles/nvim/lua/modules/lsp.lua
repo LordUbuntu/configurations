@@ -3,6 +3,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    event = 'BufEnter',
     dependencies = {
       {
         "williamboman/mason.nvim",
@@ -179,4 +180,4 @@ return {
       })
     end,
   },
-}
+Trouble}

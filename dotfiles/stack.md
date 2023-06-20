@@ -9,6 +9,8 @@ This is a list of the tools I use and how I use them in my dev env.
 * NVim - Modern VI Text Editor
 * Alacritty (to become WezTerm) - Blazingly Fast Terminal Emulator
 * Zathura
+* MPV - Watch/Listen to anything
+* CMUS (need a better alternative) - Music Player on CLI
 
 * CLI Tools
   * PyEnv - Easier env management (mostly just for nvim)

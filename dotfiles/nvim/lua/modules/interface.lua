@@ -108,5 +108,18 @@ return {
     dependencies = 'nvim-tree/nvim-web-devicons',
     version = '*',
     opts = {}
+  },
+  -- colorizer plugin
+  -- see: https://github.com/norcalli/nvim-colorizer.lua
+  {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup({
+        '*',
+      }, {
+        css = true,
+        css_fn = true,
+      })
+    end,
   }
 }

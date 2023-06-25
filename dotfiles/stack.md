@@ -12,9 +12,6 @@ This is a list of the tools I use and how I use them in my dev env.
 * MPV - Watch/Listen to anything
 * CMUS (need a better alternative) - Music Player on CLI
 
-* dwarf fortress
-* openttd
-
 * CLI Tools
   * PyEnv - Easier env management (mostly just for nvim)
   * FZF - Find fuzzy files fast

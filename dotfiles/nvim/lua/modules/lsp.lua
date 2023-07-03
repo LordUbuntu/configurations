@@ -1,9 +1,11 @@
 -- LSP configurations for Neovim
 -- TODO: A temporary point to build off of, not the final module
+-- TODO: get TODO-COMMENTS and LSP to play nice together
 return {
   {
     "neovim/nvim-lspconfig",
-    event = 'BufEnter',
+    lazy = true,
+    event = 'FileType',
     dependencies = {
       {
         "williamboman/mason.nvim",
@@ -12,12 +14,12 @@ return {
         "williamboman/mason-lspconfig.nvim",
       },
       {
-        "j-hui/fidget.nvim",
-        tag = 'legacy', -- while breaking changes are underway
-      },
-      {
         'folke/todo-comments.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' },
+      },
+      {
+        "j-hui/fidget.nvim",
+        tag = 'legacy', -- while breaking changes are underway
       },
       {
         'folke/trouble.nvim',
@@ -63,12 +65,6 @@ return {
       require('trouble').setup()
       require('core.helpers').map('n', '<leader>xx', '<cmd>TroubleToggle<cr>',
         'Show Trouble')
-
-      require('todo-comments').setup()
-      require('core.helpers').map('n', '<leader>xT', '<cmd>TodoTrouble<cr>',
-        'Show Todo in Trouble')
-      require('core.helpers').map('n', '<leader>xt', '<cmd>TodoTelescope<cr>',
-        'Show Todo in Telescope')
 
       -- Set up cool signs for diagnostics
       local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -178,6 +174,12 @@ return {
           },
         },
       })
+
+      require('todo-comments').setup()
+      require('core.helpers').map('n', '<leader>xT', '<cmd>TodoTrouble<cr>',
+        'Show Todo in Trouble')
+      require('core.helpers').map('n', '<leader>xt', '<cmd>TodoTelescope<cr>',
+        'Show Todo in Telescope')
     end,
   },
 Trouble}

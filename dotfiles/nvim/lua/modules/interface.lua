@@ -1,4 +1,5 @@
 -- NeoVIm Graphical User Interface
+-- TODO: replace colorizer with CCC
 return {
   -- bufferline:  A snazzy buffer line (with tabpage integration)
   --              for Neovim built using lua.
@@ -16,14 +17,34 @@ return {
   -- colorizer plugin
   -- see: https://github.com/norcalli/nvim-colorizer.lua
   {
-    'norcalli/nvim-colorizer.lua',
-    event = 'FileType',
+    'NvChad/nvim-colorizer.lua',
+    event = 'UIEnter',
+    keys = {
+      { '<leader>uc', '<cmd>ColorizerToggle<cr>', desc = 'Toggle Colorizer' }
+    },
     config = function()
-      require('colorizer').setup({
-        '*',
-      }, {
-        css = true,
-        css_fn = true,
+      require("colorizer").setup({
+          filetypes = { "*", 'html', 'css', 'js' },
+          user_default_options = {
+            RGB = true, -- #RGB
+            RRGGBB = true, -- #RRGGBB
+            names = true, -- "Name" codes like Blue or blue
+            RRGGBBAA = true, -- #RRGGBBAA
+            AARRGGBB = true, -- 0xAARRGGBB
+            rgb_fn = true, -- CSS rgb(), rgba()
+            hsl_fn = true, -- CSS hsl(), hsla()
+            css = true, -- Enable all CSS features
+            css_fn = true, -- Enable all CSS *functions*
+            -- Available modes for `mode`: foreground, background,  virtualtext
+            mode = "virtualtext",
+            virtualtext = "⏺",
+            tailwind = true,
+            -- parsers can contain values used in |user_default_options|
+            sass = { enable = true, parsers = { "css" }, }, -- Enable sass colors
+            always_update = true,
+          },
+          -- all the sub-options of filetypes apply to buftypes
+          buftypes = {},
       })
     end,
   },
@@ -143,7 +164,6 @@ return {
   {
     'jiaoshijie/undotree',
     dependencies = 'nvim-lua/plenary.nvim',
-    keys = '<leader>ut',
     config = function()
       local undotree = require('undotree')
       undotree.setup({
@@ -165,7 +185,7 @@ return {
       })
 
       require('core.helpers').map(
-          'n', '<leader>ut', undotree.toggle, 'Toggle Undo Tree')
+          'n', '<leader>ut', require('undotree').toggle, 'Toggle Undo Tree')
     end,
   },
 }

@@ -6,16 +6,64 @@
 --     https://github.com/windwp/nvim-ts-autotag
 -- * nvim-ts-context-commentstring:
 --     https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+-- * HiPhish/rainbow-delimiters.nvim:
+--     https://gitlab.com/HiPhish/rainbow-delimiters.nvim
 return {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
+  event = 'FileType',
   dependencies = {
     -- nvim-ts-autotag: use treesitter to auto close and auto rename html tags
     -- see: https://github.com/windwp/nvim-ts-autotag
-    'windwp/nvim-ts-autotag',
+    {
+      'windwp/nvim-ts-autotag',
+    },
     -- nvim-ts-context-commentstring: set comentstring based on cursor location
     -- see: https://github.com/JoosepAlviste/nvim-ts-context-commentstring
-    'JoosepAlviste/nvim-ts-context-commentstring',
+    {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+    },
+    -- rainbow-delimiters: colour delimiters for easier tracking of pairs
+    -- see: https://gitlab.com/HiPhish/rainbow-delimiters.nvim
+    {
+      'HiPhish/rainbow-delimiters.nvim',
+      dependencies = 'nvim-treesitter/nvim-treesitter',
+      event = 'UIEnter',
+      init = function()
+        vim.cmd[[
+          au ColorScheme gruvbox highlight link RainbowDelimiterRed GruvboxRed
+          au ColorScheme gruvbox highlight link RainbowDelimiterOrange GruvboxOrange
+          au ColorScheme gruvbox highlight link RainbowDelimiterYellow GruvboxYellow
+          au ColorScheme gruvbox highlight link RainbowDelimiterGreen GruvboxGreen
+          au ColorScheme gruvbox highlight link RainbowDelimiterCyan GruvboxAqua
+          au ColorScheme gruvbox highlight link RainbowDelimiterBlue GruvboxBlue
+          au ColorScheme gruvbox highlight link RainbowDelimiterViolet GruvboxPurple
+        ]]
+      end,
+      config = function()
+        -- This module contains a number of default definitions
+        local rainbow_delimiters = require 'rainbow-delimiters'
+        vim.g.rainbow_delimiters = {
+            strategy = {
+                [''] = rainbow_delimiters.strategy['global'],
+                vim = rainbow_delimiters.strategy['local'],
+            },
+            query = {
+                [''] = 'rainbow-delimiters',
+                lua = 'rainbow-blocks',
+            },
+            highlight = {
+                'RainbowDelimiterRed',
+                'RainbowDelimiterOrange',
+                'RainbowDelimiterYellow',
+                'RainbowDelimiterGreen',
+                'RainbowDelimiterCyan',
+                'RainbowDelimiterBlue',
+                'RainbowDelimiterViolet',
+            },
+        }
+      end,
+    },
   },
   config = function()
     require('nvim-treesitter.configs').setup({

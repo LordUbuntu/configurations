@@ -8,6 +8,9 @@ return {
   {
     'folke/zen-mode.nvim',
     lazy = true,
+    keys = {
+      { '<leader>mz', '<cmd>ZenMode<cr>', desc = 'Toggle Zen Mode' },
+    },
     cmd = "ZenMode",
     dependencies = {
       -- twilight config

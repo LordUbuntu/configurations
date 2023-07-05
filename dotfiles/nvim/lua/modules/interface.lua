@@ -6,6 +6,9 @@ return {
   {
     'akinsho/bufferline.nvim',
     event = 'UIEnter',
+    keys = {
+      { '<leader>bc', '<cmd>BufferLinePick<cr>', desc = 'Choose Buffer' },
+    },
     dependencies = 'nvim-tree/nvim-web-devicons',
     version = '*',
     opts = {}
@@ -59,6 +62,11 @@ return {
       vim.opt.formatoptions = vim.opt.formatoptions + "t"
     end,
   },
+  -- dressing: improve default vim.ui interfaces
+  -- see: https://github.com/stevearc/dressing.nvim
+  {
+    'stevearc/dressing.nvim',
+  },
   -- indent blankline: Add indentation guides to all lines
   -- see: https://github.com/lukas-reineke/indent-blankline.nvim
   {
@@ -89,14 +97,23 @@ return {
   -- see: https://github.com/luukvbaal/nnn.nvim
   {
     'luukvbaal/nnn.nvim',
-    lazy = true,
     cmd = {
       'NnnExplorer',
       'NnnPicker',
     },
+    keys = {
+      { '<leader>ne', '<cmd>NnnExplorer<cr>', desc = 'Explore files with NNN' },
+      { '<leader>np', '<cmd>NnnPicker<cr>', desc = 'Pick file with NNN' },
+    },
     config = function()
       require('nnn').setup()
     end,
+  },
+  -- vim-startuptime: a nicer startup time visualizer
+  -- see: https://github.com/dstein64/vim-startuptime
+  {
+    'dstein64/vim-startuptime',
+    cmd = 'StartupTime',
   },
   -- todo-comments plugin
   -- see: https://github.com/folke/todo-comments.nvim
@@ -111,7 +128,6 @@ return {
     -- PERF:
     -- TEST:
     'folke/todo-comments.nvim',
-    lazy = true,
     event = 'UIEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
@@ -126,25 +142,30 @@ return {
   -- see: https://github.com/jiaoshijie/undotree
   {
     'jiaoshijie/undotree',
-    lazy = true,
     dependencies = 'nvim-lua/plenary.nvim',
     keys = '<leader>ut',
-    opts = {
-      float_diff = true,  -- using float window previews diff, set this `true` will disable layout option
-      layout = "left_bottom", -- "left_bottom", "left_left_bottom"
-      ignore_filetype = { 'Undotree', 'UndotreeDiff', 'qf', 'TelescopePrompt', 'spectre_panel', 'tsplayground' },
-      window = {
-        winblend = 30,
-      },
-      keymaps = {
-        ['j'] = "move_next",        -- jump to next undo node
-        ['k'] = "move_prev",        -- jump to prev undo node
-        ['J'] = "move_change_next", -- jump to next undo node, undo to that state
-        ['K'] = "move_change_prev", -- jump to prev undo node, undo to that state
-        ['<cr>'] = "action_enter",  -- undo to the current undo state
-        ['p'] = "enter_diffbuf",    -- preview diff of current undo node with current state
-        ['q'] = "quit",             -- quit undotree
-      },
-    },
+    config = function()
+      local undotree = require('undotree')
+      undotree.setup({
+        float_diff = true,  -- using float window previews diff, set this `true` will disable layout option
+        layout = "left_bottom", -- "left_bottom", "left_left_bottom"
+        ignore_filetype = { 'Undotree', 'UndotreeDiff', 'qf', 'TelescopePrompt', 'spectre_panel', 'tsplayground' },
+        window = {
+          winblend = 30,
+        },
+        keymaps = {
+          ['j'] = "move_next",        -- jump to next undo node
+          ['k'] = "move_prev",        -- jump to prev undo node
+          ['J'] = "move_change_next", -- jump to next undo node, undo to that state
+          ['K'] = "move_change_prev", -- jump to prev undo node, undo to that state
+          ['<cr>'] = "action_enter",  -- undo to the current undo state
+          ['p'] = "enter_diffbuf",    -- preview diff of current undo node with current state
+          ['q'] = "quit",             -- quit undotree
+        },
+      })
+
+      require('core.helpers').map(
+          'n', '<leader>ut', undotree.toggle, 'Toggle Undo Tree')
+    end,
   },
 }

@@ -11,7 +11,6 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
-  event = 'FileType',
   dependencies = {
     -- nvim-ts-autotag: use treesitter to auto close and auto rename html tags
     -- see: https://github.com/windwp/nvim-ts-autotag

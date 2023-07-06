@@ -26,6 +26,7 @@ return {
     -- see: https://gitlab.com/HiPhish/rainbow-delimiters.nvim
     {
       'HiPhish/rainbow-delimiters.nvim',
+      enabled = false,
       dependencies = 'nvim-treesitter/nvim-treesitter',
       event = 'UIEnter',
       init = function()

@@ -1,4 +1,4 @@
--- NeoVIm Graphical User Interface
+-- The looks of the editor
 -- TODO: replace colorizer with CCC
 return {
   -- bufferline:  A snazzy buffer line (with tabpage integration)
@@ -112,80 +112,6 @@ return {
         trail = '…',
       }
       vim.opt.list = true
-    end,
-  },
-  -- nnn: use the unorthidox file manger in nvim
-  -- see: https://github.com/luukvbaal/nnn.nvim
-  {
-    'luukvbaal/nnn.nvim',
-    cmd = {
-      'NnnExplorer',
-      'NnnPicker',
-    },
-    keys = {
-      { '<leader>ne', '<cmd>NnnExplorer<cr>', desc = 'Explore files with NNN' },
-      { '<leader>np', '<cmd>NnnPicker<cr>', desc = 'Pick file with NNN' },
-    },
-    config = function()
-      require('nnn').setup()
-    end,
-  },
-  -- vim-startuptime: a nicer startup time visualizer
-  -- see: https://github.com/dstein64/vim-startuptime
-  {
-    'dstein64/vim-startuptime',
-    cmd = 'StartupTime',
-  },
-  -- todo-comments plugin
-  -- see: https://github.com/folke/todo-comments.nvim
-  -- NOTE: ensure darkman is not lazy-loaded or todo-comments
-  --       highlighting becomes non-deterministic.
-  {
-    -- FIX:
-    -- WARN:
-    -- HACK:
-    -- INFO:
-    -- TODO:
-    -- PERF:
-    -- TEST:
-    'folke/todo-comments.nvim',
-    event = 'UIEnter',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('todo-comments').setup({})
-      require('core.helpers').map('n', '<leader>xT', '<cmd>TodoTrouble<cr>',
-        'Show Todo in Trouble')
-      require('core.helpers').map('n', '<leader>xt', '<cmd>TodoTelescope<cr>',
-        'Show Todo in Telescope')
-    end,
-  },
-  -- undotree: navigate parallel universes in neovim
-  -- see: https://github.com/jiaoshijie/undotree
-  {
-    'jiaoshijie/undotree',
-    dependencies = 'nvim-lua/plenary.nvim',
-    config = function()
-      local undotree = require('undotree')
-      undotree.setup({
-        float_diff = true,  -- using float window previews diff, set this `true` will disable layout option
-        layout = "left_bottom", -- "left_bottom", "left_left_bottom"
-        ignore_filetype = { 'Undotree', 'UndotreeDiff', 'qf', 'TelescopePrompt', 'spectre_panel', 'tsplayground' },
-        window = {
-          winblend = 30,
-        },
-        keymaps = {
-          ['j'] = "move_next",        -- jump to next undo node
-          ['k'] = "move_prev",        -- jump to prev undo node
-          ['J'] = "move_change_next", -- jump to next undo node, undo to that state
-          ['K'] = "move_change_prev", -- jump to prev undo node, undo to that state
-          ['<cr>'] = "action_enter",  -- undo to the current undo state
-          ['p'] = "enter_diffbuf",    -- preview diff of current undo node with current state
-          ['q'] = "quit",             -- quit undotree
-        },
-      })
-
-      require('core.helpers').map(
-          'n', '<leader>ut', require('undotree').toggle, 'Toggle Undo Tree')
     end,
   },
 }

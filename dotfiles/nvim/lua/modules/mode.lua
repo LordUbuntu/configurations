@@ -1,10 +1,10 @@
--- zen-mode: distraction-free coding for neovim
--- twilight: dims inactive portions of the code
--- see:
--- * zen-mode: https://github.com/folke/zen-mode.nvim
--- * twilight: https://github.com/folke/twilight.nvim
+-- different editor modes to go into, mostly aesthetic
 return {
-  -- zen-mode config
+  -- zen-mode: distraction-free coding for neovim
+  -- twilight: dims inactive portions of the code
+  -- see:
+  -- * zen-mode: https://github.com/folke/zen-mode.nvim
+  -- * twilight: https://github.com/folke/twilight.nvim
   {
     'folke/zen-mode.nvim',
     lazy = true,

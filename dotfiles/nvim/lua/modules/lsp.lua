@@ -1,6 +1,5 @@
 -- LSP configurations for Neovim
--- TODO: A temporary point to build off of, not the final module
--- TODO: get TODO-COMMENTS and LSP to play nice together
+-- FIXME: A temporary point to build off of, not the final module
 return {
   {
     "neovim/nvim-lspconfig",
@@ -12,10 +11,6 @@ return {
       },
       {
         "williamboman/mason-lspconfig.nvim",
-      },
-      {
-        'folke/todo-comments.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' },
       },
       {
         "j-hui/fidget.nvim",

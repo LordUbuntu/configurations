@@ -5,14 +5,30 @@
 -- FIXME: temp starting point, needs more work
 return {
   'hrsh7th/nvim-cmp',
+  lazy = true,
+  event = 'VeryLazy',
   dependencies = {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lua',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
-    'L3MON4D3/LuaSnip',
+    -- snippets
+    {
+      'L3MON4D3/LuaSnip',
+      config = function()
+        require('luasnip').config.set_config({ enable_autosnippets = true })
+      end,
+    },
     'saadparwaiz1/cmp_luasnip',
     'rafamadriz/friendly-snippets',
+    {
+      'iurimateus/luasnip-latex-snippets.nvim',
+      requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+      config = function()
+        require'luasnip-latex-snippets'.setup({ use_treesitter = true })
+      end,
+      ft = { "tex", "markdown" },
+    },
   },
   config = function()
     local cmp = require('cmp')

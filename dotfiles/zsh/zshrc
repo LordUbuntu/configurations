@@ -365,6 +365,16 @@ else
 fi
 
 
+###########
+# FOR FUN #
+###########
+
+# unimatrix
+if type unimatrix &> /dev/null
+then
+  alias -g matrix="unimatrix -s 88 -a -c red -l cgkns"
+fi
+
 
 #################
 #  ENV EXPORTS  #

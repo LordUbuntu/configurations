@@ -51,4 +51,8 @@ config.font = wezterm.font_with_fallback {
 } ]]
 config.font_size = 13
 
+config.use_ime = true
+
+config.enable_tab_bar = false
+
 return config

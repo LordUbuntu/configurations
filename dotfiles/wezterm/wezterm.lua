@@ -13,7 +13,7 @@ config.color_scheme = 'Gruvbox dark, medium (base16)'
 config.font = wezterm.font_with_fallback {
   {
     family = 'Fira Code Nerd Font Mono',
-    weight = 'Medium',
+    weight = 'Light',
     harfbuzz_features = {
       'zero',
       'calt',
@@ -29,6 +29,7 @@ config.font = wezterm.font_with_fallback {
       'cv30',
       'cv32',
       'ss07',
+      'ss09',
     },
   },
 }
@@ -51,8 +52,14 @@ config.font = wezterm.font_with_fallback {
 } ]]
 config.font_size = 13
 
-config.use_ime = true
-
+-- window
 config.enable_tab_bar = false
+config.webgpu_power_preference = "HighPerformance"
+config.enable_wayland = false
+
+-- ime
+config.use_ime = true
+config.ime_preedit_rendering = 'Builtin'
+config.xim_im_name = 'ibus'
 
 return config

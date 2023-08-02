@@ -32,34 +32,22 @@ config.font = wezterm.font_with_fallback {
       'ss09',
     },
   },
+  {
+    family = 'Noto Sans Mono',
+    weight = 'Regular',
+  },
+  {
+    family = 'Noto Sans CJK SC',
+    weight = 'Regular',
+  },
 }
 -- config.font = wezterm.font('Fira Code Nerd Font Mono')
---[[ config.harfbuzz_features = {
-  'zero',
-  'calt',
-  'clig',
-  'cv01',
-  'cv02',
-  'cv04',
-  'cv08',
-  'cv21',
-  'cv24',
-  'cv25',
-  'cv26',
-  'cv30',
-  'cv32',
-  'ss07',
-} ]]
 config.font_size = 13
 
 -- window
 config.enable_tab_bar = false
-config.webgpu_power_preference = "HighPerformance"
-config.enable_wayland = false
 
 -- ime
 config.use_ime = true
-config.ime_preedit_rendering = 'Builtin'
-config.xim_im_name = 'ibus'
 
 return config

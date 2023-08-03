@@ -103,7 +103,7 @@ format = '[$ssh_symbol$hostname]($style) in '
 [directory]
 truncation_length = 3
 truncate_to_repo = true
-fish_style_pwd_dir_length = 3
+fish_style_pwd_dir_length = 1
 truncation_symbol = '…'
 style = "bold blue"
 read_only = '!'
@@ -127,7 +127,7 @@ untracked = '?${count}'
 modified = '+${count}'
 staged = '●${count}'
 renamed = '»${count}'
-format = '([\[($ahead_behind)$untracked$modified$renamed$staged$conflicted$up_to_date\]]($style))'
+format = '([\[($ahead_behind)$untracked$modified$renamed$staged$conflicted$up_to_date\]]($style)) '
 [git_commit]
 tag_disabled = false
 tag_symbol = '🏷'

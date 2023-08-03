@@ -6,14 +6,8 @@ local creatures = {
   '🐉', -- dragon
   '🦄', -- unicorn
   '🐏', -- ram
-  '🦚', -- peacock
-  '🦩', -- flamingo
-  '🪿', -- goose
   '🦐', -- ebi
-  '👾', -- space invader
   '🔥', -- fire elemental
-  '💾', -- living floppy
-  '📎', -- clippy
 }
 return {
   {

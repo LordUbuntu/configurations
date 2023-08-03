@@ -2,7 +2,7 @@ local M = {}
 
 -- map keys
 M.map = function(mode, lhs, rhs, desc)
-  vim.keymap.set(mode, lhs, rhs, { silent = true, buffer = bufnr, desc = desc })
+  vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
 end
 
 -- TODO: future map replacement

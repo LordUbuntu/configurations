@@ -177,4 +177,4 @@ return {
         'Show Todo in Telescope')
     end,
   },
-Trouble}
+}

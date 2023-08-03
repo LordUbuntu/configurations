@@ -11,12 +11,11 @@ vim.g.maplocalleader = " "
 -- navigation
 map('n', 'j', 'gj')
 map('n', 'k', 'gk')
-
 -- window
--- map('n', '<leader>wh', '<C-w>h')
--- map('n', '<leader>wj', '<C-w>j')
--- map('n', '<leader>wk', '<C-w>k')
--- map('n', '<leader>wl', '<C-w>l')
+map('n', '<C-h>', '<C-w>h')
+map('n', '<C-j>', '<C-w>j')
+map('n', '<C-k>', '<C-w>k')
+map('n', '<C-l>', '<C-w>l')
 
 -- buffer
 map('n', '<leader>bn', '<cmd>bnext<CR>', 'Next Buffer')

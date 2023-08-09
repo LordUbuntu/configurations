@@ -12,7 +12,7 @@ config.color_scheme = 'Gruvbox dark, medium (base16)'
 -- font stuff (see: https://github.com/tonsky/FiraCode)
 config.font = wezterm.font_with_fallback {
   {
-    family = 'Fira Code Nerd Font Mono',
+    family = 'Fira Code',
     weight = 'Light',
     harfbuzz_features = {
       'zero',
@@ -40,14 +40,17 @@ config.font = wezterm.font_with_fallback {
     family = 'Noto Sans CJK SC',
     weight = 'Regular',
   },
+  -- fun fonts:
+  -- - minecraft enchantment
+  -- - CJK AllSeto
 }
--- config.font = wezterm.font('Fira Code Nerd Font Mono')
 config.font_size = 13
+
+-- warning: shrodinger's ime
+config.use_ime = true
 
 -- window
 config.enable_tab_bar = false
 
--- ime
-config.use_ime = true
-
 return config
+

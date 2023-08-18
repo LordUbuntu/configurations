@@ -175,8 +175,24 @@ symbol = '↯'
 style = 'bold red'
 format = '[$symbol$status]($style)'
 
+[os.symbols]
+Alpine = ' '
+Amazon = ' '
+Android = ' '
+Arch = ' '
+FreeBSD = ' '
+Gentoo = ' '
+Linux = ' '
+Macos = ' '
+Manjaro = ' '
+NixOS = ' ' # f313
+Pop = ' '
+Raspbian = ' '
+openSUSE = ' '
 [os]
-# nothing for now...
+disabled = false
+style = 'bold blue'
+format = 'on [($symbol)($name)]($style) '
 
 [shlvl]
 disabled = false
@@ -190,4 +206,3 @@ success_symbol = '[ι](bold green)'
 error_symbol = '[ι](bold red)'
 vimcmd_symbol = '[ν](bold blue)'
 # alternatives ιλμν✗
-

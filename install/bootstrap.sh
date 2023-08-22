@@ -61,3 +61,27 @@ else
   echo "!!! SSH failed !!!"
   exit 1
 fi
+
+
+
+echo """
+======= ZSH =======
+"""
+# install ssh if it is not installed already
+if [ ! $(command -v zsh) ]
+then
+  echo "ZSH not installed, attempting to install ZSH..."
+  # "install ssh" or something using host-wrapper install function
+fi
+if [ $(command -v zsh) ]
+then
+  if [ $(basename "$SHELL") != zsh ]
+  then
+    echo "Changing default shell of $USER to $(command -v zsh)"
+    echo "sudo chsh -s \"$(command -v zsh)\" \"$USER\""
+    sudo chsh -s "$(command -v zsh)" "$USER"
+  fi
+else
+  echo "!!! ZSH failed !!!"
+  exit 1
+fi

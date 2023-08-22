@@ -1,9 +1,13 @@
+echo $XDG_SESSION_TYPE
 configurations
-|- scripts
-|  |- bootstrap.sh  (install dependencies and setup environment like default shell)
-|  \- setup.sh      (symlink file structure from dotfiles to $HOME)
+|- install
+|  |- bootstrap.sh  (install universal deps and env, needed for setup)
+|  \- setup.sh      (setup each dotfiles subdir from programs specified)  
 |- dotfiles
-|  \- (semantic file structure emulating $HOME as its root)
+|  \- (each folder contains config files along with a deps and links file
+|      to specify where each file will be linked to and automatically
+|      install packages and dependencies (or build manually if needed).
+|      This will only be done for files specified in the install setup.
 \- nix
    \- (all nix config files and other stuff)
 

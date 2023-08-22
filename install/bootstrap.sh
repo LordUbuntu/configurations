@@ -12,7 +12,6 @@ echo """
 
 
 echo """
-
 ======= GIT =======
 """
 # install git if it is not installed already
@@ -24,7 +23,7 @@ fi
 # setup git if/once it is installed
 if [ $(command -v git) ]
 then
-  if [ $(git config user.email) == "" ]
+  if [ "$(git config user.email)" = "" ]
   then
     read -rp "Git user email: " email
     git config --global user.email "$email"
@@ -37,7 +36,6 @@ fi
 
 
 echo """
-
 ======= SSH =======
 """
 # install ssh if it is not installed already
@@ -54,7 +52,7 @@ then
     ssh-keyget -t rsa -b 4096 -C "$(git config user.email)"
     ssh-add ~/.ssh/id_rsa
   fi
-  if [ ! $(ps -p "$SSH_AGENT_PID" >/dev/null) ]
+  if [ ! $(ps -p "$SSH_AGENT_PID" 2>/dev/null) ]
   then
     echo "Staring SSH agent"
     eval "$(ssh-agent -s)"

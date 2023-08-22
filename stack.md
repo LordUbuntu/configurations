@@ -1,5 +1,25 @@
 # My Stack
 
+Desktop applications
+* Discord
+* Spotify
+* Obsidian
+* Firefox
+  Development
+    * VSCode
+    * Ultimaker Cura
+    * Chrome
+  Learning
+    * Anki
+    * Klavaro
+  Media
+    * Blender
+    * Inkscape
+    * Krita
+    * OBS
+    * MPV
+
+
 This is a list of the tools I use and how I use them in my dev env.
 
 * Zellij - Better TMUX Replacement
@@ -9,7 +29,6 @@ This is a list of the tools I use and how I use them in my dev env.
 * NVim - Modern VI Text Editor
 * Alacritty (to become WezTerm) - Blazingly Fast Terminal Emulator
 * Zathura
-* MPV - Watch/Listen to anything
 * CMUS (need a better alternative) - Music Player on CLI
 
 * CLI Tools

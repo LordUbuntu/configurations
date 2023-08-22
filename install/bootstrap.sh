@@ -13,11 +13,14 @@ fi
 # setup git if/once it is installed
 if [ $(command -v git) ]
 then
-  # setup git configurations
-  read -rp "git user email: " email
-  git config --global user.email "$email"
+  if [ $(git config user.email) == "" ]
+  then
+    read -rp "git user email: " email
+    git config --global user.email "$email"
+  fi
 else
-  echo "!!! GIT was not installed, may need to be installed manually..."
+  echo "!!! GIT was not installed, may need to be installed and setup manually..."
+  exit 1
 fi
 
 

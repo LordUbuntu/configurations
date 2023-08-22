@@ -1,0 +1,7 @@
+|- scripts
+|  |- bootstrap.sh  (install dependencies and setup environment)
+|  \- setup.sh      (symbolic link dotfiles to $HOME)
+|- dotfiles
+|  \- [dotfiles arranged to simulate their structure relative to $HOME]
+\- nixos
+   \- [all nix flakes, nixos configurations, home manager configurations]

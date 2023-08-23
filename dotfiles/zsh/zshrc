@@ -198,8 +198,6 @@ then
   export PYENV_ROOT="$HOME/.pyenv"
   PATH="$PATH:$PYENV_ROOT/bin"
   # eval "$(pyenv init -)"
-else
-  git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 fi
 
 # FZF

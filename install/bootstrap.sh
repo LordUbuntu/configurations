@@ -1,6 +1,16 @@
 #!/bin/sh
 # TODO: the install checks at the start of each should be moved into a func
 
+# global dependencies
+# unzip
+# wget
+# curl
+# gzip
+# tar
+# bash
+# sh
+# git
+
 
 
 echo """

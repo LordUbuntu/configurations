@@ -1,47 +1,59 @@
 # My Stack
 
-Desktop applications
-* Discord
-* Spotify
-* Obsidian
-* Firefox
-  Development
-    * VSCode
-    * Ultimaker Cura
-    * Chrome
-  Learning
-    * Anki
-    * Klavaro
-  Media
-    * Blender
-    * Inkscape
-    * Krita
-    * OBS
-    * MPV
+A complete list of packages (taken from nix), following the convention:
+- Desktop Applications
+  - Terminal Applications
+ 
 
+- discord
+- spotify
+  - cmus
+- obsidian
+- firefox
 
-This is a list of the tools I use and how I use them in my dev env.
+- google chrome
+- vscode
+- ultimaker cura
+  - neovim
+  - wezterm
+  - starship
+  - zellij
 
-* Zellij - Better TMUX Replacement
-* Starship - Grand Unified Prompt
-* Gruvbox - Universal Warm Theme (until I find or make a better one)
-* Zsh - Powerful configurable shell
-* NVim - Modern VI Text Editor
-* Alacritty (to become WezTerm) - Blazingly Fast Terminal Emulator
-* Zathura
-* CMUS (need a better alternative) - Music Player on CLI
+- anki
+- klavaro
 
-* CLI Tools
-  * PyEnv - Easier env management (mostly just for nvim)
-  * FZF - Find fuzzy files fast
-  * Ripgrep(all) - Find file contents _FAST_
-  * Hyperfine - Benchmark program execution
-  * fd - fast finder
-  * FASD (to become something else?) - Jump to frecent directories instantly
-  * NNN - A nice filesystem navigator
-  * Delta - A better diff command to use with git etc
-  * Btop - A great system monitor
-  * DUF - A better df
-  * EXA - A better ls/tree/etc
-  * BAT - A better cat
-  * FD - A better find
+- blender
+- inkscape
+- krita
+
+- obs-studio
+- lmms
+  - mpv
+
+- foliate
+- sioyek
+  - zathura
+
+  - python3
+  - pip3
+  - pipx
+  - pip-tools
+ 
+  - hyperfine
+  - httpie
+  - btop
+  - neofetch
+  - podman
+  - distrobox
+
+  - zsh
+  - bat
+  - delta
+  - duf
+  - exa
+  - fasd
+  - fd
+  - fzf
+  - nnn
+  - ripgrep
+  - ripgrep-all

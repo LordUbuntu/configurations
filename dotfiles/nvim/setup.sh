@@ -19,6 +19,11 @@ then
   echo "\e[31mCRITICAL: curl is missing\e[0m"
   exit 1
 fi
+if [ ! $(command -v git) ]
+then
+  echo "\e[31mCRITICAL: git is missing\e[0m"
+  exit 1
+fi
 if [ ! $(command -v cmake) ]
 then
   echo "\e[31mCRITICAL: cmake is missing\e[0m"
@@ -135,6 +140,25 @@ unset VERSION ARCH
 
 
 
+# install and setup fzf
+echo "\e[34m===== Setting up fzf\e[0m"
+PATH="$PATH:$HOME/.fzf/bin/fzf"
+if [ ! $(command -v fzf) ]
+then
+  echo "\e[33mInstalling fzf\e[0m"
+  git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+  $HOME/.fzf/install
+  if [ $? ]
+  then
+    echo "\e[32mDone installing fzf\e[0m"
+  else
+    echo "\e[31mCRITICAL: failed to install fzf\e[0m"
+    exit 1
+  fi
+fi
+
+
+
 # finished
-echo "PATH=$PATH"
+echo "export PATH=$PATH"
 echo "\e[34m=======================================\e[0m"

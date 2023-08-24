@@ -88,5 +88,5 @@ fi
 
 
 # finished
-echo "\e[33mPATH=$PATH"
+echo "\e[33mfinal PATH=$PATH"
 echo "\e[34m======================================="

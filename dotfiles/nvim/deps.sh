@@ -1,6 +1,15 @@
 #!/bin/sh
 # install dependencies for nvim
 
+
+# ensure prerequisites met
+if [ ! $(command -v curl) ]
+then
+  echo "CRITICAL: curl is missing"
+  exit 1
+fi
+
+
 # TODO:
 # - treesitter
 #   - rust (cargo)
@@ -8,17 +17,12 @@
 # - go build chain (darkman)
 
 # install and setup pyenv to give neovim a Python 3 provider with virutalenv
-if [ ! $(command -v curl) ]
+if [ ! -d "$HOME/.pyenv" ]
 then
-  echo "CRITICAL: curl is missing"
-  exit 1
+  echo "Installing pyenv"
+  PYENV_GIT_TAG=v2.3.24 
+  curl https://pyenv.run | bash
 else
-  if [ -d "$HOME/.pyenv" ]
-  then
-    echo "Installing pyenv"
-    PYENV_GIT_TAG=v2.3.24 
-    curl https://pyenv.run | bash
-  fi
   if [ -f "$HOME/.pyenv/bin/pyenv" ]
   then
     echo "Setting up neovim pyenv"
@@ -35,4 +39,5 @@ else
     pyenv activate neovim3
     pip install pynvim neovim
     source deactivate
+  fi
 fi

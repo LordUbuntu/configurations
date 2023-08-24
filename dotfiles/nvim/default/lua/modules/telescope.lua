@@ -5,16 +5,19 @@ return {
   tag = '0.1.0',
   cmd = 'Telescope',
   keys = {
-    { '<leader>fb', '<cmd>Telescope buffers<cr>', desc = 'Find Buffer' },
+    { '<leader>fb', '<cmd>Telescope buffers<cr>',    desc = 'Find Buffer' },
     { '<leader>ff', '<cmd>Telescope find_files<cr>', desc = 'Find File' },
-    { '<leader>fg', '<cmd>Telescope live_grep<cr>', desc = 'Find Pattern' },
-    { '<leader>fm', '<cmd>Telescope marks<cr>', desc = 'Find Mark' },
-    { '<leader>ft', '<cmd>Telescope tags<cr>', desc = 'Find Tag' },
+    { '<leader>fg', '<cmd>Telescope live_grep<cr>',  desc = 'Find Pattern' },
+    { '<leader>fm', '<cmd>Telescope marks<cr>',      desc = 'Find Mark' },
+    { '<leader>ft', '<cmd>Telescope tags<cr>',       desc = 'Find Tag' },
   },
   dependencies = {
     {
       'nvim-telescope/telescope-fzf-native.nvim',
-      build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+      dependencies = {
+        { "junegunn/fzf", build = "./install --bin" }
+      },
+      build = 'make',
       config = function()
         require('telescope').load_extension('fzf')
       end,

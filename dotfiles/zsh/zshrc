@@ -174,32 +174,6 @@ then
   PATH="$PATH:$HOME/.emacs.d/bin"
 fi
 
-# HASKELL
-if type cabal &> /dev/null
-then
-  PATH="$PATH:$HOME/.cabal/bin"
-fi
-
-# RUST
-if type cargo &> /dev/null
-then
-  PATH="$PATH:$HOME/.cargo/bin"
-fi
-
-# NVIDIA CUDA
-if [[ -f /usr/local/cuda/bin ]]
-then
-  PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
-fi
-
-# PYENV
-if [[ -d $HOME/.pyenv ]]
-then
-  export PYENV_ROOT="$HOME/.pyenv"
-  PATH="$PATH:$PYENV_ROOT/bin"
-  # eval "$(pyenv init -)"
-fi
-
 # FZF
 if type fzf &> /dev/null
 then
@@ -349,6 +323,47 @@ fi
 
 
 
+#######################
+# DEVELOPMENT TOOLING #
+#######################
+# HASKELL
+if type cabal &> /dev/null
+then
+  PATH="$PATH:$HOME/.cabal/bin"
+fi
+
+# RUST
+if type cargo &> /dev/null
+then
+  PATH="$PATH:$HOME/.cargo/bin"
+fi
+
+# GO
+if [[ -d /usr/local/go/bin ]]
+then
+  GOPATH="$HOME/go"
+  PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
+fi
+
+# NVIDIA CUDA
+if [[ -d /usr/local/cuda/bin ]]
+then
+  PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
+fi
+
+# PYENV
+if [[ -d $HOME/.pyenv ]]
+then
+  export PYENV_ROOT="$HOME/.pyenv"
+  PATH="$PATH:$PYENV_ROOT/bin"
+  # eval "$(pyenv init -)"
+else
+  git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+fi
+
+
+
+
 ############
 #  PROMPT  #
 ############
@@ -363,6 +378,7 @@ else
 fi
 
 
+
 ###########
 # FOR FUN #
 ###########
@@ -374,6 +390,7 @@ then
 fi
 
 
+
 #################
 #  ENV EXPORTS  #
 #################
@@ -382,6 +399,8 @@ export PATH
 export LC_CTYPE="en_CA.UTF-8"
 export EDITOR="nvim"
 export OPENER="xdg-open"
+
+
 
 ###############
 # Completions #

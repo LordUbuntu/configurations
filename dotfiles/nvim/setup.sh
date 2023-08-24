@@ -1,5 +1,6 @@
 #!/bin/sh
-# install dependencies for nvim
+# Jacobus Burger (2023)
+# Setup script to install prerequisite programs for neovim to function properly
 echo "\e[34m========== INSTALLING - NVIM ==========\e[0m"
 
 

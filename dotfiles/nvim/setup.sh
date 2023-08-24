@@ -141,6 +141,7 @@ unset VERSION ARCH
 
 
 # install and setup fzf
+# NOTE: may not be necessary
 echo "\e[34m===== Setting up fzf\e[0m"
 PATH="$PATH:$HOME/.fzf/bin/fzf"
 if [ ! $(command -v fzf) ]

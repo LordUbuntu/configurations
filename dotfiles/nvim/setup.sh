@@ -94,6 +94,9 @@ then
   echo "\e[33mInstalling go\e[0m"
   # download latest
   curl -O -L "https://golang.org/dl/go$VERSION.linux-$ARCH.tar.gz"
+  # TODO: determine how paranoid this per-step check is, and maybe put it
+  # everywhere if it isn't?
+  [ ! $? ] && echo "\e[31mCRITICAL: failed to install go\e[0m" && exit 1
   # remove any previous installations and untar to /usr/local/go.
   # DO NOT UNTAR INTO EXISTING GO INSTALLATIONS
   echo "\e[31mNEED SUDO TO INSTALL GO:\e[0m"
@@ -112,6 +115,31 @@ then
   fi
 fi
 unset VERSION ARCH
+if [ ! $(command -v darkman) ]
+then
+  echo "\e[33mInstalling darkman\e[0m"
+  # time to build from source...
+  if [ ! $(command -v scdoc) ]
+  then
+    echo "\e[31mCRITICAL: can't install darkman without scdoc\e[0m"
+    exit 1
+  fi
+  git clone https://gitlab.com/WhyNotHugo/darkman.git
+  cd darkman
+  make
+  echo "\e[31mNEED SUDO TO INSTALL DARKMAN:\e[0m"
+  echo "\e[31msudo make install\e[0m"
+  sudo make install
+  if [ $? ]
+  then
+    echo "\e[32mDone installing darkman\e[0m"
+  else
+    echo "\e[31mCRITICAL: failed to install darkman\e[0m"
+    exit 1
+  fi
+  cd ..
+  rm -rf darkman
+fi
 
 
 

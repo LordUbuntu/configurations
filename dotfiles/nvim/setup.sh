@@ -6,10 +6,27 @@ echo "\e[34m========== INSTALLING - NVIM ==========\e[0m"
 
 
 # ensure prerequisites met
+# givens:
+# grep
+# awk
+# rm
+# sudo
+# tar
+# an internet connection
 echo "\e[34m===== Checking prerequisites\e[0m"
 if [ ! $(command -v curl) ]
 then
   echo "\e[31mCRITICAL: curl is missing\e[0m"
+  exit 1
+fi
+if [ ! $(command -v cmake) ]
+then
+  echo "\e[31mCRITICAL: cmake is missing\e[0m"
+  exit 1
+fi
+if [ ! $(command -v tar) ]
+then
+  echo "\e[31mCRITICAL: tar is missing\e[0m"
   exit 1
 fi
 
@@ -115,31 +132,6 @@ then
   fi
 fi
 unset VERSION ARCH
-if [ ! $(command -v darkman) ]
-then
-  echo "\e[33mInstalling darkman\e[0m"
-  # time to build from source...
-  if [ ! $(command -v scdoc) ]
-  then
-    echo "\e[31mCRITICAL: can't install darkman without scdoc\e[0m"
-    exit 1
-  fi
-  git clone https://gitlab.com/WhyNotHugo/darkman.git
-  cd darkman
-  make
-  echo "\e[31mNEED SUDO TO INSTALL DARKMAN:\e[0m"
-  echo "\e[31msudo make install\e[0m"
-  sudo make install
-  if [ $? ]
-  then
-    echo "\e[32mDone installing darkman\e[0m"
-  else
-    echo "\e[31mCRITICAL: failed to install darkman\e[0m"
-    exit 1
-  fi
-  cd ..
-  rm -rf darkman
-fi
 
 
 

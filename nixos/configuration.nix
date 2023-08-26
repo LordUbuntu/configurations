@@ -200,10 +200,6 @@
       enable = true;
       onBoot = "ignore";
       onShutdown = "shutdown";
-      qemu = {
-        ovmf.enable = true;
-        ovmf.packages = with pkgs; [ OVMFFull ];
-      };
     };
   };
 

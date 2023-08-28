@@ -111,7 +111,13 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.gnome = {
+    enable = true;
+    extraGSettingsOverrides = ''
+      [org/gnome/mutter]
+      experimental-features=['scale-monitor-framebuffer']
+    '';
+  };
   services.gnome.sushi.enable = true;
   # NOTE: may remove more here in the future
   environment.gnome.excludePackages = with pkgs.gnome; [
@@ -200,6 +206,11 @@
       enable = true;
       onBoot = "ignore";
       onShutdown = "shutdown";
+      qemu = {
+        swtmp.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = with pkgs; [ OVMFFull.fd OVMFFull ];
+      };
     };
   };
 
@@ -273,9 +284,16 @@
       # sioyek
       # Gnome stuff
       # for a full list of gnome apps, see https://apps.gnome.org
+      authenticator
+      dynamic-wallpaper
+      eyedropper
+      gnome.gnome-color-manager
+      gnome.gnome-mahjongg
       gnome.gnome-tweaks
       gnome.pomodoro
-      gnome.gnome-mahjongg
+      metadata-cleaner
+      pika-backup
+      raider
 
 
 

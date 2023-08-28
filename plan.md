@@ -13,3 +13,6 @@ configurations
 
 
 - basically just bootstrap and then setup
+
+future:
+- setup and install home-manager as a potential extra

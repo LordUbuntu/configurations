@@ -41,34 +41,11 @@
         efiSupport = true;
         useOSProber = true;
         configurationLimit = 13;
-        extraEntries = ''
-          menuentry "Fedora Submenu" {
-            set root=(hd0,1)
-            chainloader /efi/fedora/grubx64.efi
-          }
-        '';
       };
     };
 
     # use adi1090x plymouth themes
     plymouth = { };
-
-    # TODO: move into a seperate module conditionally loaded for correct hardware
-    # Kernel Extras - VFIO Passthrough
-    kernelParams = [ "iommu=pt" "amd_iommu=on" "vfio-pci.ids=1002:73df,1002:ab28,1022:1639" ];
-    kernelModules = [ "kvm-amd" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
-    extraModprobeConfig = "options vfio-pci ids=1002:73df,1002:ab28,1022:1639";
-    # Group11: 1002:73df (NAVI GPU)
-    # Group12: 1002:ab28 (NAVI Audio)
-    # 1022:1639 (Back USB Port)
-    postBootCommands = ''
-        DEVS="0000:03:00.0 0000:03:00.1 0000:07:00.4"
-
-        for DEV in $DEVS; do
-            echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-        done
-        modprobe -i vfio-pci
-    '';
   };
 
 
@@ -109,52 +86,6 @@
   };
 
 
-  # Hide Apps I don't want to see in gnome activies view
-  desktop.hiddenApps = [
-    "cups.desktop"
-    "nnn.desktop"
-    "umpv.desktop"
-    "btop.desktop"
-    "nvim.desktop"
-    "zathura.desktop"  # this one's a bit iffy
-    "org.pwmt.zathura-cb.desktop"
-    "org.pwmt.zathura-djvu.desktop"
-    "org.pwmt.zathura-pdf-mupdf.desktop"
-    "org.pwmt.zathura-ps.desktop"
-    "org.pwmt.zathura.desktop"
-    "micro.desktop"
-    "htop.desktop"
-    "startcenter.desktop" # LibreOffice Start Center
-    "xsltfilter.desktop" # LibreOffice XSLT based filters
-    "xterm.desktop"
-    "scrcpy-console.desktop"
-    # all the Krita mimetype stuff
-    "krita_brush.desktop"
-    "krita_csv.desktop"
-    "krita_exr.desktop"
-    "krita_gif.desktop"
-    "krita_heif.desktop"
-    "krita_heightmap.desktop"
-    "krita_jp2.desktop"
-    "krita_jpeg.desktop"
-    "krita_jxl.desktop"
-    "krita_kra.desktop"
-    "krita_krz.desktop"
-    "krita_ora.desktop"
-    "krita_pdf.desktop"
-    "krita_png.desktop"
-    "krita_psd.desktop"
-    "krita_qimageio.desktop"
-    "krita_raw.desktop"
-    "krita_spriter.desktop"
-    "krita_svg.desktop"
-    "krita_tga.desktop"
-    "krita_tiff.desktop"
-    "krita_webp.desktop"
-    "krita_xcf.desktop"
-  ];
-
-
   # Services
   services = {
     # X11
@@ -169,6 +100,7 @@
         # Gnome DE
         gnome = {
           enable = true;
+          # TODO: make gnome setup more declarative in future
           extraGSettingsOverrides = ''
             [org/gnome/mutter]
             experimental-features=['scale-monitor-framebuffer']
@@ -221,6 +153,53 @@
   };
 
 
+  # Hide Apps I don't want to see in gnome activies view
+  # Thanks to Max Headroom (https://git.privatevoid.net/max/config/-/blob/master/modules/desktop/default.nix)
+  desktop.hiddenApps = [
+    "cups.desktop"
+    "nnn.desktop"
+    "umpv.desktop"
+    "btop.desktop"
+    "nvim.desktop"
+    "zathura.desktop"  # this one's a bit iffy
+    "org.pwmt.zathura-cb.desktop"
+    "org.pwmt.zathura-djvu.desktop"
+    "org.pwmt.zathura-pdf-mupdf.desktop"
+    "org.pwmt.zathura-ps.desktop"
+    "org.pwmt.zathura.desktop"
+    "micro.desktop"
+    "htop.desktop"
+    "startcenter.desktop" # LibreOffice Start Center
+    "xsltfilter.desktop" # LibreOffice XSLT based filters
+    "xterm.desktop"
+    "scrcpy-console.desktop"
+    # all the Krita mimetype stuff
+    "krita_brush.desktop"
+    "krita_csv.desktop"
+    "krita_exr.desktop"
+    "krita_gif.desktop"
+    "krita_heif.desktop"
+    "krita_heightmap.desktop"
+    "krita_jp2.desktop"
+    "krita_jpeg.desktop"
+    "krita_jxl.desktop"
+    "krita_kra.desktop"
+    "krita_krz.desktop"
+    "krita_ora.desktop"
+    "krita_pdf.desktop"
+    "krita_png.desktop"
+    "krita_psd.desktop"
+    "krita_qimageio.desktop"
+    "krita_raw.desktop"
+    "krita_spriter.desktop"
+    "krita_svg.desktop"
+    "krita_tga.desktop"
+    "krita_tiff.desktop"
+    "krita_webp.desktop"
+    "krita_xcf.desktop"
+  ];
+
+
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
@@ -247,27 +226,11 @@
 
   # Virtualisation
   virtualisation = {
-    # Podman for Distrobox
     podman = {
       enable = true;
       dockerCompat = true;
     };
-    # Libvirt for virtual machines
-    libvirtd = {
-      enable = true;
-      onBoot = "ignore";
-      onShutdown = "shutdown";
-      qemu = {
-        swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          packages = with pkgs; [ OVMFFull.fd OVMFFull ];
-        };
-      };
-    };
   };
-
-  environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
 
 
   # asusctl
@@ -276,32 +239,15 @@
       enable = true;
       enableUserService = true;
     };
-    supergfxd = {
-      enable = true;
-    };
+    supergfxd.enable = true;
   };
-  environment.etc."supergfxd.conf".text = with lib; lib.mkForce ''
-    {
-      "mode": "Vfio",
-      "vfio_enable": true,
-      "vfio_save": false,
-      "always_reboot": false,
-      "no_logind": false,
-      "logout_timeout_s": 180,
-      "hotplug_type": "None"
-    }
-  '';
-
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jaybee = {
     isNormalUser = true;
     description = "Jacobus Burger";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm" "qemu-libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       # GUI
       anki
@@ -319,7 +265,6 @@
       obs-studio
       obsidian
       spotify
-      # thunderbird
       vscode-fhs
       # sioyek
       # Gnome stuff
@@ -336,6 +281,7 @@
       raider
       # Gnome Extensions
       gnomeExtensions.blur-my-shell
+      gnomeExtensions.burn-my-shell
       gnomeExtensions.custom-accent-colors
       gnomeExtensions.espresso
       gnomeExtensions.forge  # tiling goodness
@@ -404,10 +350,7 @@
     # virtualisation
     podman
     distrobox
-    virt-manager
-    win-virtio
-    qemu
-    qemu-utils
+    toolbox
 
     # developer utilities
     python310Full

@@ -124,6 +124,34 @@
     "org.pwmt.zathura.desktop"
     "micro.desktop"
     "htop.desktop"
+    "startcenter.desktop" # LibreOffice Start Center
+    "xsltfilter.desktop" # LibreOffice XSLT based filters
+    "xterm.desktop"
+    "scrcpy-console.desktop"
+    # all the Krita mimetype stuff
+    "krita_brush.desktop"
+    "krita_csv.desktop"
+    "krita_exr.desktop"
+    "krita_gif.desktop"
+    "krita_heif.desktop"
+    "krita_heightmap.desktop"
+    "krita_jp2.desktop"
+    "krita_jpeg.desktop"
+    "krita_jxl.desktop"
+    "krita_kra.desktop"
+    "krita_krz.desktop"
+    "krita_ora.desktop"
+    "krita_pdf.desktop"
+    "krita_png.desktop"
+    "krita_psd.desktop"
+    "krita_qimageio.desktop"
+    "krita_raw.desktop"
+    "krita_spriter.desktop"
+    "krita_svg.desktop"
+    "krita_tga.desktop"
+    "krita_tiff.desktop"
+    "krita_webp.desktop"
+    "krita_xcf.desktop"
   ];
 
 

@@ -194,20 +194,6 @@
       nerdfonts
       liberation_ttf
     ];
-    fontconfig.defaultFonts = {
-      monospace = [
-        "Noto Sans Mono"
-        "Noto Sans CJK"
-      ];
-      sansSerif = [
-        "Noto Sans"
-        "Noto Sans CJK"
-      ];
-      serif = [
-        "Noto Sans Serif"
-        "Noto Sans CJK"
-      ];
-    };
   };
 
 

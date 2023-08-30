@@ -14,9 +14,20 @@
   # TODO:
   # - setup plymouth config
   # - check windows
+  # - figure out how to play startup sounds
   # - setup secure boot
   # - setup power management
   # - setup polkit
+  # RESOURCES:
+  # - Kernel Parameters: https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html
+  # - Learn Nix: 
+  #     https://nixos.wiki/wiki/NixOS_as_a_desktop
+  #     https://www.reddit.com/r/NixOS/comments/113ondu/rice_nixos/
+  #     https://github.com/dmadisetti/.dots/tree/template
+  #     https://codeberg.org/SkyFox42/NixOS-Config
+  # - Plymouth:
+  #     https://github.com/adi1090x/plymouth-themes
+  #     https://askubuntu.com/questions/1174097/how-to-increse-plymouth-theme-duration
 
 
   # AMD SETUP

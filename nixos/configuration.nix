@@ -8,14 +8,15 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./hidden-apps.nix
     ];
 
   # TODO:
-  # - setup plymouth config
+  # + setup syncthing
+  # - login to accounts
+  # - bring in dotfiles
   # - check windows
-  # - figure out how to play startup sounds
   # - setup secure boot
+  # - check no problems with secure boot
   # - setup power management
   # - setup polkit
   # RESOURCES:
@@ -30,6 +31,22 @@
   #     https://askubuntu.com/questions/1174097/how-to-increse-plymouth-theme-duration
 
 
+  # Nix
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "3 days";
+    };
+    optimise = {
+      automatic = true;
+      dates = [ "13 hours" ];
+    };
+    settings = {
+      auto-optimise-store = true;
+    };
+  };
+
+
   # AMD SETUP
   hardware = {
     opengl = {
@@ -41,10 +58,6 @@
         rocm-opencl-icd
         rocm-opencl-runtime
         libva
-        # amdvlk
-      ];
-      extraPackages32 = with pkgs; [
-        # driversi686Linux.amdvlk
       ];
     };
   };
@@ -60,6 +73,9 @@
 
   # Boot
   boot = {
+    initrd.systemd.enable = true;  # experimental
+    kernelModules = [ "amdgpu" ];
+    kernelParams = [ "quiet" "splash" ];  # remember: ESC to see status
     # Bootloader
     loader = {
       timeout = 5;
@@ -73,11 +89,11 @@
       };
     };
 
-    # use adi1090x plymouth themes
+    # see: https://github.com/adi1090x/plymouth-themes
     plymouth = {
       enable = true;
-      # theme = "";
-      # themePackages = with pkgs; [ adi1090x-plymouth-themes ];
+      theme = "red_loader";
+      themePackages = [(pkgs.adi1090x-plymouth-themes.override {selected_themes = ["red_loader"];})];
     };
   };
 
@@ -88,7 +104,7 @@
       enable = true;
       dockerCompat = true;
       extraPackages = with pkgs; [
-        # gvisor  # container sandboxing
+        gvisor  # container sandboxing
       ];
     };
   };
@@ -104,81 +120,58 @@
   };
 
 
+  networking.hostName = "mercury"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "America/Vancouver";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_CA.UTF-8";
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ libpinyin uniemoji ];
+  };
+
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
 
-  # GNOME DE
+  # Enable the GNOME Desktop Environment.
+  services.xserver.displayManager.job.preStart = "sleep 5"; # wait for plymouth before starting gdm
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
   services.xserver.excludePackages = with pkgs; [ xterm ];
   services.gnome.sushi.enable = true;
-  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
-    [org/gnome/mutter]
-    experimental-features=['scale-monitor-framebuffer']
-  '';  # fractional scaling ^^^
+  services.xserver.desktopManager.gnome.extraGSettingsOverridePackages = [ pkgs.gnome.mutter ];
   environment.gnome.excludePackages = with pkgs.gnome; [
     cheese
     gnome-clocks
-    pkgs.gnome-connections  # Remote Desktop Client
-    pkgs.gnome-console
     gnome-contacts
-    seahorse
-    simple-scan  # document scanner
-    yelp
     gnome-logs
     gnome-maps
+    gnome-music
+    pkgs.epiphany
+    pkgs.gnome-connections  # Remote Desktop Client
+    pkgs.gnome-console
     pkgs.gnome-photos
     pkgs.gnome-tour
+    seahorse
+    simple-scan  # document scanner
     totem
-    pkgs.epiphany
+    yelp
   ];
-  # Hide Apps I don't want to see in gnome activies view
-  # Thanks to Max Headroom (https://git.privatevoid.net/max/config/-/blob/master/modules/desktop/default.nix)
-  desktop.hiddenApps = [
-    "btop.desktop"
-    "cups.desktop"
-    "htop.desktop"
-    "krita_brush.desktop"
-    "krita_csv.desktop"
-    "krita_exr.desktop"
-    "krita_gif.desktop"
-    "krita_heif.desktop"
-    "krita_heightmap.desktop"
-    "krita_jp2.desktop"
-    "krita_jpeg.desktop"
-    "krita_jxl.desktop"
-    "krita_kra.desktop"
-    "krita_krz.desktop"
-    "krita_ora.desktop"
-    "krita_pdf.desktop"
-    "krita_png.desktop"
-    "krita_psd.desktop"
-    "krita_qimageio.desktop"
-    "krita_raw.desktop"
-    "krita_spriter.desktop"
-    "krita_svg.desktop"
-    "krita_tga.desktop"
-    "krita_tiff.desktop"
-    "krita_webp.desktop"
-    "krita_xcf.desktop"
-    "micro.desktop"
-    "nnn.desktop"
-    "nvim.desktop"
-    "org.pwmt.zathura-cb.desktop"
-    "org.pwmt.zathura-djvu.desktop"
-    "org.pwmt.zathura-pdf-mupdf.desktop"
-    "org.pwmt.zathura-ps.desktop"
-    "org.pwmt.zathura.desktop"
-    "scrcpy-console.desktop"
-    "startcenter.desktop" # LibreOffice Start Center
-    "umpv.desktop"
-    "xsltfilter.desktop" # LibreOffice XSLT based filters
-    "xterm.desktop"
-    "zathura.desktop"  # this one's a bit iffy
-    # all the Krita mimetype stuff
-  ];
+  # MANUAL STUFF TO DO:
+  # - setup fractional scaling on gnome
+  # `gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"`
+  # - then setup hidden icons
+  # `files="btop.desktop cups.desktop htop.desktop krita_brush.desktop krita_csv.desktop krita_exr.desktop krita_gif.desktop krita_heif.desktop krita_heightmap.desktop krita_jp2.desktop krita_jpeg.desktop krita_jxl.desktop krita_kra.desktop krita_krz.desktop krita_ora.desktop krita_pdf.desktop krita_png.desktop krita_psd.desktop krita_qimageio.desktop krita_raw.desktop krita_spriter.desktop krita_svg.desktop krita_tga.desktop krita_tiff.desktop krita_webp.desktop krita_xcf.desktop micro.desktop nnn.desktop nvim.desktop org.pwmt.zathura-cb.desktop org.pwmt.zathura-djvu.desktop org.pwmt.zathura-pdf-mupdf.desktop org.pwmt.zathura-ps.desktop org.pwmt.zathura.desktop scrcpy-console.desktop startcenter.desktop umpv.desktop xsltfilter.desktop xterm.desktop zathura.desktop"` 
+  # `for f in $files; do touch /home/jaybee/.local/share/applications/$f; echo "[Desktop Entry]\nNoDisplay=true\nHidden=true" > /home/jaybee/.local/share/applications/$f; done`
 
 
   # Configure keymap in X11
@@ -187,10 +180,8 @@
     xkbVariant = "";
   };
 
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -204,16 +195,14 @@
     jack.enable = true;
   };
 
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jaybee = {
     isNormalUser = true;
     description = "Jacobus Burger";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "syncthing" ];
     packages = with pkgs; [
       # GUI
       anki
@@ -232,12 +221,15 @@
       spotify
       vscode-fhs
       # Gnome Apps, for a full list of gnome apps, see https://apps.gnome.org
+      amberol
       authenticator
       dynamic-wallpaper
       eyedropper
       gnome.gnome-color-manager
       gnome.gnome-mahjongg
+      gnome.gnome-terminal
       gnome.gnome-tweaks
+      gnome.gnome-terminal  # for when wezterm isn't working
       gnome.pomodoro
       metadata-cleaner
       pika-backup
@@ -260,15 +252,18 @@
       ripgrep
       ripgrep-all
       starship
-      wezterm
+      wezterm  # jank on gnome
       zathura
       zellij
       zsh
     ];
   };
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
-  # System packages
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
   environment.systemPackages = with pkgs; [
     # system utilities
     coreutils-full
@@ -284,6 +279,7 @@
     htop
     parted
     file
+    unzip
 
     # security
     chkrootkit
@@ -303,38 +299,46 @@
     micro
 
     # Gnome Extensions
-    # recommended: manual install
-    # burn-my-windows
-    # blur-my-shell
-    # custom-accent-colors
-    # expresso
-    # forge
-    # just-perfection
-    # next-up
+    gnomeExtensions.custom-accent-colors
+    gnomeExtensions.caffeine
+    gnomeExtensions.just-perfection
+    gnomeExtensions.next-up
   ];
 
 
-  # Networking
-  networking = {
-    networkmanager.enable = true;
-    hostName = "mercury";  # defire your hostname
-  };
-
-
-  # Time
-  time.timeZone = "America/Vancouver";
-
-
-  # Internationalization
-  i18n = {
-    defaultLocale = "en_CA.UTF-8";
-    inputMethod = {
-      enabled = "ibus";
-      ibus.engines = with pkgs.ibus-engines; [ libpinyin uniemoji ];
+  # Fonts
+  fonts = {
+    fonts = with pkgs; [
+      noto-fonts
+      # noto-fonts-cjk
+      # noto-fonts-emoji
+      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      liberation_ttf
+    ];
+    fontconfig = {
+      defaultFonts = {
+        # TODO: add more nerdfonts for other font styles
+        serif = [ "Noto Sans" ];
+        sansSerif = [ "Noto Serif" ];
+        monospace = [ "Noto Sans Mono" "FiraCode Nerd Font Mono" ];
+      };
+      hinting.style = "hintfull";
     };
   };
 
 
+  # Syncthing
+  services = {
+    syncthing = {
+      enable = true;
+      user = "jaybee";
+      dataDir = "/home/jaybee/Sync";
+      configDir = "/home/jaybee/Sync/.config/syncthing";
+      overrideFolders = true;
+    };
+  };
+
+ 
   # SSH
   services.openssh.enable = true;
   programs.ssh.startAgent = true;

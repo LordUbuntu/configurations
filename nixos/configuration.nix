@@ -12,13 +12,14 @@
 
   # TODO:
   # + setup syncthing
-  # - login to accounts
-  # - bring in dotfiles
-  # - check windows
+  # - log into accounts
+  # - sync dotfiles
+  # + check windows
   # - setup secure boot
-  # - check no problems with secure boot
+  # - check no problems with secure boot on all systems
   # - setup power management
   # - setup polkit
+  # - look into lightdm
   # RESOURCES:
   # - Kernel Parameters: https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html
   # - Learn Nix: 
@@ -26,6 +27,7 @@
   #     https://www.reddit.com/r/NixOS/comments/113ondu/rice_nixos/
   #     https://github.com/dmadisetti/.dots/tree/template
   #     https://codeberg.org/SkyFox42/NixOS-Config
+  #     https://github.com/search?q=dotfiles%20language%3Anix&type=repositories
   # - Plymouth:
   #     https://github.com/adi1090x/plymouth-themes
   #     https://askubuntu.com/questions/1174097/how-to-increse-plymouth-theme-duration
@@ -74,7 +76,7 @@
   # Boot
   boot = {
     initrd.systemd.enable = true;  # experimental
-    kernelModules = [ "amdgpu" ];
+    initrd.kernelModules = [ "amdgpu" ];
     kernelParams = [ "quiet" "splash" ];  # remember: ESC to see status
     # Bootloader
     loader = {
@@ -139,10 +141,11 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.job.preStart = "sleep 5"; # wait for plymouth before starting gdm
+  services.xserver.displayManager.job.preStart = "sleep 3"; # wait for plymouth before starting gdm
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
@@ -303,16 +306,18 @@
     gnomeExtensions.caffeine
     gnomeExtensions.just-perfection
     gnomeExtensions.next-up
+
+    blender-hip
   ];
 
 
   # Fonts
   fonts = {
     fonts = with pkgs; [
+      # TODO: consider other google fonts
       noto-fonts
-      # noto-fonts-cjk
-      # noto-fonts-emoji
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      noto-fonts-cjk
+      (nerdfonts.override { fonts = [ "FiraCode" ]; })  # TODO: add more
       liberation_ttf
     ];
     fontconfig = {

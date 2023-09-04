@@ -10,27 +10,20 @@
       ./hardware-configuration.nix
     ];
 
+
   # TODO:
-  # + setup syncthing
+  # - setup syncthing
   # - log into accounts
   # - sync dotfiles
-  # + check windows
-  # - setup secure boot
-  # - check no problems with secure boot on all systems
-  # - setup power management
-  # - setup polkit
-  # - look into lightdm
+  # - check windows
   # RESOURCES:
   # - Kernel Parameters: https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html
-  # - Learn Nix: 
+  # - Learn Nix:
   #     https://nixos.wiki/wiki/NixOS_as_a_desktop
   #     https://www.reddit.com/r/NixOS/comments/113ondu/rice_nixos/
   #     https://github.com/dmadisetti/.dots/tree/template
   #     https://codeberg.org/SkyFox42/NixOS-Config
   #     https://github.com/search?q=dotfiles%20language%3Anix&type=repositories
-  # - Plymouth:
-  #     https://github.com/adi1090x/plymouth-themes
-  #     https://askubuntu.com/questions/1174097/how-to-increse-plymouth-theme-duration
 
 
   # Nix
@@ -45,11 +38,13 @@
     };
     settings = {
       auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
     };
   };
 
 
   # AMD SETUP
+  # TODO: move amd stuff to a seperate module and import instead
   hardware = {
     opengl = {
       enable = true;
@@ -75,8 +70,7 @@
 
   # Boot
   boot = {
-    initrd.systemd.enable = true;  # experimental
-    initrd.kernelModules = [ "amdgpu" ];
+    kernelModules = [ "amdgpu" ];
     kernelParams = [ "quiet" "splash" ];  # remember: ESC to see status
     # Bootloader
     loader = {
@@ -94,8 +88,8 @@
     # see: https://github.com/adi1090x/plymouth-themes
     plymouth = {
       enable = true;
-      theme = "red_loader";
-      themePackages = [(pkgs.adi1090x-plymouth-themes.override {selected_themes = ["red_loader"];})];
+      theme = "colorful_sliced";
+      themePackages = [(pkgs.adi1090x-plymouth-themes.override {selected_themes = ["colorful_sliced"];})];
     };
   };
 
@@ -105,9 +99,6 @@
     podman = {
       enable = true;
       dockerCompat = true;
-      extraPackages = with pkgs; [
-        gvisor  # container sandboxing
-      ];
     };
   };
 
@@ -123,7 +114,6 @@
 
 
   networking.hostName = "mercury"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -141,16 +131,16 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  # services.xserver.videoDrivers = [ "amdgpu" ];
 
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.job.preStart = "sleep 3"; # wait for plymouth before starting gdm
+  services.xserver.displayManager.job.preStart = "sleep 5"; # wait for plymouth before starting gdm
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
   services.xserver.excludePackages = with pkgs; [ xterm ];
-  services.gnome.sushi.enable = true;
+  # services.gnome.sushi.enable = true;
   services.xserver.desktopManager.gnome.extraGSettingsOverridePackages = [ pkgs.gnome.mutter ];
   environment.gnome.excludePackages = with pkgs.gnome; [
     cheese
@@ -173,7 +163,7 @@
   # - setup fractional scaling on gnome
   # `gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"`
   # - then setup hidden icons
-  # `files="btop.desktop cups.desktop htop.desktop krita_brush.desktop krita_csv.desktop krita_exr.desktop krita_gif.desktop krita_heif.desktop krita_heightmap.desktop krita_jp2.desktop krita_jpeg.desktop krita_jxl.desktop krita_kra.desktop krita_krz.desktop krita_ora.desktop krita_pdf.desktop krita_png.desktop krita_psd.desktop krita_qimageio.desktop krita_raw.desktop krita_spriter.desktop krita_svg.desktop krita_tga.desktop krita_tiff.desktop krita_webp.desktop krita_xcf.desktop micro.desktop nnn.desktop nvim.desktop org.pwmt.zathura-cb.desktop org.pwmt.zathura-djvu.desktop org.pwmt.zathura-pdf-mupdf.desktop org.pwmt.zathura-ps.desktop org.pwmt.zathura.desktop scrcpy-console.desktop startcenter.desktop umpv.desktop xsltfilter.desktop xterm.desktop zathura.desktop"` 
+  # `files="btop.desktop cups.desktop htop.desktop krita_brush.desktop krita_csv.desktop krita_exr.desktop krita_gif.desktop krita_heif.desktop krita_heightmap.desktop krita_jp2.desktop krita_jpeg.desktop krita_jxl.desktop krita_kra.desktop krita_krz.desktop krita_ora.desktop krita_pdf.desktop krita_png.desktop krita_psd.desktop krita_qimageio.desktop krita_raw.desktop krita_spriter.desktop krita_svg.desktop krita_tga.desktop krita_tiff.desktop krita_webp.desktop krita_xcf.desktop micro.desktop nnn.desktop nvim.desktop org.pwmt.zathura-cb.desktop org.pwmt.zathura-djvu.desktop org.pwmt.zathura-pdf-mupdf.desktop org.pwmt.zathura-ps.desktop org.pwmt.zathura.desktop scrcpy-console.desktop startcenter.desktop umpv.desktop xsltfilter.desktop xterm.desktop zathura.desktop"`
   # `for f in $files; do touch /home/jaybee/.local/share/applications/$f; echo "[Desktop Entry]\nNoDisplay=true\nHidden=true" > /home/jaybee/.local/share/applications/$f; done`
 
 
@@ -230,9 +220,8 @@
       eyedropper
       gnome.gnome-color-manager
       gnome.gnome-mahjongg
-      gnome.gnome-terminal
       gnome.gnome-tweaks
-      gnome.gnome-terminal  # for when wezterm isn't working
+      # gnome.gnome-terminal  # for when wezterm isn't working
       gnome.pomodoro
       metadata-cleaner
       pika-backup
@@ -256,9 +245,13 @@
       ripgrep-all
       starship
       wezterm  # jank on gnome
-      zathura
       zellij
       zsh
+
+      # pdf stuff
+      zathura
+      pandoc
+      texlive.combined.scheme-full
     ];
   };
 
@@ -305,7 +298,6 @@
     gnomeExtensions.custom-accent-colors
     gnomeExtensions.caffeine
     gnomeExtensions.just-perfection
-    gnomeExtensions.next-up
 
     blender-hip
   ];
@@ -314,7 +306,6 @@
   # Fonts
   fonts = {
     fonts = with pkgs; [
-      # TODO: consider other google fonts
       noto-fonts
       noto-fonts-cjk
       (nerdfonts.override { fonts = [ "FiraCode" ]; })  # TODO: add more
@@ -343,7 +334,7 @@
     };
   };
 
- 
+
   # SSH
   services.openssh.enable = true;
   programs.ssh.startAgent = true;

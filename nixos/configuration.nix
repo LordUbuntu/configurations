@@ -3,13 +3,14 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  unstable = import <unstable> { config = config.nixpkgs.config; };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-
 
   # TODO:
   # - setup syncthing
@@ -68,29 +69,48 @@
   };
 
 
-  # Boot
+  # Bootloader.
   boot = {
     kernelModules = [ "amdgpu" ];
-    kernelParams = [ "quiet" "splash" ];  # remember: ESC to see status
-    # Bootloader
+    kernelParams = [ "quiet" "splash" ];
     loader = {
-      timeout = 5;
-      efi.canTouchEfiVariables = true;
+      # systemd-boot.enable = true;
       grub = {
         enable = true;
         device = "nodev";
-        efiSupport = true;
-        useOSProber = true;
-        configurationLimit = 13;
+	efiSupport = true;
+	useOSProber = true;
+	configurationLimit = 13;
       };
+      efi.canTouchEfiVariables = true;
     };
 
+    plymouth.enable = true;  # default nixos boot splash
+    # 	causes a hang for some unknown reason
     # see: https://github.com/adi1090x/plymouth-themes
-    plymouth = {
-      enable = true;
-      theme = "colorful_sliced";
-      themePackages = [(pkgs.adi1090x-plymouth-themes.override {selected_themes = ["colorful_sliced"];})];
-    };
+    # plymouth = {
+    #   enable = true;
+    #   themePackages = [(pkgs.adi1090x-plymouth-themes.override {selected_themes = ["colorful_sliced"];})];
+    #   theme = "colorful_sliced";
+    # };
+  };
+
+
+  # Enable networking
+  networking.hostName = "mercury"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable = true;
+
+
+  # Set your time zone.
+  time.timeZone = "America/Vancouver";
+
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_CA.UTF-8";
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ libpinyin uniemoji ];
   };
 
 
@@ -103,44 +123,18 @@
   };
 
 
-  # Asus laptop stuff
-  services = {
-    asusd = {
-      enable = true;
-      enableUserService = true;
-    };
-    supergfxd.enable = true;
-  };
-
-
-  networking.hostName = "mercury"; # Define your hostname.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "America/Vancouver";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_CA.UTF-8";
-  i18n.inputMethod = {
-    enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ libpinyin uniemoji ];
-  };
-
-
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  # services.xserver.videoDrivers = [ "amdgpu" ];
-
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.job.preStart = "sleep 5"; # wait for plymouth before starting gdm
+  services.xserver.videoDrivers = [
+    "amdgpu"
+    "modesetting"
+    "fbdev"
+  ];
+  services.xserver.displayManager.job.preStart = "sleep 5";  # give time for plymouth animation
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
   services.xserver.excludePackages = with pkgs; [ xterm ];
-  # services.gnome.sushi.enable = true;
   services.xserver.desktopManager.gnome.extraGSettingsOverridePackages = [ pkgs.gnome.mutter ];
   environment.gnome.excludePackages = with pkgs.gnome; [
     cheese
@@ -151,7 +145,6 @@
     gnome-music
     pkgs.epiphany
     pkgs.gnome-connections  # Remote Desktop Client
-    pkgs.gnome-console
     pkgs.gnome-photos
     pkgs.gnome-tour
     seahorse
@@ -159,12 +152,6 @@
     totem
     yelp
   ];
-  # MANUAL STUFF TO DO:
-  # - setup fractional scaling on gnome
-  # `gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"`
-  # - then setup hidden icons
-  # `files="btop.desktop cups.desktop htop.desktop krita_brush.desktop krita_csv.desktop krita_exr.desktop krita_gif.desktop krita_heif.desktop krita_heightmap.desktop krita_jp2.desktop krita_jpeg.desktop krita_jxl.desktop krita_kra.desktop krita_krz.desktop krita_ora.desktop krita_pdf.desktop krita_png.desktop krita_psd.desktop krita_qimageio.desktop krita_raw.desktop krita_spriter.desktop krita_svg.desktop krita_tga.desktop krita_tiff.desktop krita_webp.desktop krita_xcf.desktop micro.desktop nnn.desktop nvim.desktop org.pwmt.zathura-cb.desktop org.pwmt.zathura-djvu.desktop org.pwmt.zathura-pdf-mupdf.desktop org.pwmt.zathura-ps.desktop org.pwmt.zathura.desktop scrcpy-console.desktop startcenter.desktop umpv.desktop xsltfilter.desktop xterm.desktop zathura.desktop"`
-  # `for f in $files; do touch /home/jaybee/.local/share/applications/$f; echo "[Desktop Entry]\nNoDisplay=true\nHidden=true" > /home/jaybee/.local/share/applications/$f; done`
 
 
   # Configure keymap in X11
@@ -173,8 +160,10 @@
     xkbVariant = "";
   };
 
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -188,138 +177,26 @@
     jack.enable = true;
   };
 
+
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.jaybee = {
-    isNormalUser = true;
-    description = "Jacobus Burger";
-    extraGroups = [ "networkmanager" "wheel" "syncthing" ];
-    packages = with pkgs; [
-      # GUI
-      anki
-      blender
-      cura
-      discord
-      firefox
-      google-chrome
-      inkscape
-      klavaro
-      krita
-      lmms
-      mpv
-      obs-studio
-      obsidian
-      spotify
-      vscode-fhs
-      # Gnome Apps, for a full list of gnome apps, see https://apps.gnome.org
-      amberol
-      authenticator
-      dynamic-wallpaper
-      eyedropper
-      gnome.gnome-color-manager
-      gnome.gnome-mahjongg
-      gnome.gnome-tweaks
-      # gnome.gnome-terminal  # for when wezterm isn't working
-      gnome.pomodoro
-      metadata-cleaner
-      pika-backup
 
-      # CLI
-      bat
-      btop
-      cbonsai
-      cmus
-      delta
-      duf
-      exa
-      fasd
-      fd
-      fzf
-      httpie
-      hyperfine
-      neofetch
-      nnn
-      ripgrep
-      ripgrep-all
-      starship
-      wezterm  # jank on gnome
-      zellij
-      zsh
-
-      # pdf stuff
-      zathura
-      pandoc
-      texlive.combined.scheme-full
-    ];
+  # flatpak
+  services.flatpak.enable = true;
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    # system utilities
-    coreutils-full
-    busybox
-    rocminfo
-    vulkan-tools
-    clinfo
-    pciutils
-    usbutils
-    wget
-    curl
-    git
-    htop
-    parted
-    file
-    unzip
-
-    # security
-    chkrootkit
-    lynis
-
-    # virtualisation
-    podman
-    distrobox
-    toolbox
-
-    # developer utilities
-    python310Full
-    python310Packages.pip
-    python310Packages.pipx       # I must be assimilated !_!
-    python310Packages.pip-tools  # Resistance is futile
-    neovim
-    micro
-
-    # Gnome Extensions
-    gnomeExtensions.custom-accent-colors
-    gnomeExtensions.caffeine
-    gnomeExtensions.just-perfection
-
-    blender-hip
-  ];
-
-
-  # Fonts
-  fonts = {
-    fonts = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })  # TODO: add more
-      liberation_ttf
-    ];
-    fontconfig = {
-      defaultFonts = {
-        # TODO: add more nerdfonts for other font styles
-        serif = [ "Noto Sans" ];
-        sansSerif = [ "Noto Serif" ];
-        monospace = [ "Noto Sans Mono" "FiraCode Nerd Font Mono" ];
-      };
-      hinting.style = "hintfull";
+  # Asus laptop stuff
+  services = {
+    asusd = {
+      enable = true;
+      enableUserService = true;
     };
+    supergfxd.enable = true;
   };
 
 
@@ -335,14 +212,141 @@
   };
 
 
-  # SSH
+  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   programs.ssh.startAgent = true;
 
 
-  # Security
-  services.fwupd.enable = true;  # dbus firmwrae updtaer, for gnome device security thingy
+  # Enabel FWUPD
+  # services.fwupd.enable = true;
 
+
+  # Fonts
+  fonts = {
+    fonts = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      roboto
+      (nerdfonts.override { fonts = [ "FiraCode" ]; })  # TODO: add more
+    ];
+    fontconfig = {
+      defaultFonts = {
+        # TODO: add more nerdfonts for other font styles
+        serif = [ "Roboto Mono" "Noto Sans" ];
+        sansSerif = [ "Roboto Mono" "Noto Serif" ];
+        monospace = [ "FiraCode Nerd Font Mono" "Noto Sans Mono" ];
+      };
+      hinting.style = "hintfull";
+    };
+  };
+
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.jaybee = {
+    isNormalUser = true;
+    description = "Jacobus Burger";
+    extraGroups = [ "networkmanager" "syncthing" "wheel" ];
+    # packages = with pkgs; [ ];
+  };
+
+  # Packages
+  nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs; [
+    # system utilities
+    blender-hip
+    clinfo
+    coreutils-full
+    curl
+    file
+    git
+    htop
+    parted
+    pciutils
+    rocminfo
+    unzip
+    usbutils
+    vulkan-tools
+    wget
+
+    # security
+    chkrootkit
+    lynis
+
+    # virtualisation
+    distrobox
+    podman
+    toolbox
+
+    # developer tools
+    micro
+    neovim
+    python310Full
+    python310Packages.pip
+    python310Packages.pip-tools # Resistance is fulite
+    python310Packages.pipx      # I must be assimilated !_!
+    unstable.wezterm
+
+    # cli tools
+    bat
+    btop
+    cbonsai
+    cmus
+    delta
+    duf
+    exa
+    fasd
+    fd
+    fzf
+    httpie
+    hyperfine
+    neofetch
+    nnn
+    ripgrep
+    ripgrep-all
+    starship
+    zellij
+    zsh
+
+    # documents
+    pandoc
+    texlive.combined.scheme-full
+    zathura
+
+    # GUI
+    amberol
+    anki
+    audacity
+    blender
+    cura
+    discord
+    firefox
+    google-chrome
+    inkscape
+    klavaro
+    krita
+    libresprite  # aseprite atl
+    lmms
+    mpv
+    obs-studio
+    obsidian
+    spotify
+    vscode-fhs
+    
+    # Gnome
+    celluloid  # mpv frontend
+    dynamic-wallpaper
+    eyedropper
+    gnome.gnome-color-manager
+    gnome.gnome-mahjongg
+    gnome.gnome-software  # make sure flatpak is setup with flathub
+    gnome.gnome-tweaks
+    gnome.pomodoro
+    gnomeExtensions.caffeine
+    gnomeExtensions.custom-accent-colors
+    gnomeExtensions.just-perfection
+    metadata-cleaner
+    pika-backup
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

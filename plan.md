@@ -1,4 +1,5 @@
-echo $XDG_SESSION_TYPE
+One of the running principles of this repo is that each program's config is reasonably self-contained so that it's a simple matter of installing the program and syncing config files.
+
 configurations
 |- install
 |  |- bootstrap.sh  (install universal deps and env, needed for setup)

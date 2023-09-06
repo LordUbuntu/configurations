@@ -10,6 +10,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./nix-alien.nix
     ];
 
   # TODO:
@@ -28,6 +29,7 @@ in
 
 
   # Nix
+  nixpkgs.config.allowUnfree = true;
   nix = {
     gc = {
       automatic = true;
@@ -78,15 +80,15 @@ in
       grub = {
         enable = true;
         device = "nodev";
-	efiSupport = true;
-	useOSProber = true;
-	configurationLimit = 13;
+        efiSupport = true;
+        useOSProber = true;
+        configurationLimit = 13;
       };
       efi.canTouchEfiVariables = true;
     };
 
     plymouth.enable = true;  # default nixos boot splash
-    # 	causes a hang for some unknown reason
+    #   hangs on bootup for some unknown reason
     # see: https://github.com/adi1090x/plymouth-themes
     # plymouth = {
     #   enable = true;
@@ -250,8 +252,10 @@ in
   };
 
   # Packages
-  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
+    # nix stuff
+    nix-index
+
     # system utilities
     blender-hip
     clinfo
@@ -331,7 +335,7 @@ in
     obsidian
     spotify
     vscode-fhs
-    
+
     # Gnome
     celluloid  # mpv frontend
     dynamic-wallpaper

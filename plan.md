@@ -16,4 +16,5 @@ configurations
 - basically just bootstrap and then setup
 
 future:
+- reconfigure install and setup scripts from toplevel to defer to nixos or fedora/debian/arch setups based on current system
 - setup and install home-manager as a potential extra

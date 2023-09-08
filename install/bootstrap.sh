@@ -59,7 +59,7 @@ then
   if [ ! -f "$HOME/.ssh/id_rsa" ]
   then
     echo "Forging SSH keys for $USER with git email $(git config user.email)"
-    ssh-keyget -t rsa -b 4096 -C "$(git config user.email)"
+    ssh-keygen -t rsa -b 4096 -C "$(git config user.email)"
     ssh-add ~/.ssh/id_rsa
   fi
   if [ ! $(ps -p "$SSH_AGENT_PID" 2>/dev/null) ]

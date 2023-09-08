@@ -1,5 +1,7 @@
 One of the running principles of this repo is that each program's config is reasonably self-contained so that it's a simple matter of installing the program and syncing config files.
 
+I need to refactor for nix compatability. Mostly in just skipping install and setup files (except for some basics like git), and copying config files.
+
 configurations
 |- install
 |  |- bootstrap.sh  (install universal deps and env, needed for setup)

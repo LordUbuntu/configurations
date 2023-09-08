@@ -25,22 +25,21 @@ set.spelllang = "en_ca"
 ---------------------
 set.termguicolors = true
 set.wrap = true
-set.textwidth = 80
+set.wrapmargin = 80
+-- set.textwidth = 0  -- set to 80 for hard newline break
+set.linebreak = true
+set.breakindent = true
+set.showbreak = '>> '
 set.colorcolumn = "80"
--- set.formatoptions = set.formatoptions + "t"
+set.formatoptions = set.formatoptions + "t"
 set.number = true
 set.relativenumber = true
-set.linebreak = true
 set.linespace = 3
 set.showmode = false
 set.foldmethod = "expr"
 set.foldexpr = "nvim_treesitter#foldexpr()"
 set.splitright = true
 set.splitbelow = true
-
------------------
--- PERFORMANCE
------------------
 set.lazyredraw = true
 set.timeoutlen = 300
 set.updatetime = 100
@@ -85,7 +84,7 @@ autocmd('Filetype', {
 -- Filetypes
 --------------
 g.filetype_pl = "prolog"
-vim.g.python3_host_prog = '$HOME/.pyenv/versions/neovim3/bin/python3'
+vim.g.python3_host_prog = '$HOME/.virtualenvs/neovim3/bin/python'
 -- spelling
 autocmd('Filetype', {
   pattern = { 'txt', 'md', 'markdown', 'tex', 'latex', 'bib' },

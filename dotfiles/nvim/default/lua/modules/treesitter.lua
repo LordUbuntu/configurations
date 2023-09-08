@@ -94,7 +94,7 @@ return {
         'typescript',
         'vim',
         'vimdoc',
-        'yaml',
+        -- 'yaml',
       },
       sync_install = false,
       auto_install = true,

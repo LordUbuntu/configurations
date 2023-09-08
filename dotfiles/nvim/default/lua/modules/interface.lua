@@ -37,7 +37,7 @@ return {
             css_fn = true, -- Enable all CSS *functions*
             -- Available modes for `mode`: foreground, background,  virtualtext
             mode = "virtualtext",
-            virtualtext = "⏺",
+            virtualtext = "",
             tailwind = true,
             -- parsers can contain values used in |user_default_options|
             sass = { enable = true, parsers = { "css" }, }, -- Enable sass colors
@@ -78,8 +78,13 @@ return {
       },
     },
     config = function()
-      vim.opt.textwidth = 80
-      vim.opt.colorcolumn = "81"
+      vim.opt.wrap = true
+      vim.opt.wrapmargin = 80
+      -- vim.opt.textwidth = 0  -- set to 80 for hard newline break, 0 to not
+      vim.opt.linebreak = true
+      vim.opt.breakindent = true
+      vim.opt.showbreak = '>> '
+      vim.opt.colorcolumn = "80"
       vim.opt.formatoptions = vim.opt.formatoptions + "t"
     end,
   },

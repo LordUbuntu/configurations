@@ -40,7 +40,7 @@ fi
 # install and setup tree-sitter
 echo "\e[34m===== Setting up tree-sitter\e[0m"
 PATH="$PATH:$HOME/.cargo/bin"  # setup path to avoid reinstalls
-if [ ! $(command -v cargo) ]
+if [ ! $(command -v tree-sitter) ] && [ ! $(command -v cargo) ]
 then
   echo "\e[33mInstalling rust\e[0m"
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -67,32 +67,15 @@ fi
 
 
 
-# install and setup pyenv to give neovim a Python 3 provider with virutalenv
+# install and setup neovim virtual environment
 echo "\e[34m===== Setting up Python 3 virutual environment"
-PATH="$PATH:$HOME/.pyenv/bin/pyenv"  # setup path to avoid reinstalls
-if [ ! $(command -v pyenv) ]
-then
-  echo "\e[33mInstalling pyenv\e[0m"
-  PYENV_GIT_TAG=v2.3.24 
-  curl https://pyenv.run | bash
-  if [ $? ]
-  then
-    echo "\e[32mDone pyenv\e[0m"
-  else
-    echo "\e[31mCRITICAL: failed to install pyenv\e[0m"
-    exit 1
-  fi
-  unset PYENV_GIT_TAG
-fi
-# setup neovim3 pyenv if not already
-if [ ! $(pyenv virtualenvs | grep 'neovim3' | awk '{print $1}') ]
+if [ ! -d "$HOME/.virtualenvs/neovim3" ]
 then
   echo "\e[33mSetting up neovim3 virtual env\e[0m"
-  # WARNING: untested
-  # install and create virtualenv
+  # setup virutal environment path
   python -m venv "$HOME/.virtualenvs/neovim3"
   source "$HOME/.virtualenvs/neovim3/bin/activate"
-  # install packages in virtual env, assuming we're currently in one
+  # install packages in virtual environment
   pip install pynvim neovim
   deactivate
   if [ $? ]

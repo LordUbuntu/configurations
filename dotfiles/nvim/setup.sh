@@ -88,13 +88,13 @@ fi
 if [ ! $(pyenv virtualenvs | grep 'neovim3' | awk '{print $1}') ]
 then
   echo "\e[33mSetting up neovim3 virtual env\e[0m"
+  # WARNING: untested
   # install and create virtualenv
-  pyenv install 3.10
-  pyenv virtualenv neovim3
-  # install packages in virtual env
-  pyenv activate neovim3
+  python -m venv "$HOME/.virtualenvs/neovim3"
+  source "$HOME/.virtualenvs/neovim3/bin/activate"
+  # install packages in virtual env, assuming we're currently in one
   pip install pynvim neovim
-  source deactivate
+  deactivate
   if [ $? ]
   then
     echo "\e[32mDone virtualenv for neovim\e[0m"

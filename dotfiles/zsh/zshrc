@@ -52,7 +52,7 @@ SAVEHIST=200
 # - Behaviour
 setopt bang_hist hist_ignore_space hist_beep beep
 setopt share_history inc_append_history extended_history
-setopt interactive_comments # correct_all 
+setopt interactive_comments # correct_all
 autoload -Uz vcs_info # gitstuff
 # - Storage
 setopt hist_find_no_dups hist_ignore_all_dups
@@ -60,8 +60,8 @@ setopt hist_fcntl_lock hist_reduce_blanks
 setopt hist_no_functions
 # - Directory Stack
 setopt auto_cd
-setopt auto_pushd 
-setopt pushd_minus pushd_silent pushd_to_home pushd_ignore_dups 
+setopt auto_pushd
+setopt pushd_minus pushd_silent pushd_to_home pushd_ignore_dups
 DIRSTACKSIZE=13
 # - Completion
 setopt bash_auto_list list_packed list_rows_first list_types
@@ -189,7 +189,6 @@ if [[ -f /usr/local/cuda/bin ]]
 then
   PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
 fi
-
 
 # FZF
 if type fzf &> /dev/null
@@ -394,6 +393,11 @@ then
   zstyle ':completion:*' special-dirs true
   zstyle :compinstall filename '/home/jaybee/.zshrc'
   autoload -Uz compinit
-  compinit
+  if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]
+  then
+        compinit
+  else
+        compinit -C
+  fi
 fi
 # zprof

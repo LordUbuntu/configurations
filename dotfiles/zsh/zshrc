@@ -109,8 +109,6 @@ then
   zcomet load MichaelAquilina/zsh-you-should-use
   export YSU_MESSAGE_POSITION="before"
   export YSU_MESSAGE_FORMAT="$(tput setaf 3)Found %alias_type for %command: %alias$(tput sgr0)"
-  #   lazy load pyenv
-  zcomet trigger pyenv mattberther/zsh-pyenv
   #   get extra autocompletions
   zcomet load zsh-users/zsh-completions
   #   fish-like syntax highlighting
@@ -192,13 +190,6 @@ then
   PATH="$PATH:/usr/local/cuda/bin"  # needed for nvidia cuda+cudnn
 fi
 
-# PYENV
-if [[ -d $HOME/.pyenv ]]
-then
-  export PYENV_ROOT="$HOME/.pyenv"
-  PATH="$PATH:$PYENV_ROOT/bin"
-  # eval "$(pyenv init -)"
-fi
 
 # FZF
 if type fzf &> /dev/null

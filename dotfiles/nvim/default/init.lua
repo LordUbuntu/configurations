@@ -15,13 +15,10 @@ require("core.lazy")
 
 
 -- set colorscheme
-vim.cmd[[
-  autocmd ColorSchemePre gruvbox highlight link RainbowDelimiterRed GruvboxRed
-  autocmd ColorSchemePre gruvbox highlight link RainbowDelimiterOrange GruvboxOrange
-  autocmd ColorSchemePre gruvbox highlight link RainbowDelimiterYellow GruvboxYellow
-  autocmd ColorSchemePre gruvbox highlight link RainbowDelimiterGreen GruvboxGreen
-  autocmd ColorSchemePre gruvbox highlight link RainbowDelimiterCyan GruvboxAqua
-  autocmd ColorSchemePre gruvbox highlight link RainbowDelimiterBlue GruvboxBlue
-  autocmd ColorSchemePre gruvbox highlight link RainbowDelimiterViolet GruvboxPurple
-]]
 vim.cmd.colorscheme(require("core.helpers").try_colorscheme("gruvbox"))
+
+if os.getenv('theme') == 'light' then
+  vim.opt.background = 'light'
+else
+  vim.opt.background = 'dark'
+end

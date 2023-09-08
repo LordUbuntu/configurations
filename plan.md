@@ -17,4 +17,5 @@ configurations
 
 future:
 - reconfigure install and setup scripts from toplevel to defer to nixos or fedora/debian/arch setups based on current system
+- detox off pyenv with python venv instead (for nvim, setup venv in a predictable place in $HOME directory)
 - setup and install home-manager as a potential extra

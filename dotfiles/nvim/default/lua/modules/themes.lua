@@ -97,16 +97,4 @@ return {
       vim.g.oh_lucy_transparent_background = false
     end,
   },
-  -- darkman: A neovim plugin for interfacing with the freedesktop
-  --          dark mode standard
-  -- see:
-  --  https://github.com/4e554c4c/darkman.nvim
-  --  https://darkman.whynothugo.nl/
-  {
-    '4e554c4c/darkman.nvim',
-    build = 'go build -o bin/darkman.nvim',
-    config = function()
-      require('darkman').setup()
-    end,
-  },
 }

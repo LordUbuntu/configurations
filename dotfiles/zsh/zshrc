@@ -2,7 +2,6 @@
 #############
 #  ALIASES  #
 #############
-
 alias rm='rm -I' # or possibly rm -Irf
 alias cp='cp -i'
 type duf &> /dev/null && alias df='duf' || alias df='df -h'
@@ -40,7 +39,6 @@ then
 fi
 
 
-
 ##############
 #  SETTINGS  #
 ##############
@@ -52,7 +50,7 @@ SAVEHIST=200
 # - Behaviour
 setopt bang_hist hist_ignore_space hist_beep beep
 setopt share_history inc_append_history extended_history
-setopt interactive_comments # correct_all
+setopt interactive_comments # correct_all 
 autoload -Uz vcs_info # gitstuff
 # - Storage
 setopt hist_find_no_dups hist_ignore_all_dups
@@ -60,8 +58,8 @@ setopt hist_fcntl_lock hist_reduce_blanks
 setopt hist_no_functions
 # - Directory Stack
 setopt auto_cd
-setopt auto_pushd
-setopt pushd_minus pushd_silent pushd_to_home pushd_ignore_dups
+setopt auto_pushd 
+setopt pushd_minus pushd_silent pushd_to_home pushd_ignore_dups 
 DIRSTACKSIZE=13
 # - Completion
 setopt bash_auto_list list_packed list_rows_first list_types
@@ -85,7 +83,6 @@ setopt bare_glob_qual brace_ccl glob_dots ksh_glob mark_dirs
 # - Style
 setopt prompt_subst
 autoload -U colors && colors
-
 
 
 ###########
@@ -120,14 +117,31 @@ else
 fi
 
 
-
 ##############
 #  ENV SETUP #
 ##############
 
 # set environment variables taking system state into consideration
 PATH="$PATH:$HOME/.local/bin:$HOME/bin"
+theme='dark'
 
+
+#############
+# FUNCTIONS #
+#############
+
+autoload -U add-zsh-hook
+# automatically enter and exit python virtual environments
+# thanks to: https://dev.to/moniquelive/auto-activate-and-deactivate-python-venv-using-zsh-4dlm
+python_venv() {
+  MYVENV=./venv
+  # when you cd into a folder that contains $MYVENV
+  [[ -d $MYVENV ]] && source $MYVENV/bin/activate > /dev/null 2>&1
+  # when you cd into a folder that doesn't
+  [[ ! -d $MYVENV ]] && deactivate > /dev/null 2>&1
+}
+add-zsh-hook chpwd python_venv
+python_venv
 
 
 ############
@@ -372,6 +386,8 @@ export PATH
 export LC_CTYPE="en_CA.UTF-8"
 export EDITOR="nvim"
 export OPENER="xdg-open"
+export theme
+
 
 ###############
 # Completions #
@@ -395,9 +411,9 @@ then
   autoload -Uz compinit
   if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]
   then
-        compinit
+  	compinit
   else
-        compinit -C
+  	compinit -C
   fi
 fi
 # zprof

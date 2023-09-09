@@ -29,6 +29,7 @@ config.default_cursor_style = 'BlinkingUnderline'
 config.cursor_blink_rate = 500
 config.animation_fps = 144
 
+
 -- font stuff (see: https://github.com/tonsky/FiraCode)
 config.font = wezterm.font_with_fallback {
   {
@@ -65,9 +66,12 @@ config.font = wezterm.font_with_fallback {
   -- - CJK AllSeto
 }
 config.font_size = 13
+config.warn_about_missing_glyphs=false
+
 
 -- warning: shrodinger's ime
 config.use_ime = true
+
 
 -- window
 config.enable_tab_bar = false
@@ -79,6 +83,7 @@ config.window_padding = {
   top = '3px',
   bottom = '3px',
 }
+-- config.window_background_opacity = 0.96
 
 -- render
 -- config.dpi = 192.0  -- potential fix for high res monitors

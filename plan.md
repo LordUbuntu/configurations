@@ -1,6 +1,5 @@
 One of the running principles of this repo is that each program's config is reasonably self-contained so that it's a simple matter of installing the program and syncing config files.
 
-I need to refactor for nix compatability. Mostly in just skipping install and setup files (except for some basics like git), and copying config files.
 
 configurations
 |- install
@@ -15,9 +14,12 @@ configurations
    \- (all nix config files and other stuff)
 
 
-- basically just bootstrap and then setup
 
-future:
-- reconfigure install and setup scripts from toplevel to defer to nixos or fedora/debian/arch setups based on current system
-- detox off pyenv with python venv instead (for nvim, setup venv in a predictable place in $HOME directory)
-- setup and install home-manager as a potential extra
+At the beginning, setup will first check if system has nix, and if it does will start a setup script in the nix directory to use flakes and whatever.
+If the system is arch/ubuntu/fedora, then it will do the usual task of running each bootstrap script in each dotfile directory.
+In either case, dotfiles will be linked/copied to their respective paths on system. Only difference is in how dependencies/packages are handled.
+
+Alternatively, it might be easier to have a separate file in install directory for arch, ubuntu, fedora, and nix that will automatically install all packages and sync all dotfiles for each respective system.
+Or perhaps have a directory for each distribution with its respective 
+files and everything to setup a seperate preferred system for each independently. Making this repo a superrepo with sub-repos dedicated to different os setups/configs.
+Or it might be good to simplify this in the future by just having the one script for one system to install all packages and sync dotfiles.

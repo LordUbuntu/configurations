@@ -11,6 +11,14 @@ echo """
 
 
 
+if [ ! $(command -v nix) ]
+then
+  # install dotfile dependencies
+  sh deps.sh
+fi
+
+
+
 echo """
 ======= GIT =======
 """

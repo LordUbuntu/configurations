@@ -1,15 +1,5 @@
 #!/bin/sh
-# TODO: the install checks at the start of each should be moved into a func
-
-# global dependencies
-# unzip
-# wget
-# curl
-# gzip
-# tar
-# bash
-# sh
-# git
+# This script will setup environment for all installed programs
 
 
 
@@ -24,12 +14,6 @@ echo """
 echo """
 ======= GIT =======
 """
-# install git if it is not installed already
-if [ ! $(command -v git) ]
-then
-  echo "GIT not installed, attempting to install GIT..."
-  # "install git" or something using host-wrapper install function
-fi
 # setup git if/once it is installed
 if [ $(command -v git) ]
 then
@@ -39,7 +23,7 @@ then
     git config --global user.email "$email"
   fi
 else
-  echo "!!! GIT failed !!!"
+  echo "!!! GIT not installed !!!"
   exit 1
 fi
 
@@ -48,12 +32,6 @@ fi
 echo """
 ======= SSH =======
 """
-# install ssh if it is not installed already
-if [ ! $(command -v ssh) ]
-then
-  echo "SSH not installed, attempting to install SSH..."
-  # "install ssh" or something using host-wrapper install function
-fi
 if [ $(command -v ssh) ]
 then
   if [ ! -f "$HOME/.ssh/id_rsa" ]
@@ -68,7 +46,7 @@ then
     eval "$(ssh-agent -s)"
   fi
 else
-  echo "!!! SSH failed !!!"
+  echo "!!! SSH not installed !!!"
   exit 1
 fi
 
@@ -77,12 +55,6 @@ fi
 echo """
 ======= ZSH =======
 """
-# install ssh if it is not installed already
-if [ ! $(command -v zsh) ]
-then
-  echo "ZSH not installed, attempting to install ZSH..."
-  # "install ssh" or something using host-wrapper install function
-fi
 if [ $(command -v zsh) ]
 then
   if [ $(basename "$SHELL") != zsh ]
@@ -92,6 +64,6 @@ then
     sudo chsh -s "$(command -v zsh)" "$USER"
   fi
 else
-  echo "!!! ZSH failed !!!"
+  echo "!!! ZSH not installed !!!"
   exit 1
 fi

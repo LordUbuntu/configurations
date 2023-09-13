@@ -1,3 +1,9 @@
+Plan:
+- start at toplevel install.sh script
+- run general bootstrap (single bootstrap file in install directory, skips over installation if on nix, then proceeds towards setting up environment stuff, then finally next step)
+- automatically run bootstrap.sh file in each subdirectory under dotfiles directory.
+
+
 One of the running principles of this repo is that each program's config is reasonably self-contained so that it's a simple matter of installing the program and syncing config files.
 
 There will be a place for startpages to be stored (from my AWE startpage repo. The idea is sync startpages and run them with daemon on machine locally, probably somewhere inside ~/.local or in a ~/.startpage directory)

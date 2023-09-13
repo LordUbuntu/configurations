@@ -75,7 +75,3 @@ else
   echo "!!! ZSH not installed !!!"
   exit 1
 fi
-
-
-
-sh link_files.sh

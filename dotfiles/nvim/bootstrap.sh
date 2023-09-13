@@ -1,14 +1,25 @@
 #!/bin/sh
 # Jacobus Burger (2023)
 
-# Install dependencies if not covered by nix
+##### Install Dependencies if not on nix
 if [ ! $(command -v nix) ]
 then
-  sh deps.sh
+  echo "\e[34m===== INSTALL DEPENDENCIES - NVIM\e[0m"
+  if [ ! $(command -v cargo) ]
+  then
+    echo "\e[34m===== INSTALL RUST\e[0m"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  fi
+  if [ ! $(command -v tree-sitter) ]
+  then
+    echo "\e[34m===== INSTALL TREESITTER\e[0m"
+    cargo install tree-sitter-cli
+  fi
 fi
 
 
 
+##### Setup Environment
 echo "\e[34m===== BOOTSTRAP ENVIRONMENT - NVIM\e[0m"
 # install and setup neovim virtual environment
 echo "\e[34m===== Setting up Python 3 virutual environment"
@@ -33,9 +44,7 @@ fi
 
 
 # install and setup fzf
-# NOTE: may not be necessary
 echo "\e[34m===== Setting up fzf\e[0m"
-PATH="$PATH:$HOME/.fzf/bin/fzf"
 if [ ! $(command -v fzf) ]
 then
   echo "\e[33mInstalling fzf\e[0m"
@@ -49,6 +58,27 @@ then
     exit 1
   fi
 fi
+
+
+
+##### Link Files
+dst="$HOME/.config/nvim"
+# backup preexisting files
+if [ -e "$dst" ]
+then
+  mv "$dst" "$dst.backup"
+fi
+read -p "Linking will delete the original, are you sure?" ans
+case $ans in
+  [Yy]* )
+    echo "copying from $PWD/default to $dst"
+    rm -rf "$dst"
+    cp -R "$PWD/default/." "$dst"
+    break;;
+  [Nn]* )
+    echo "skipping...";;
+  * ) echo "please answer Yes or No"
+esac
 
 
 

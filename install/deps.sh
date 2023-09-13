@@ -1,8 +1,8 @@
 #!/bin/sh
-# Attempt to install all binaries using whatever package manager is available
+# attempt to install all binaries using whatever package manager is available
 
 
-# GLOBAL DEPENDENCIES
+# global dependencies
 # unzip
 # wget
 # curl
@@ -37,5 +37,5 @@ then
   sudo dnf install "$programs"
 elif [ $(command -v pacman) ]
 then
-  sudo pacman -Suy "$programs"
+  sudo pacman -suy "$programs"
 fi

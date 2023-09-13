@@ -21,11 +21,10 @@ fi
 
 ##### Setup Environment
 echo -e "\e[34m===== BOOTSTRAP ENVIRONMENT - NVIM\e[0m"
-# install and setup neovim virtual environment
-echo -e "\e[34m===== Setting up Python 3 virutual environment"
 if [ ! -d "$HOME/.virtualenvs/neovim3" ]
 then
-  echo -e "\e[33mSetting up neovim3 virtual env\e[0m"
+  # install and setup neovim virtual environment
+  echo -e "\e[34m===== Setting up Python 3 virutual environment"
   # setup virutal environment path
   python -m venv "$HOME/.virtualenvs/neovim3"
   source "$HOME/.virtualenvs/neovim3/bin/activate"
@@ -44,10 +43,9 @@ fi
 
 
 # install and setup fzf
-echo -e "\e[34m===== Setting up fzf\e[0m"
 if [ ! $(command -v fzf) ]
 then
-  echo -e "\e[33mInstalling fzf\e[0m"
+  echo -e "\e[34m===== Setting up fzf\e[0m"
   git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
   $HOME/.fzf/install
   if [ $? ]

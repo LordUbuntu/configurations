@@ -1,6 +1,10 @@
 #!/bin/sh
 # Jacobus Burger (2023)
 
+echo -e "\e[34m===== BOOTSTRAP - EMACS\e[0m"
+
+
+
 ##### Install Dependencies if not on nix
 if [ ! $(command -v nix) ]
 then
@@ -14,8 +18,8 @@ fi
 
 
 ##### Link Files
-source ../../general/functions.sh
-link "$PWD/doom/." "$HOME/.doom.d"
+source general/functions.sh
+link "$PWD/dotfiles/emacs/doom" "$HOME/.doom.d"
 
 
 echo -e "\e[34m=======================================\e[0m"

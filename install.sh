@@ -9,5 +9,5 @@ sh general/bootstrap.sh
 for program in $(ls dotfiles/.)
 do
   # bootstrap program
-  sh "dotfiles/$program/bootstrap.sh"
+  [ -e "dotfiles/$program/bootstrap.sh" ] && sh "dotfiles/$program/bootstrap.sh"
 done

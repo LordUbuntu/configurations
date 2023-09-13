@@ -101,7 +101,7 @@ format = '[$ssh_symbol$hostname]($style) in '
 # alternatives 🚀🪐
 
 [directory]
-truncation_length = 3
+truncation_length = 2
 truncate_to_repo = true
 fish_style_pwd_dir_length = 1
 truncation_symbol = '…'
@@ -115,7 +115,7 @@ disabled = false
 [git_branch]
 truncation_length = 13
 style = 'bold purple'
-format = 'on [$symbol$branch(:$remote_branch)]($style) '
+format = ' [$symbol$branch(:$remote_branch)]($style) '
 [git_status]
 style = 'bold purple'
 conflicted = '✘'
@@ -137,14 +137,14 @@ format = 'on [\($hash$tag\)]($style) '
 style = 'bold purple'
 
 [memory_usage]
-disabled = false
+disabled = true
 threshold = 80
 symbol = '🖫'
 style = 'bold red'
 format = 'mem [$symbol ${ram} ${swap}]($style)'
 
 [sudo]
-disabled = false
+disabled = true
 style = 'bold red'
 symbol = '☉ ' # alternatives 👁☉
 format = '[as $symbol]($style)'
@@ -159,9 +159,9 @@ style = 'bold cyan'
 symbol = '⭮' # alternatives ◆⭮⯞
 
 [battery]
-full_symbol = ''
-charging_symbol = ''
-discharging_symbol = ''
+full_symbol = '󰁹'
+charging_symbol = '󰂏'
+discharging_symbol = '󰂌'
 [[battery.display]]
 threshold = 25
 style = 'bold red'
@@ -175,6 +175,10 @@ symbol = '↯'
 style = 'bold red'
 format = '[$symbol$status]($style)'
 
+[os]
+disabled = true
+style = 'bold blue'
+format = 'on [($symbol)($name)]($style) '
 [os.symbols]
 Alpine = ' '
 Amazon = ' '
@@ -189,10 +193,6 @@ NixOS = ' ' # f313
 Pop = ' '
 Raspbian = ' '
 openSUSE = ' '
-[os]
-disabled = false
-style = 'bold blue'
-format = 'on [($symbol)($name)]($style) '
 
 [shlvl]
 disabled = false

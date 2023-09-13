@@ -60,8 +60,8 @@ fi
 
 
 ##### Link Files
-source ../../general/functions.sh
-link "$PWD/default/." "$HOME/.config/nvim"
+source general/functions.sh
+link "$PWD/dotfiles/nvim/default" "$HOME/.config/nvim"
 
 
 echo -e "\e[34m=======================================\e[0m"

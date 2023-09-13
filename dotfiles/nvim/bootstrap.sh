@@ -60,7 +60,7 @@ fi
 
 
 ##### Link Files
-source ../../install/functions.sh
+source ../../general/functions.sh
 link "$PWD/default/." "$HOME/.config/nvim"
 
 

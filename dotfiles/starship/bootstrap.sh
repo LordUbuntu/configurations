@@ -4,7 +4,7 @@
 ##### Install Dependencies if not on nix
 if [ ! $(command -v nix) ]
 then
-  echo -e "\e[34m===== INSTALL DEPENDENCIES - EMACS\e[0m"
+  echo -e "\e[34m===== INSTALL DEPENDENCIES - STARSHIP\e[0m"
 fi
 
 
@@ -15,7 +15,6 @@ fi
 
 ##### Link Files
 source ../../general/functions.sh
-link "$PWD/doom/." "$HOME/.doom.d"
-
+link "$PWD/starship.toml" "$HOME/.config/starship/starship.toml
 
 echo -e "\e[34m=======================================\e[0m"

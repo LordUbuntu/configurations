@@ -62,24 +62,8 @@ fi
 
 
 ##### Link Files
-dst="$HOME/.config/nvim"
-# backup preexisting files
-if [ -e "$dst" ]
-then
-  mv "$dst" "$dst.backup"
-fi
-read -p "Linking will delete the original, are you sure?" ans
-case $ans in
-  [Yy]* )
-    echo "copying from $PWD/default to $dst"
-    rm -rf "$dst"
-    cp -R "$PWD/default/." "$dst"
-    break;;
-  [Nn]* )
-    echo "skipping...";;
-  * ) echo "please answer Yes or No"
-esac
-
+source ../../install/functions.sh
+link "$PWD/default/." "$HOME/.config/nvim"
 
 
 echo "\e[34m=======================================\e[0m"

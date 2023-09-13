@@ -24,6 +24,7 @@ then
   # sh
   # git
   # gcc
+  # rustup
 
   programs="
   bash

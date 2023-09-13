@@ -84,8 +84,7 @@ then
   fi
   if [ ! $(ps -p "$SSH_AGENT_PID" 2>/dev/null) ]
   then
-    echo "Staring SSH agent"
-    eval "$(ssh-agent -s)"
+    eval "$(ssh-agent -s)" &>/dev/null
   fi
 else
   echo "!!! SSH not installed !!!"

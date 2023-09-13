@@ -12,5 +12,3 @@ function link {
   * ) echo "Skipping..."
   esac
 }
-
-export -f link

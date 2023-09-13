@@ -1,5 +1,6 @@
 #!/bin/sh
 # Jacobus Burger (2023)
+echo -e "\e[34m===== BOOTSTRAP - NVIM\e[0m"
 
 ##### Install Dependencies if not on nix
 if [ ! $(command -v nix) ]

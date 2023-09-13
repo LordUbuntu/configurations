@@ -170,7 +170,7 @@ threshold = 40
 style = 'bold yellow'
 
 [status]
-disabled = false
+disabled = true
 symbol = '↯'
 style = 'bold red'
 format = '[$symbol$status]($style)'
@@ -180,18 +180,12 @@ disabled = true
 style = 'bold blue'
 format = 'on [($symbol)($name)]($style) '
 [os.symbols]
-Alpine = ' '
-Amazon = ' '
-Android = ' '
 Arch = ' '
 FreeBSD = ' '
 Gentoo = ' '
 Linux = ' '
-Macos = ' '
-Manjaro = ' '
 NixOS = ' ' # f313
 Pop = ' '
-Raspbian = ' '
 openSUSE = ' '
 
 [shlvl]

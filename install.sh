@@ -5,6 +5,7 @@
 source general/functions.sh
 sh general/bootstrap.sh
 
+export PATH="/home/jaybee/.local/bin:/home/jaybee/bin:/home/jaybee/.cargo/bin"
 # for all programs
 for program in $(ls dotfiles/.)
 do

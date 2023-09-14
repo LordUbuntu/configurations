@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   unstable = import <unstable> { config = config.nixpkgs.config; };
 in
@@ -44,6 +44,7 @@ in
       experimental-features = [ "nix-command" "flakes" ];
     };
   };
+  programs.nix-ld.enable = true;
 
 
   # AMD SETUP
@@ -80,15 +81,15 @@ in
       grub = {
         enable = true;
         device = "nodev";
-        efiSupport = true;
-        useOSProber = true;
-        configurationLimit = 13;
+	efiSupport = true;
+	useOSProber = true;
+	configurationLimit = 13;
       };
       efi.canTouchEfiVariables = true;
     };
 
     plymouth.enable = true;  # default nixos boot splash
-    #   hangs on bootup for some unknown reason
+    # 	hangs on bootup for some unknown reason
     # see: https://github.com/adi1090x/plymouth-themes
     # plymouth = {
     #   enable = true;
@@ -113,6 +114,11 @@ in
   i18n.inputMethod = {
     enabled = "ibus";
     ibus.engines = with pkgs.ibus-engines; [ libpinyin uniemoji ];
+  };
+  console = {
+    packages = with pkgs; [ terminus_font ];
+    font = "ter-v32n";
+    keyMap = "us";
   };
 
 
@@ -223,20 +229,31 @@ in
   # services.fwupd.enable = true;
 
 
+  # Enable shell stuff
+  programs.zsh.enable = true;
+
+
+  # Environment
+  environment = {
+    sessionVariables = lib.mkDefault {
+      LD_LIBRARY_PATH = lib.makeLibraryPath [ pkgs.stdenv.cc.cc ];
+    };
+  };
+
+
   # Fonts
   fonts = {
     fonts = with pkgs; [
       noto-fonts
       noto-fonts-cjk
-      roboto
       (nerdfonts.override { fonts = [ "FiraCode" ]; })  # TODO: add more
     ];
     fontconfig = {
       defaultFonts = {
         # TODO: add more nerdfonts for other font styles
-        serif = [ "Roboto Mono" "Noto Sans" ];
-        sansSerif = [ "Roboto Mono" "Noto Serif" ];
-        monospace = [ "FiraCode Nerd Font Mono" "Noto Sans Mono" ];
+        serif = [ "Noto Sans" ];
+        sansSerif = [ "Noto Serif" ];
+        monospace = [ "FiraCode Nerd Font Mono" ];
       };
       hinting.style = "hintfull";
     };
@@ -247,6 +264,7 @@ in
   users.users.jaybee = {
     isNormalUser = true;
     description = "Jacobus Burger";
+    shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "syncthing" "wheel" ];
     # packages = with pkgs; [ ];
   };
@@ -279,19 +297,31 @@ in
     # virtualisation
     distrobox
     podman
+    docker
+    docker-compose
     toolbox
 
     # developer tools
     micro
     neovim
+    #   Python 3.10
     python310Full
     python310Packages.pip
     python310Packages.pip-tools # Resistance is fulite
     python310Packages.pipx      # I must be assimilated !_!
+    # 	C/C++
+    gcc
+    clang
+    gnumake
     unstable.wezterm
+    # Rust
+    rustup
 
     # cli tools
     bat
+    bat-extras.batman
+    bat-extras.batgrep
+    bat-extras.batdiff
     btop
     cbonsai
     cmus
@@ -305,10 +335,13 @@ in
     hyperfine
     neofetch
     nnn
+    nvtop
     ripgrep
     ripgrep-all
     starship
+    tree-sitter
     zellij
+    zlib.dev
     zsh
 
     # documents
@@ -335,7 +368,7 @@ in
     obsidian
     spotify
     vscode-fhs
-
+    
     # Gnome
     celluloid  # mpv frontend
     dynamic-wallpaper

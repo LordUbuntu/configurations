@@ -26,7 +26,6 @@ alias mkexec='chmod +x'
 alias root='cd /'
 alias home='cd $HOME'
 alias note="nvim $(date +%F).md"
-alias activate="source .env/bin/activate"
 type exa &> /dev/null && alias tree='exa -T' || alias tree='tree -CF'
 
 # workaround because ubuntu doesn't follow naming conventions apparently
@@ -123,7 +122,6 @@ fi
 
 # set environment variables taking system state into consideration
 PATH="$PATH:$HOME/.local/bin:$HOME/bin"
-theme='dark'
 
 
 #############
@@ -386,7 +384,6 @@ export PATH
 export LC_CTYPE="en_CA.UTF-8"
 export EDITOR="nvim"
 export OPENER="xdg-open"
-export theme
 
 
 ###############

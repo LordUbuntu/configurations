@@ -5,9 +5,9 @@
 source general/functions.sh
 sh general/bootstrap.sh
 
-export PATH="/home/jaybee/.local/bin:/home/jaybee/bin:/home/jaybee/.cargo/bin"
+export PATH="$PATH:/home/jaybee/.local/bin:/home/jaybee/bin:/home/jaybee/.cargo/bin"
 # for all programs
-for program in $(ls dotfiles/.)
+for program in `ls dotfiles/.`
 do
   # bootstrap program
   [ -e "dotfiles/$program/bootstrap.sh" ] && sh "dotfiles/$program/bootstrap.sh"

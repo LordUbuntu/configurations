@@ -1,11 +1,11 @@
-echo -e "\e[34m===== BOOTSTRAP - BAT\e[0m"
+echo -e "\e[34m===== BOOTSTRAP - ZSH\e[0m"
 
 
 
 ##### Install Dependencies if not on nix
 if [ ! $(command -v nix) ]
 then
-  echo -e "\e[34m===== INSTALL DEPENDENCIES - BAT\e[0m"
+  echo -e "\e[34m===== INSTALL DEPENDENCIES - ZSH\e[0m"
 else
   echo "please ensure duf, exa, ripgrep, ripgrep-all, zellij, nvim, cargo, fzf, fasd, nnn, starship, and unimatrix"
 fi

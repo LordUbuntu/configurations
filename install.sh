@@ -5,8 +5,20 @@
 source general/functions.sh
 sh general/bootstrap.sh
 
+# setup path
 export PATH="$PATH:/home/jaybee/.local/bin:/home/jaybee/bin:/home/jaybee/.cargo/bin"
-# for all programs
+
+# setup desktop files
+read -p "Do you want to copy in desktop files?" ans
+case $ans in
+  [Yy]* )
+    sh local/setup.sh
+    break;;
+* ) echo "Skipping..."
+esac
+
+
+# bootstrap dotfiles
 for program in `ls dotfiles/.`
 do
   # bootstrap program

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Arch
+GenericName=Terminal entering Arch
+Comment=Terminal entering Arch
+Category=Distrobox;System;Utility"
+Exec=/nix/store/zs3i81mv2h425nzh1iyf9l6k5487bdya-distrobox-1.4.2.1/bin/distrobox enter arch
+Icon=/home/jaybee/.local/share/icons/distrobox/arch.png
+Keywords=distrobox;
+NoDisplay=true
+Hidden=true
+Terminal=true
+TryExec=/nix/store/zs3i81mv2h425nzh1iyf9l6k5487bdya-distrobox-1.4.2.1/bin/distrobox
+Type=Application

@@ -370,7 +370,7 @@ in
     lmms
     mpv
     obs-studio
-    obsidian
+    unstable.obsidian
     spotify
     vscode-fhs
     

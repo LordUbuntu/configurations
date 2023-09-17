@@ -19,8 +19,13 @@ esac
 
 
 # bootstrap dotfiles
-for program in `ls dotfiles/.`
-do
-  # bootstrap program
-  [ -e "dotfiles/$program/bootstrap.sh" ] && sh "dotfiles/$program/bootstrap.sh"
-done
+read -p "Do you want to copy in dotfiles?" ans
+case $ans in
+  [Yy]* )
+    for program in `ls dotfiles/.`
+    do
+      [ -e "dotfiles/$program/bootstrap.sh" ] && sh "dotfiles/$program/bootstrap.sh"
+    done
+    break;;
+  * ) echo "Skipping..."
+esac

@@ -25,8 +25,8 @@ wezterm.on('window-config-reloaded', function(window, pane)
   end
 end)
 -- TODO: add a check for battery power to enable/disable cursor blinking
-config.default_cursor_style = 'BlinkingUnderline'
-config.cursor_blink_rate = 500
+-- config.default_cursor_style = 'BlinkingUnderline'
+-- config.cursor_blink_rate = 500
 config.animation_fps = 144
 
 

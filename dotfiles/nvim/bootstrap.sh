@@ -8,7 +8,7 @@ echo -e "\e[34m===== BOOTSTRAP - NVIM\e[0m"
 if [ ! $(command -v nix) ]
 then
   echo -e "\e[34m===== INSTALL DEPENDENCIES - NVIM\e[0m"
-  if [ ! $(command -v cargo) ]
+  if [ ! -f "$HOME/.cargo/bin/cargo" ]
   then
     echo -e "\e[34m===== INSTALL RUST\e[0m"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -16,7 +16,7 @@ then
   if [ ! $(command -v tree-sitter) ]
   then
     echo -e "\e[34m===== INSTALL TREESITTER\e[0m"
-    cargo install tree-sitter-cli
+    $HOME/.cargo/bin/cargo install tree-sitter-cli
   fi
 fi
 

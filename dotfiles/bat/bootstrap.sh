@@ -32,10 +32,11 @@ then
   # see: https://github.com/eth-p/bat-extras
   if [ ! $(command -v batgrep) ]
   then
-    cd /tmp/
     git clone https://github.com/eth-p/bat-extras.git
     cd bat-extras
     ./build.sh
+    cd ..
+    rm -rf bat-extras
   fi
 else
   echo "please ensure pkgs.bat-extras"

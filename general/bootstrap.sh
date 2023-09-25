@@ -65,10 +65,6 @@ then
   # noto-sans
   # fira-code nerd font
   
-  # TODO:
-  # - distribute installation process to each seperate dotfile directory?
-  # - automate font installation and other manual intallation
-  
   # install packages
   read -p "Do you want to install packages?" ans
   case $ans in
@@ -85,15 +81,6 @@ then
           echo """===== Installing MANUAL PACKAGES"""   
           # install spotify, amberol, obsidian, anki, discord
           flatpak install com.spotify.Client io.bassi.Amberol md.obsidian.Obsidian net.ankiweb.Anki com.discordapp.Discord io.github.celluloid_player.Celluloid
-          # install rust
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-          # install fasd
-          git clone https://github.com/clvv/fasd
-          cd fasd
-          make install
-          PREFIX=$HOME make install
-          cd ..
-          rm -rf fasd
           # install ripgrep-all
           $HOME/.cargo/bin/cargo install --locked ripgrep_all
           # install wezterm

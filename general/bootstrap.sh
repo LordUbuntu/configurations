@@ -77,9 +77,14 @@ then
           sudo apt install "$programs"
         elif [ $(command -v dnf) ]
         then
-          # NOTE: fasd must be installed manually, so must ripgrep-all, and starship, and zellij, and obsidian, and spotify, and amberol, and anki, rustup
-          programs="$programs python3 python3-pip pipx distrobox podman docker-distribution docker-compose git-delta exa fd-find fzf httpie hyperfine neofetch nnn ripgrep zsh pandoc texlive discord mpv"
+          echo """===== Installing DNF PACKAGES"""   
+          programs="unzip wget curl gzip tar bash git gcc clang make cmake neovim python3 python3-pip pipx distrobox podman docker-distribution docker-compose git-delta exa fd-find fzf httpie hyperfine neofetch nnn ripgrep zsh pandoc texlive discord mpv"
           sudo dnf install $programs
+          echo """===== Installing MANUAL PACKAGES"""   
+          # install spotify, amberol, obsidian, and anki with flatpak
+          flatpak install com.spotify.Client io.bassi.Amberol md.obsidian.Obsidian net.ankiweb.Anki
+          
+          # NOTE: fasd must be installed manually, so must ripgrep-all, and starship, and zellij, and obsidian, and spotify, and amberol, and anki, rustup
         elif [ $(command -v pacman) ]
         then
           sudo pacman -suy "$programs"

@@ -13,8 +13,11 @@ echo """
 
 if [ ! $(command -v nix) ]
 then
-  # install dotfile dependencies
-  # global dependencies
+  # GENERAL LIST OF PROGRAMS TO INSTALL
+  # see: nixos/configuration.nix for full list of packages on any system
+  # note: to be general here, only essentials are listed/included. The rest should be covered manually or automated some other way
+  #
+  # DEV TOOLS
   # unzip
   # wget
   # curl
@@ -24,7 +27,40 @@ then
   # sh
   # git
   # gcc
+  # clang
+  # gnumake
+  # python3 (with pip and pipx)
   # rustup
+  # nano
+  # neovim
+  # distrobox (and podman)
+  # docker
+  # bat
+  # bat-extras (batman, batgrep, batdiff)
+  # delta
+  # exa
+  # fasd
+  # fd
+  # fzf
+  # httpie
+  # hyperfine
+  # neofetch
+  # nnn
+  # ripgrep (and ripgrep-all)
+  # starship
+  # zellij
+  # zsh
+  # pandoc
+  # texlive
+  #
+  # GUI APPS
+  # discord
+  # obsidian
+  # spotify
+  # amberol
+  # anki
+  # mpv
+  
 
   programs="
   bash
@@ -40,6 +76,7 @@ then
 
   if [ $(command -v apt) ]
   then
+    # TODO: `install` function that will take in the string of packages, substitute any names where needed, and so on
     # substitute programs with weird names like bat -> bat-cat
     # install packages
     sudo apt install "$programs"

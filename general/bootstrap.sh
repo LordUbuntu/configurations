@@ -67,15 +67,12 @@ then
     [Yy]* )
         if [ $(command -v apt) ]
         then
-          # substitute packages
-          # pip -> python3-pip
-          # python -> python3
           sudo apt install "$programs"
         elif [ $(command -v dnf) ]
         then
           # git-delta
           echo """===== Installing DNF PACKAGES"""   
-          programs="unzip chsh wget curl gzip tar bash git gcc clang make cmake zsh neovim python3 python3-pip pipx distrobox podman docker-distribution docker-compose exa fd-find fzf httpie hyperfine neofetch nnn ripgrep pandoc texlive poppler ffmpeg mpv"
+          programs="unzip chsh wget curl gzip tar bash git gcc clang make cmake zsh neovim python3 python3-pip pipx distrobox podman docker-distribution docker-compose exa git-delta duf fd-find fzf httpie hyperfine neofetch nnn ripgrep pandoc texlive poppler ffmpeg mpv"
           sudo dnf install $programs
           echo """===== Installing MANUAL PACKAGES"""   
           # install spotify, amberol, obsidian, anki, discord

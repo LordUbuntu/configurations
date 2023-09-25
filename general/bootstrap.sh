@@ -82,7 +82,7 @@ then
           # install spotify, amberol, obsidian, anki, discord
           flatpak install com.spotify.Client io.bassi.Amberol md.obsidian.Obsidian net.ankiweb.Anki com.discordapp.Discord io.github.celluloid_player.Celluloid
           # install ripgrep-all
-          $HOME/.cargo/bin/cargo install --locked ripgrep_all
+          $HOME/.cargo/bin/cargo install ripgrep_all
           # install wezterm
           sudo dnf install -y https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly-fedora38.rpm
         elif [ $(command -v pacman) ]

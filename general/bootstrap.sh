@@ -61,32 +61,68 @@ then
   # anki
   # mpv
   
-
+  # core  packages
   programs="
-  bash
-  curl
-  gcc
-  git
-  gzip
-  sh
-  tar
   unzip
   wget
+  curl
+  gzip
+  tar
+  bash
+  sh
+  git
+  gcc
+  clang
+  make
+  neovim
   "
 
-  if [ $(command -v apt) ]
-  then
-    # TODO: `install` function that will take in the string of packages, substitute any names where needed, and so on
-    # substitute programs with weird names like bat -> bat-cat
-    # install packages
-    sudo apt install "$programs"
-  elif [ $(command -v dnf) ]
-  then
-    sudo dnf install "$programs"
-  elif [ $(command -v pacman) ]
-  then
-    sudo pacman -suy "$programs"
-  fi
+
+  # install packages
+  read -p "Do you want to install packages?" ans
+  case $ans in
+    [Yy]* )
+        if [ $(command -v apt) ]
+        then
+          # substitute packages
+          # pip -> python3-pip
+          # python -> python3
+          sudo apt install "$pkgs"
+        elif [ $(command -v dnf) ]
+        then
+          # NOTE: fasd must be installed manually, so must ripgrep-all, and starship, and zellij, and obsidian, and spotify, and amberol, and anki
+          programs="
+          python3
+          python3-pip
+          pipx
+          rust
+          distrobox
+          podman
+          docker-distribution
+          docker-compose
+          git-delta
+          exa
+          fd-find
+          fzf
+          httpie
+          hyperfine
+          neofetch
+          nnn
+          ripgrep
+          zsh
+          pandoc
+          texlive
+          discord
+          mpv
+          "
+          sudo dnf install "$pkgs"
+        elif [ $(command -v pacman) ]
+        then
+          sudo pacman -suy "$pkgs"
+        fi
+      break;;
+  * ) echo "Skipping..."
+  esac
 fi
 
 

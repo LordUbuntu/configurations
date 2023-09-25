@@ -62,20 +62,7 @@ then
   # mpv
   
   # core  packages
-  programs="
-  unzip
-  wget
-  curl
-  gzip
-  tar
-  bash
-  sh
-  git
-  gcc
-  clang
-  make
-  neovim
-  "
+  programs="unzip wget curl gzip tar bash git gcc clang make cmake neovim"
 
 
   # install packages
@@ -87,38 +74,15 @@ then
           # substitute packages
           # pip -> python3-pip
           # python -> python3
-          sudo apt install "$pkgs"
+          sudo apt install "$programs"
         elif [ $(command -v dnf) ]
         then
-          # NOTE: fasd must be installed manually, so must ripgrep-all, and starship, and zellij, and obsidian, and spotify, and amberol, and anki
-          programs="
-          python3
-          python3-pip
-          pipx
-          rust
-          distrobox
-          podman
-          docker-distribution
-          docker-compose
-          git-delta
-          exa
-          fd-find
-          fzf
-          httpie
-          hyperfine
-          neofetch
-          nnn
-          ripgrep
-          zsh
-          pandoc
-          texlive
-          discord
-          mpv
-          "
-          sudo dnf install "$pkgs"
+          # NOTE: fasd must be installed manually, so must ripgrep-all, and starship, and zellij, and obsidian, and spotify, and amberol, and anki, rustup
+          programs="$programs python3 python3-pip pipx distrobox podman docker-distribution docker-compose git-delta exa fd-find fzf httpie hyperfine neofetch nnn ripgrep zsh pandoc texlive discord mpv"
+          sudo dnf install $programs
         elif [ $(command -v pacman) ]
         then
-          sudo pacman -suy "$pkgs"
+          sudo pacman -suy "$programs"
         fi
       break;;
   * ) echo "Skipping..."

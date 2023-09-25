@@ -6,7 +6,6 @@ echo -e "\e[34m===== BOOTSTRAP - WEZTERM\e[0m"
 if [ ! $(command -v nix) ]
 then
   echo -e "\e[34m===== INSTALL DEPENDENCIES - WEZTERM\e[0m"
-  # noto-sans, nerd-fonts (fira-code), wezterm itself
 else
   echo "please ensure fonts are installed..."
 fi

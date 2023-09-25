@@ -32,9 +32,9 @@ then
   # see: https://github.com/eth-p/bat-extras
   if [ ! $(command -v batgrep) ]
   then
-    git clone https://github.com/eth-p/bat-extras.git
+    git clone https://github.com/eth-p/bat-extras
     cd bat-extras
-    ./build.sh
+    sudo ./build.sh
     cd ..
     rm -rf bat-extras
   fi

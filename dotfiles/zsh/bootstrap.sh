@@ -19,13 +19,16 @@ then
     sudo dnf install python3 python3-pip pipx
   fi
   # install bat
-  $HOME/.cargo/bin/cargo install bat
-  # install bat-extras
-  git clone https://github.com/eth-p/bat-extras.git
-  cd bat-extras
-  ./build.sh
-  cd ..
-  rm -rf bat-extras
+  if [ ! $(command -v bat) ]
+  then
+    $HOME/.cargo/bin/cargo install bat
+    # install bat-extras
+    git clone https://github.com/eth-p/bat-extras
+    cd bat-extras
+    sudo ./build.sh
+    cd ..
+    rm -rf bat-extras
+  fi
   # install duf
   if [ $(command -v dnf) ]
   then

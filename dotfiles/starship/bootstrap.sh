@@ -8,7 +8,7 @@ echo -e "\e[34m===== BOOTSTRAP - STARSHIP\e[0m"
 if [ ! $(command -v nix) ]
 then
   # ensure rustup
-  if [ ! $(command -v cargo) ]
+  if [ ! -f "$HOME/.rustup" ]
   then
     echo -e "\e[34m===== INSTALL RUST\e[0m"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh

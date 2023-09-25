@@ -88,6 +88,8 @@ then
           rm -rf fasd
           # install ripgrep-all
           $HOME/.cargo/bin/cargo install --locked ripgrep_all
+          # install wezterm
+          sudo dnf install -y https://github.com/wez/wezterm/releases/download/20230712-072601-f4abf8fd/wezterm-20230712_072601_f4abf8fd-1.fedora37.x86_64.rpm
         elif [ $(command -v pacman) ]
         then
           sudo pacman -suy "$programs"

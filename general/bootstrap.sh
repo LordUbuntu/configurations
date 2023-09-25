@@ -61,10 +61,6 @@ then
   # anki
   # mpv
   
-  # core  packages
-  programs="unzip wget curl gzip tar bash git gcc clang make cmake neovim"
-
-
   # install packages
   read -p "Do you want to install packages?" ans
   case $ans in
@@ -77,14 +73,24 @@ then
           sudo apt install "$programs"
         elif [ $(command -v dnf) ]
         then
+          # git-delta
           echo """===== Installing DNF PACKAGES"""   
-          programs="unzip wget curl gzip tar bash git gcc clang make cmake neovim python3 python3-pip pipx distrobox podman docker-distribution docker-compose git-delta exa fd-find fzf httpie hyperfine neofetch nnn ripgrep zsh pandoc texlive discord mpv"
+          programs="unzip chsh wget curl gzip tar bash git gcc clang make cmake zsh neovim python3 python3-pip pipx distrobox podman docker-distribution docker-compose exa fd-find fzf httpie hyperfine neofetch nnn ripgrep pandoc texlive poppler ffmpeg mpv"
           sudo dnf install $programs
           echo """===== Installing MANUAL PACKAGES"""   
-          # install spotify, amberol, obsidian, and anki with flatpak
-          flatpak install com.spotify.Client io.bassi.Amberol md.obsidian.Obsidian net.ankiweb.Anki
-          
-          # NOTE: fasd must be installed manually, so must ripgrep-all, and starship, and zellij, and obsidian, and spotify, and amberol, and anki, rustup
+          # install spotify, amberol, obsidian, anki, discord
+          flatpak install com.spotify.Client io.bassi.Amberol md.obsidian.Obsidian net.ankiweb.Anki com.discordapp.Discord io.github.celluloid_player.Celluloid
+          # install rust
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+          # install fasd
+          git clone https://github.com/clvv/fasd
+          cd fasd
+          make install
+          PREFIX=$HOME make install
+          cd ..
+          rm -rf fasd
+          # install ripgrep-all
+          $HOME/.cargo/bin/cargo install --locked ripgrep_all
         elif [ $(command -v pacman) ]
         then
           sudo pacman -suy "$programs"

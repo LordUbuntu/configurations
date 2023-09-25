@@ -60,6 +60,14 @@ then
   # amberol
   # anki
   # mpv
+  # 
+  # FONTS
+  # noto-sans
+  # fira-code nerd font
+  
+  # TODO:
+  # - distribute installation process to each seperate dotfile directory?
+  # - automate font installation and other manual intallation
   
   # install packages
   read -p "Do you want to install packages?" ans
@@ -89,7 +97,7 @@ then
           # install ripgrep-all
           $HOME/.cargo/bin/cargo install --locked ripgrep_all
           # install wezterm
-          sudo dnf install -y https://github.com/wez/wezterm/releases/download/20230712-072601-f4abf8fd/wezterm-20230712_072601_f4abf8fd-1.fedora37.x86_64.rpm
+          sudo dnf install -y https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly-fedora38.rpm
         elif [ $(command -v pacman) ]
         then
           sudo pacman -suy "$programs"

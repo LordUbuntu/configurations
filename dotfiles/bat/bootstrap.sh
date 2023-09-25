@@ -7,7 +7,7 @@ if [ ! $(command -v nix) ]
 then
   echo -e "\e[34m===== INSTALL DEPENDENCIES - BAT\e[0m"
   # install rust
-  if [ ! $(command -v cargo) ]
+  if [ ! -f "$HOME/.cargo/bin/cargo" ]
   then
     echo -e "\e[34m===== INSTALL RUST\e[0m"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -15,13 +15,15 @@ then
   # insall ripgrep for batgrep
   if [ ! $(command -v rg) ]
   then
-    cargo install ripgrep
+    $HOME/.cargo/bin/cargo install ripgrep
+  else
+    echo "can't install ripgrep, cargo not installed..."
   fi
   # skip man and less because they're assumed to be present
   # install delta for batdiff
   if [ ! $(command -v delta) ]
   then
-    cargo install git-delta
+    $HOME/.cargo/bin/cargo install git-delta
   else
     echo "can't install delta, cargo not installed..."
   fi

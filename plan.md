@@ -1,3 +1,5 @@
+TODO: install basic packages on non nixos systems using nix, instead automating setup of nix on non-nixos systems, circumventing a lot of nonsense and dramatically simplifying things.
+
 Plan:
 - start at toplevel install.sh script
 - run general bootstrap (single bootstrap file in install directory, skips over installation if on nix, then proceeds towards setting up environment stuff, then finally next step)

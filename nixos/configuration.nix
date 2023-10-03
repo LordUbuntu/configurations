@@ -252,6 +252,7 @@ in
       noto-fonts
       noto-fonts-cjk
       (nerdfonts.override { fonts = [ "FiraCode" ]; })  # TODO: add more
+      open-dyslexic
     ];
     fontconfig = {
       defaultFonts = {

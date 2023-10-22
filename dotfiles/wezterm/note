@@ -1,0 +1,4 @@
+Inspired by https://evantravers.com/articles/2022/02/08/light-dark-toggle-for-neovim-fish-and-kitty/
+
+wezterm sets its light/dark theme based on system theme, and then also sets the theme environment variable in .zshenv at the same time to either 'light' or 'dark' to match the wezterm theme.
+Then neovim (and probably other programs) look at that environment variable and change theme based upon it.

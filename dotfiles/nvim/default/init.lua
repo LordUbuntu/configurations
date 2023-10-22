@@ -15,4 +15,9 @@ require("core.lazy")
 
 
 -- set colorscheme
+if os.getenv('theme') == 'light' then
+  vim.o.background = 'light'
+else
+  vim.o.background = 'dark'
+end
 vim.cmd.colorscheme(require("core.helpers").try_colorscheme("gruvbox"))

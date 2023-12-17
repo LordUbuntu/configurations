@@ -2,6 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
+
+# TODO: fix to work on both Nvidia and AMD/Intel hardware
+
 { config, pkgs, lib, ... }:
 let
   unstable = import <unstable> { config = config.nixpkgs.config; };

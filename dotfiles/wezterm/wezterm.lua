@@ -9,15 +9,11 @@ end
 -- looks
 --   change color scheme to match system automatically
 function scheme_for_appearance(appearance)
-  local file = io.open(os.getenv("HOME") .. "/.zshenv", "w")
   if appearance:find 'Dark' then
-    file:write("export theme=\"dark\"\n")
     return 'Gruvbox dark, medium (base16)'
   else
-    file:write("export theme=\"light\"\n")
     return 'Gruvbox light, medium (base16)'
   end
-  file:close()
 end
 wezterm.on('window-config-reloaded', function(window, pane)
   local overrides = window:get_config_overrides() or {}
@@ -65,9 +61,20 @@ config.font = wezterm.font_with_fallback {
     family = 'Noto Sans CJK SC',
     weight = 'Regular',
   },
+  --[[
   -- fun fonts:
-  -- - minecraft enchantment
-  -- - CJK AllSeto
+  {
+    -- CJK AllSeto : Cute CJK handwritten font
+  },
+  {
+    -- Minecraft Enchantment Table Font (Intergalatic Alphabet)
+  },
+  {
+    -- Lovecraft font
+    family = "Lovecraft's Diary",
+    weight = 'Medium',
+  },
+  ]]
 }
 config.font_size = 13
 config.warn_about_missing_glyphs=false

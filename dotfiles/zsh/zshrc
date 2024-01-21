@@ -191,7 +191,7 @@ then
 fi
 
 # RUST
-if type cargo &> /dev/null
+if [[ -f $HOME/.cargo/bin ]]
 then
   PATH="$PATH:$HOME/.cargo/bin"
 fi
